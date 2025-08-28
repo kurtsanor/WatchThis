@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import "@mantine/core/styles.css";
 import "./App.css";
 import MovieCard from "./components/MovieCard";
@@ -43,7 +43,6 @@ function App() {
           ? await searchMoviesByNameAndPage(searched, currentPage)
           : await getPopularMoviesByPage(currentPage);
         setMovies(data);
-        console.log(data);
       } catch (error) {
         alert(error);
       } finally {
@@ -53,26 +52,28 @@ function App() {
     init();
   }, [searched, currentPage]);
 
-  const handleSearch = async (e: { preventDefault: () => void }) => {
+  const handleSearch = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     if (!searchInput.current?.value.trim()) return;
     setSearchParams({ search: searchInput.current?.value });
   };
 
-  const handleOnClick = async (id: number) => {
-    const data = await getMovieTrailerById(id);
-    console.log(data);
-    const trailer = data.results.find(
-      (vid: any) => vid.type === "Trailer" && vid.site === "YouTube"
-    );
-    let url;
-    if (trailer) {
-      url = `https://www.youtube.com/embed/${trailer.key}?rel=0`;
-    }
-    open();
-    setTrailerUrl(url);
-  };
+  const handleOnClick = useCallback((id: number) => {
+    const fetchData = async () => {
+      const data = await getMovieTrailerById(id);
+      const trailer = data.results.find(
+        (vid: any) => vid.type === "Trailer" && vid.site === "YouTube"
+      );
+      let url;
+      if (trailer) {
+        url = `https://www.youtube.com/embed/${trailer.key}?rel=0`;
+      }
+      open();
+      setTrailerUrl(url);
+    };
+    fetchData();
+  }, []);
 
   const handleOnChange = async (page: number) => {
     setSearchParams({
@@ -109,7 +110,7 @@ function App() {
           </Group>
         </Group>
       </form>
-      {movies?.results < 1 && (
+      {movies?.results.length < 1 && (
         <Text fz="h2" ta={"center"}>
           No results found!
         </Text>

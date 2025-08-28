@@ -8,7 +8,6 @@ export async function getPopularMovies() {
   try {
     const res = await fetch(url);
     const data = await res.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.log(error);
@@ -23,7 +22,6 @@ export async function getPopularMoviesByPage(page) {
   try {
     const res = await fetch(url);
     const data = await res.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.log(error);
