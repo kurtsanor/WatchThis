@@ -92,29 +92,20 @@ function App() {
         trailerUrl={trailerUrl}
       ></TrailerModal>
 
+      <div
+        style={{ position: "sticky", top: 0, zIndex: "1", overflow: "hidden" }}
+      >
+        <Header />
+      </div>
       <form onSubmit={handleSearch}>
-        <Header
-          left={
-            <Group gap={"xs"}>
-              <IconMovie size={"8%"}></IconMovie>
-              <Text>
-                <Anchor href="/" fw={"bolder"} size="1.5rem" td={"none"}>
-                  WatchThis
-                </Anchor>
-              </Text>
-            </Group>
-          }
-          right={
-            <Group>
-              <TextInput
-                placeholder="Search movie name.."
-                ref={searchInput}
-                required
-              ></TextInput>
-              <Button type="submit">Search</Button>
-            </Group>
-          }
-        />
+        <Group justify="center" mb={"2rem"}>
+          <TextInput
+            placeholder="Search movie name.."
+            ref={searchInput}
+            required
+          ></TextInput>
+          <Button type="submit">Search</Button>
+        </Group>
       </form>
       {movies?.results.length < 1 && (
         <Text fz="h2" ta={"center"}>

@@ -1,7 +1,8 @@
 import { useState, type ReactNode } from "react";
-import { Burger, Container, Group } from "@mantine/core";
+import { Anchor, Burger, Container, Group, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "../css/HeaderSimple.module.css";
+import { IconMovie } from "@tabler/icons-react";
 
 const links = [
   { link: "/", label: "Home" },
@@ -10,12 +11,7 @@ const links = [
   { link: "/community", label: "Community" },
 ];
 
-interface HeaderProps {
-  left?: ReactNode;
-  right?: ReactNode;
-}
-
-function Header({ left, right }: HeaderProps) {
+function Header() {
   const [opened, { toggle }] = useDisclosure(false);
   const [active, setActive] = useState(links[0].link);
 
@@ -37,14 +33,18 @@ function Header({ left, right }: HeaderProps) {
   return (
     <header className={classes.header}>
       <Group className={classes.inner}>
-        <Group gap={5} visibleFrom="xs">
-          <Group>
-            {left}
-            {items}
+        <Group gap={5}>
+          <Group gap={"xs"}>
+            <IconMovie height={"30px"} width={"40px"}></IconMovie>
+            <Text>
+              <Anchor href="/" fw={"bolder"} size="1.5rem" td={"none"}>
+                WatchThis
+              </Anchor>
+            </Text>
           </Group>
         </Group>
-        <Group>{right}</Group>
-        <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
+        <Group visibleFrom="md">{items}</Group>
+        <Burger opened={opened} onClick={toggle} hiddenFrom="md" size="sm" />
       </Group>
     </header>
   );
