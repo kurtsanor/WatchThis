@@ -22,6 +22,7 @@ import {
 } from "./api/movieApi";
 import { useDisclosure } from "@mantine/hooks";
 import TrailerModal from "./components/TrailerModal";
+import Header from "./components/Header";
 
 function App() {
   const [movies, setMovies] = useState<any>(null);
@@ -92,24 +93,28 @@ function App() {
       ></TrailerModal>
 
       <form onSubmit={handleSearch}>
-        <Group justify="space-between" mb={"lg"}>
-          <Group gap={"xs"}>
-            <IconMovie size={"8%"}></IconMovie>
-            <Text>
-              <Anchor href="/" fw={"bolder"} size="1.5rem" td={"none"}>
-                Watchthis
-              </Anchor>
-            </Text>
-          </Group>
-          <Group justify="center">
-            <TextInput
-              placeholder="Search movie name.."
-              ref={searchInput}
-              required
-            ></TextInput>
-            <Button type="submit">Search</Button>
-          </Group>
-        </Group>
+        <Header
+          left={
+            <Group gap={"xs"}>
+              <IconMovie size={"8%"}></IconMovie>
+              <Text>
+                <Anchor href="/" fw={"bolder"} size="1.5rem" td={"none"}>
+                  WatchThis
+                </Anchor>
+              </Text>
+            </Group>
+          }
+          right={
+            <Group>
+              <TextInput
+                placeholder="Search movie name.."
+                ref={searchInput}
+                required
+              ></TextInput>
+              <Button type="submit">Search</Button>
+            </Group>
+          }
+        />
       </form>
       {movies?.results.length < 1 && (
         <Text fz="h2" ta={"center"}>
