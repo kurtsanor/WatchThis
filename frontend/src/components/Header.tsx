@@ -1,52 +1,55 @@
 import { useState, type ReactNode } from "react";
-import { Anchor, Burger, Container, Group, Text } from "@mantine/core";
+import { Anchor, Burger, Container, Drawer, Group, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "../css/HeaderSimple.module.css";
 import { IconMovie } from "@tabler/icons-react";
+import { Link, Outlet, useLocation } from "react-router-dom";
 
 const links = [
   { link: "/", label: "Home" },
-  { link: "/pricing", label: "Favorites" },
+  { link: "/favorites", label: "Favorites" },
   { link: "/learn", label: "Learn" },
   { link: "/community", label: "Community" },
 ];
 
 function Header() {
   const [opened, { toggle }] = useDisclosure(false);
-  const [active, setActive] = useState(links[0].link);
+  const location = useLocation();
 
   const items = links.map((link) => (
-    <a
+    <Link
       key={link.label}
-      href={link.link}
+      to={link.link}
       className={classes.link}
-      data-active={active === link.link || undefined}
-      onClick={(event) => {
-        event.preventDefault();
-        setActive(link.link);
-      }}
+      data-active={location.pathname === link.link || undefined}
     >
       {link.label}
-    </a>
+    </Link>
   ));
 
   return (
-    <header className={classes.header}>
-      <Group className={classes.inner}>
-        <Group gap={5}>
-          <Group gap={"xs"}>
-            <IconMovie height={"30px"} width={"40px"}></IconMovie>
-            <Text>
-              <Anchor href="/" fw={"bolder"} size="1.5rem" td={"none"}>
-                WatchThis
-              </Anchor>
-            </Text>
+    <>
+      <header className={classes.header}>
+        <Group className={classes.inner}>
+          <Group gap={5}>
+            <Group gap={"xs"}>
+              <IconMovie height={"30px"} width={"40px"}></IconMovie>
+              <Text>
+                <Anchor href="/" fw={"bolder"} size="1.5rem" td={"none"}>
+                  WatchThis
+                </Anchor>
+              </Text>
+            </Group>
           </Group>
+          <Group visibleFrom="md">{items}</Group>
+          <Burger opened={opened} onClick={toggle} hiddenFrom="md" size="sm" />
         </Group>
-        <Group visibleFrom="md">{items}</Group>
-        <Burger opened={opened} onClick={toggle} hiddenFrom="md" size="sm" />
-      </Group>
-    </header>
+        {/* <Drawer position="right"></Drawer> */}
+      </header>
+      <main style={{ padding: "2rem" }}>
+        <Outlet></Outlet>
+      </main>
+    </>
   );
 }
 export default Header;
