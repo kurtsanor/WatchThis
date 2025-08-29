@@ -35,6 +35,7 @@ function App() {
   const currentPage = searchParams.get("page") || 1;
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     setIsLoading(true);
 
     const init = async () => {
