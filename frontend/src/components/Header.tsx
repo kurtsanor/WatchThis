@@ -13,7 +13,8 @@ const links = [
 ];
 
 function Header() {
-  const [opened, { toggle }] = useDisclosure(false);
+  // const [opened, { toggle }] = useDisclosure(false);
+  const [menuOpened, { open, close }] = useDisclosure(false);
   const location = useLocation();
 
   const items = links.map((link) => (
@@ -42,13 +43,22 @@ function Header() {
             </Group>
           </Group>
           <Group visibleFrom="md">{items}</Group>
-          <Burger opened={opened} onClick={toggle} hiddenFrom="md" size="sm" />
+          <Burger
+            opened={menuOpened}
+            onClick={open}
+            hiddenFrom="md"
+            size="sm"
+          />
         </Group>
-        {/* <Drawer position="right"></Drawer> */}
+        <Drawer
+          position="right"
+          size={"50%"}
+          opened={menuOpened}
+          onClose={close}
+        >
+          {items}
+        </Drawer>
       </header>
-      <main style={{ padding: "2rem" }}>
-        <Outlet></Outlet>
-      </main>
     </>
   );
 }
