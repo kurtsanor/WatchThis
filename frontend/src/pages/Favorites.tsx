@@ -10,31 +10,22 @@ import { useDisclosure } from "@mantine/hooks";
 
 function Favorites() {
   const { favorites } = useMovieContext()!;
-  const [trailerUrl, setTrailerUrl] = useState<string | undefined>("");
   const [opened, { open, close }] = useDisclosure(false);
+  const [selectedMovieId, setSelectedMovieId] = useState<number | undefined>(
+    undefined
+  );
 
-  const handleOnClick = useCallback((id: number) => {
-    const fetchData = async () => {
-      const data = await getMovieTrailerById(id);
-      const trailer = data.results.find(
-        (vid: any) => vid.type === "Trailer" && vid.site === "YouTube"
-      );
-      let url;
-      if (trailer) {
-        url = `https://www.youtube.com/embed/${trailer.key}?rel=0`;
-      }
-      open();
-      setTrailerUrl(url);
-    };
-    fetchData();
-  }, []);
+  const handleOnClick = (id: number) => {
+    open();
+    setSelectedMovieId(id);
+  };
 
   return (
     <div>
       <TrailerModal
         opened={opened}
         close={close}
-        trailerUrl={trailerUrl}
+        movieId={selectedMovieId!}
       ></TrailerModal>
 
       <Title order={3} mb={"xl"}>

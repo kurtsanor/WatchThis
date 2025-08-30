@@ -23,8 +23,10 @@ function Home() {
   const [movies, setMovies] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [trailerUrl, setTrailerUrl] = useState<string | undefined>("");
   const [opened, { open, close }] = useDisclosure(false);
+  const [selectedMovieId, setSelectedMovieId] = useState<number | undefined>(
+    undefined
+  );
 
   const searchInput = useRef<HTMLInputElement>(null);
   const searched = searchParams.get("search");
@@ -56,21 +58,10 @@ function Home() {
     setSearchParams({ search: searchInput.current?.value });
   };
 
-  const handleOnClick = useCallback((id: number) => {
-    const fetchData = async () => {
-      const data = await getMovieTrailerById(id);
-      const trailer = data.results.find(
-        (vid: any) => vid.type === "Trailer" && vid.site === "YouTube"
-      );
-      let url;
-      if (trailer) {
-        url = `https://www.youtube.com/embed/${trailer.key}?rel=0`;
-      }
-      open();
-      setTrailerUrl(url);
-    };
-    fetchData();
-  }, []);
+  const handleOnClick = (id: number) => {
+    open();
+    setSelectedMovieId(id);
+  };
 
   const handleOnChange = async (page: number) => {
     setSearchParams({
@@ -84,7 +75,7 @@ function Home() {
       <TrailerModal
         opened={opened}
         close={close}
-        trailerUrl={trailerUrl}
+        movieId={selectedMovieId!}
       ></TrailerModal>
 
       <form onSubmit={handleSearch}>

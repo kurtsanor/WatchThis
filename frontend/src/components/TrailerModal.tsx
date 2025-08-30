@@ -4,11 +4,11 @@ import MovieTrailer from "./MovieTrailer";
 function TrailerModal({
   opened,
   close,
-  trailerUrl,
+  movieId,
 }: {
   opened: any;
   close: any;
-  trailerUrl: any;
+  movieId: number;
 }) {
   return (
     <>
@@ -19,7 +19,7 @@ function TrailerModal({
         centered
         size={"xl"}
       >
-        <MovieTrailer trailerUrl={trailerUrl}></MovieTrailer>
+        <MovieTrailer movieId={movieId}></MovieTrailer>
       </Modal>
     </>
   );
