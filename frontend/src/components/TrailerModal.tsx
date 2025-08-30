@@ -1,4 +1,4 @@
-import { Modal } from "@mantine/core";
+import { FocusTrap, Modal, TextInput } from "@mantine/core";
 import MovieTrailer from "./MovieTrailer";
 
 function TrailerModal({
@@ -19,6 +19,7 @@ function TrailerModal({
         centered
         size={"xl"}
       >
+        <FocusTrap.InitialFocus></FocusTrap.InitialFocus>
         <MovieTrailer movieId={movieId}></MovieTrailer>
       </Modal>
     </>

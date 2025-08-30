@@ -1,5 +1,5 @@
 import { Loader, Skeleton, Text } from "@mantine/core";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getMovieTrailerById } from "../api/movieApi";
 
 function MovieTrailer({ movieId }: { movieId: number }) {
@@ -42,7 +42,7 @@ function MovieTrailer({ movieId }: { movieId: number }) {
           allowFullScreen
           width={"100%"}
           height={"400px"}
-          style={{ border: "none" }}
+          style={{ border: "none", borderRadius: "0.30rem" }}
         />
       )}
     </>
