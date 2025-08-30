@@ -1,9 +1,8 @@
-import { useState, type ReactNode } from "react";
-import { Anchor, Burger, Container, Drawer, Group, Text } from "@mantine/core";
+import { Anchor, Burger, Drawer, Group, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "../css/HeaderSimple.module.css";
 import { IconMovie } from "@tabler/icons-react";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const links = [
   { link: "/", label: "Home" },
@@ -13,7 +12,6 @@ const links = [
 ];
 
 function Header() {
-  // const [opened, { toggle }] = useDisclosure(false);
   const [menuOpened, { open, close }] = useDisclosure(false);
   const location = useLocation();
 
@@ -29,37 +27,25 @@ function Header() {
   ));
 
   return (
-    <>
-      <header className={classes.header}>
-        <Group className={classes.inner}>
-          <Group gap={5}>
-            <Group gap={"xs"}>
-              <IconMovie height={"30px"} width={"40px"}></IconMovie>
-              <Text>
-                <Anchor href="/" fw={"bolder"} size="1.5rem" td={"none"}>
-                  WatchThis
-                </Anchor>
-              </Text>
-            </Group>
+    <header className={classes.header}>
+      <Group className={classes.inner}>
+        <Group gap={5}>
+          <Group gap={"xs"}>
+            <IconMovie height={"30px"} width={"40px"}></IconMovie>
+            <Text>
+              <Anchor href="/" fw={"bolder"} size="1.5rem" td={"none"}>
+                WatchThis
+              </Anchor>
+            </Text>
           </Group>
-          <Group visibleFrom="md">{items}</Group>
-          <Burger
-            opened={menuOpened}
-            onClick={open}
-            hiddenFrom="md"
-            size="sm"
-          />
         </Group>
-        <Drawer
-          position="right"
-          size={"50%"}
-          opened={menuOpened}
-          onClose={close}
-        >
-          {items}
-        </Drawer>
-      </header>
-    </>
+        <Group visibleFrom="md">{items}</Group>
+        <Burger opened={menuOpened} onClick={open} hiddenFrom="md" size="sm" />
+      </Group>
+      <Drawer position="right" size={"50%"} opened={menuOpened} onClose={close}>
+        {items}
+      </Drawer>
+    </header>
   );
 }
 export default Header;

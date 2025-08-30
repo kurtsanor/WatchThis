@@ -1,4 +1,4 @@
-import { Button, Text, Title } from "@mantine/core";
+import { Text, Title } from "@mantine/core";
 import { useState } from "react";
 
 function Favorites() {

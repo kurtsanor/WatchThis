@@ -17,7 +17,6 @@ import {
 } from "../api/movieApi";
 import { useDisclosure } from "@mantine/hooks";
 import TrailerModal from "../components/TrailerModal";
-import Header from "../components/Header";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 function Home() {
