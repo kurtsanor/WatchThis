@@ -16,7 +16,7 @@ function MovieTrailer({ movieId }: { movieId: number }) {
         );
         let url;
         if (trailer) {
-          url = `https://www.youtube.com/embed/${trailer.key}?rel=0`;
+          url = `https://www.youtube.com/embed/${trailer.key}?rel=0&autoplay=1`;
         }
         setTrailerUrl(url);
       } catch (error) {
