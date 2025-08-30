@@ -1,4 +1,4 @@
-import { IconHeart } from "@tabler/icons-react";
+import { IconHeart, IconHeartFilled } from "@tabler/icons-react";
 import {
   ActionIcon,
   Badge,
@@ -10,9 +10,24 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import classes from "../css/ArticleCard.module.css";
+import { useState } from "react";
+import { useMovieContext } from "../contexts/MovieContext";
 
 function MovieCard({ movie, onClick }: { movie: any; onClick: any }) {
   const theme = useMantineTheme();
+
+  const { addToFavorites, removeFromFavorites, isFavorite } =
+    useMovieContext()!;
+
+  const favorite = isFavorite(movie.id);
+
+  const handleOnClick = () => {
+    if (isFavorite(movie.id)) {
+      removeFromFavorites(movie.id);
+    } else {
+      addToFavorites(movie);
+    }
+  };
 
   return (
     <Card withBorder radius="md" className={classes.card}>
@@ -56,8 +71,12 @@ function MovieCard({ movie, onClick }: { movie: any; onClick: any }) {
         </Center>
 
         <Group gap={8} mr={0}>
-          <ActionIcon className={classes.action}>
-            <IconHeart size={16} color={theme.colors.red[6]} />
+          <ActionIcon className={classes.action} onClick={handleOnClick}>
+            <IconHeart
+              size={16}
+              color={theme.colors.red[6]}
+              fill={favorite ? theme.colors.red[6] : "none"}
+            />
           </ActionIcon>
         </Group>
       </Group>

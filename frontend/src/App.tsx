@@ -3,17 +3,18 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
 import Layout from "./layouts/Layout";
+import { MovieProvider } from "./contexts/MovieContext";
 
 function App() {
   return (
-    <>
+    <MovieProvider>
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home></Home>}></Route>
           <Route path="/favorites" element={<Favorites></Favorites>}></Route>
         </Route>
       </Routes>
-    </>
+    </MovieProvider>
   );
 }
 
