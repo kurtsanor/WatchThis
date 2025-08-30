@@ -12,7 +12,7 @@ function Footer() {
     >
       <p style={{ textAlign: "center" }}>Movie data and images provided by</p>
       <a href="https://www.themoviedb.org/">
-        <img src="src/assets/TMBD logo.svg" alt="TMBD logo" height={30}></img>
+        <img src="/TMBD logo.svg" alt="TMBD logo" height={30}></img>
       </a>
     </footer>
   );
