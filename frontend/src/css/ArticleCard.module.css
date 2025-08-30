@@ -1,7 +1,17 @@
 .card {
   position: relative;
-
   background-color: var(--mantine-color-body);
+}
+
+.img :hover {
+  filter: brightness(60%);
+}
+
+.playIcon {
+  position: absolute;
+  top: 20%;
+  left: 45%;
+  pointer-events: none;
 }
 
 .rating {

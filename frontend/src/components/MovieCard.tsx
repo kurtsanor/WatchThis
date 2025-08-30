@@ -1,9 +1,15 @@
-import { IconHeart, IconHeartFilled } from "@tabler/icons-react";
+import {
+  IconArrowRight,
+  IconHeart,
+  IconHeartFilled,
+  IconPlayerPlay,
+} from "@tabler/icons-react";
 import {
   ActionIcon,
   Badge,
   Card,
   Center,
+  Container,
   Group,
   Image,
   Text,
@@ -15,6 +21,7 @@ import { useMovieContext } from "../contexts/MovieContext";
 
 function MovieCard({ movie, onClick }: { movie: any; onClick: any }) {
   const theme = useMantineTheme();
+  const [hovered, setHovered] = useState(false);
 
   const { addToFavorites, removeFromFavorites, isFavorite } =
     useMovieContext()!;
@@ -32,12 +39,25 @@ function MovieCard({ movie, onClick }: { movie: any; onClick: any }) {
   return (
     <Card withBorder radius="md" className={classes.card}>
       <Card.Section onClick={onClick} style={{ cursor: "pointer" }}>
-        <Image
-          src={`https://image.tmdb.org/t/p/w500/${encodeURIComponent(
-            movie.backdrop_path
-          )}`}
-          height={180}
-        />
+        <Container
+          className={classes.img}
+          p={0}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+        >
+          <Image
+            src={`https://image.tmdb.org/t/p/w500/${encodeURIComponent(
+              movie.backdrop_path
+            )}`}
+            height={180}
+          />
+          {hovered && (
+            <IconPlayerPlay
+              className={classes.playIcon}
+              size={40}
+            ></IconPlayerPlay>
+          )}
+        </Container>
       </Card.Section>
 
       <Badge
