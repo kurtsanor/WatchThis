@@ -11,13 +11,12 @@ import {
 import MovieCardSkeleton from "../components/MovieCardSkeleton";
 import { useSearchParams } from "react-router-dom";
 import {
-  getMovieTrailerById,
   getPopularMoviesByPage,
   searchMoviesByNameAndPage,
 } from "../api/movieApi";
 import { useDisclosure } from "@mantine/hooks";
 import TrailerModal from "../components/TrailerModal";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function Home() {
   const [movies, setMovies] = useState<any>(null);
