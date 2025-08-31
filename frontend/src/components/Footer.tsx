@@ -15,7 +15,7 @@ function Footer() {
         Movie data and images provided by
       </p>
       <a href="https://www.themoviedb.org/">
-        <img src="/TMBD logo.svg" alt="TMBD logo" height={30}></img>
+        <img src="/TMBD logo.svg" alt="TMBD logo" height={20}></img>
       </a>
       <p
         style={{
