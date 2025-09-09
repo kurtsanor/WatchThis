@@ -30,7 +30,7 @@ function Header() {
     <header className={classes.header}>
       <Group className={classes.inner}>
         <Group gap={5}>
-          <Group gap={"xs"}>
+          <Group gap={"xs"} ml={"lg"}>
             <IconMovie height={"30px"} width={"40px"}></IconMovie>
             <Text>
               <Anchor href="/" fw={"bolder"} size="1.5rem" td={"none"}>
@@ -39,8 +39,16 @@ function Header() {
             </Text>
           </Group>
         </Group>
-        <Group visibleFrom="md">{items}</Group>
-        <Burger opened={menuOpened} onClick={open} hiddenFrom="md" size="sm" />
+        <Group visibleFrom="md" mr="lg">
+          {items}
+        </Group>
+        <Burger
+          opened={menuOpened}
+          onClick={open}
+          hiddenFrom="md"
+          size="sm"
+          mr={"lg"}
+        />
       </Group>
       <Drawer position="right" size={"50%"} opened={menuOpened} onClose={close}>
         {items}
