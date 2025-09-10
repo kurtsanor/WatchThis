@@ -38,7 +38,7 @@ function MoviesCarousel({ movie }: CarouselsProps) {
 
   return (
     <Carousel
-      slideSize={{ base: "100%", sm: "25%" }}
+      slideSize={{ base: "80%", sm: "25%" }}
       slideGap={10}
       emblaOptions={{ align: "start", slidesToScroll: mobile ? 1 : 3 }}
       controlSize={50}

@@ -23,12 +23,12 @@ function HeroHeader({ movie }: props) {
       />
       <Container className={classes.container} size="100%" pl="xl" pr="xl">
         <Title className={classes.title}>{movie?.results[0].title}</Title>
-        <Text className={classes.description} size="xl" mt="xl" lineClamp={4}>
+        <Text className={classes.description} size="lg" mt="xl" lineClamp={4}>
           {movie?.results[0]?.overview}
         </Text>
         <Button
-          size="xl"
-          radius="xl"
+          size="lg"
+          radius="md"
           className={classes.control}
           variant="white"
           color="dark"
