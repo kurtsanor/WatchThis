@@ -1,35 +1,55 @@
 ## Installation
 
-Follow these steps to set up and run the project locally:
+### 1. Install Node.js
 
-1. **Install Node.js**  
-   Download and install Node.js (v18.x or higher recommended) from [nodejs.org](https://nodejs.org/).
+Download and install Node.js (version 18.x or higher recommended) from the [official Node.js website](https://nodejs.org/).
 
-2. **Clone the repository**
-   ```bash
-   git clone https://github.com/kurtsanor/Watchthis.git
-   cd frontend
-   ```
+---
 
-3. **Install dependencies**  
-   Using npm:
+### 2. Open your terminal and move to the project directory
+
+Open your terminal application of choice:
+
+- **Windows:** PowerShell or Git Bash
+- **macOS:** Terminal
+- **Linux:** Any terminal emulator
+
+Then, run the following commands:
+
+```bash
+git clone https://github.com/kurtsanor/Watchthis.git
+```
+
+```bash
+cd frontend
+```
+
+---
+
+## Project Setup
+
+After installing Node.js and moving to the project directory, follow these steps:
+
+1. **Install dependencies:**
    ```bash
    npm install
    ```
-   Or with yarn:
+   Or, if you use yarn:
    ```bash
    yarn install
    ```
 
-4. **Start the development server**  
-   Using npm:
+2. **Start the development server:**
    ```bash
    npm run dev
    ```
-   Or with yarn:
+   Or, with yarn:
    ```bash
    yarn dev
    ```
 
-5. **Open the app**  
-   Visit [http://localhost:5173](http://localhost:5173) (or the port shown in your terminal) in your browser.
+3. **Open the app:**
+
+   Open your browser and go to [http://localhost:5173](http://localhost:5173) (or the port shown in your terminal).
+
+---
