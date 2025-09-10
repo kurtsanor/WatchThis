@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import HeroHeader from "../components/HeroHeader";
-import { getPopularMovies } from "../api/movieApi";
+import { getPlayingNowMovies } from "../api/movieApi";
 
 function Hero() {
   const [movies, setMovies] = useState<any>(null);
@@ -8,7 +8,7 @@ function Hero() {
   useEffect(() => {
     const init = async () => {
       try {
-        const data = await getPopularMovies();
+        const data = await getPlayingNowMovies();
         console.log(data);
         setMovies(data);
       } catch (error) {
@@ -18,11 +18,7 @@ function Hero() {
     init();
   }, []);
 
-  const formattedUrl = `https://image.tmdb.org/t/p/w500/${encodeURIComponent(
-    movies?.results[0]?.backdrop_path
-  )}`;
-
-  return <HeroHeader imgUrl={formattedUrl} />;
+  return <HeroHeader movie={movies} />;
 }
 
 export default Hero;
