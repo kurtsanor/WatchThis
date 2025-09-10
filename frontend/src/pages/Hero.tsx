@@ -27,7 +27,7 @@ function Hero() {
         <Title order={2} mb="xl" mt="xl">
           Top Rated
         </Title>
-        <MoviesCarousel></MoviesCarousel>
+        <MoviesCarousel movie={movies}></MoviesCarousel>
       </main>
     </>
   );
