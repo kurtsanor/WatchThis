@@ -13,6 +13,7 @@ import {
   Group,
   Image,
   Text,
+  Tooltip,
   useMantineTheme,
 } from "@mantine/core";
 import classes from "../css/ArticleCard.module.css";
@@ -91,13 +92,19 @@ function MovieCard({ movie, onClick }: { movie: any; onClick: any }) {
         </Center>
 
         <Group gap={8} mr={0}>
-          <ActionIcon className={classes.action} onClick={handleOnClick}>
-            <IconHeart
-              size={16}
-              color={theme.colors.red[6]}
-              fill={favorite ? theme.colors.red[6] : "none"}
-            />
-          </ActionIcon>
+          <Tooltip
+            label={favorite ? "Unfavorite" : "Favorite"}
+            color="gray"
+            withArrow
+          >
+            <ActionIcon className={classes.action} onClick={handleOnClick}>
+              <IconHeart
+                size={16}
+                color={theme.colors.red[6]}
+                fill={favorite ? theme.colors.red[6] : "none"}
+              />
+            </ActionIcon>
+          </Tooltip>
         </Group>
       </Group>
     </Card>
