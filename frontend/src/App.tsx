@@ -1,4 +1,5 @@
 import "@mantine/core/styles.css";
+import "@mantine/carousel/styles.css";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
