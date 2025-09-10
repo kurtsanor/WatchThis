@@ -1,9 +1,13 @@
 import { Button, Container, Overlay, Text, Title } from "@mantine/core";
 import classes from "../css/HeroContentLeft.module.css";
 
-function HeroHeader() {
+interface props {
+  imgUrl: string;
+}
+
+function HeroHeader({ imgUrl }: props) {
   return (
-    <div className={classes.hero}>
+    <div className={classes.hero} style={{ backgroundImage: `url(${imgUrl})` }}>
       <Overlay
         gradient="linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, .65) 40%)"
         opacity={1}
@@ -18,12 +22,12 @@ function HeroHeader() {
           Mantine includes more than 120 customizable components and hooks to
           cover you in any situation
         </Text>
-
         <Button
           variant="gradient"
           size="xl"
           radius="xl"
           className={classes.control}
+          onClick={() => console.log(imgUrl)}
         >
           Watch now
         </Button>
