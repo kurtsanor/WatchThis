@@ -31,7 +31,13 @@ function HeroHeader({ movie }: props) {
         />
         <Container className={classes.container} size="100%" pl="xl" pr="xl">
           <Title className={classes.title}>{movie?.results[0].title}</Title>
-          <Text className={classes.description} size="lg" mt="xl" lineClamp={4}>
+          <Text
+            className={classes.description}
+            size="lg"
+            mt="xl"
+            lineClamp={4}
+            c={"dimmed"}
+          >
             {movie?.results[0]?.overview}
           </Text>
           <Button
