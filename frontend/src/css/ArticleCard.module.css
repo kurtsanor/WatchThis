@@ -3,15 +3,25 @@
   background-color: var(--mantine-color-body);
 }
 
-.img :hover {
-  filter: brightness(60%);
+.img {
+  position: relative;
 }
 
 .playIcon {
   position: absolute;
-  top: 20%;
-  left: 45%;
+  top: 50%;
+  left: 50%;
   pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+}
+
+.img:hover .playIcon {
+  opacity: 1;
+}
+
+.img:hover .image {
+  filter: brightness(60%);
 }
 
 .rating {

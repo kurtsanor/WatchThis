@@ -20,9 +20,13 @@ import classes from "../css/ArticleCard.module.css";
 import { memo, useState } from "react";
 import { useMovieContext } from "../contexts/MovieContext";
 
-function MovieCard({ movie, onClick }: { movie: any; onClick: any }) {
+interface MovieCardProps {
+  movie: any;
+  onClick: (id: number) => void;
+}
+
+function MovieCard({ movie, onClick }: MovieCardProps) {
   const theme = useMantineTheme();
-  const [hovered, setHovered] = useState(false);
 
   const { addToFavorites, removeFromFavorites, isFavorite } =
     useMovieContext()!;
@@ -37,27 +41,27 @@ function MovieCard({ movie, onClick }: { movie: any; onClick: any }) {
     }
   };
 
+  console.log("movie card render");
+
   return (
     <Card withBorder radius="md" className={classes.card}>
-      <Card.Section onClick={onClick} style={{ cursor: "pointer" }}>
-        <Container
-          className={classes.img}
-          p={0}
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-        >
+      <Card.Section
+        onClick={() => onClick(movie.id)}
+        style={{ cursor: "pointer" }}
+      >
+        <Container className={classes.img} p={0}>
           <Image
             src={`https://image.tmdb.org/t/p/w500/${encodeURIComponent(
               movie.backdrop_path
             )}`}
             height={180}
+            className={classes.image}
           />
-          {hovered && (
-            <IconPlayerPlay
-              className={classes.playIcon}
-              size={40}
-            ></IconPlayerPlay>
-          )}
+
+          <IconPlayerPlay
+            className={classes.playIcon}
+            size={40}
+          ></IconPlayerPlay>
         </Container>
       </Card.Section>
 
@@ -74,7 +78,7 @@ function MovieCard({ movie, onClick }: { movie: any; onClick: any }) {
           ta={"left"}
           className={classes.title}
           fw={500}
-          onClick={onClick}
+          onClick={() => onClick(movie.id)}
           style={{ cursor: "pointer" }}
         >
           {movie.title}

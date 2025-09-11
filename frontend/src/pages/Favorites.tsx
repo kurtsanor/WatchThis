@@ -1,5 +1,5 @@
 import { Text, Title } from "@mantine/core";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { SimpleGrid } from "@mantine/core";
 import MovieCard from "../components/MovieCard";
 import { useMovieContext } from "../contexts/MovieContext";
@@ -13,10 +13,10 @@ function Favorites() {
     undefined
   );
 
-  const handleOnClick = (id: number) => {
+  const handleOnClick = useCallback((id: number) => {
     open();
     setSelectedMovieId(id);
-  };
+  }, []);
 
   return (
     <div>
@@ -35,7 +35,7 @@ function Favorites() {
             <MovieCard
               key={movie.id}
               movie={movie}
-              onClick={() => handleOnClick(movie.id)}
+              onClick={handleOnClick}
             ></MovieCard>
           ))}
         </SimpleGrid>

@@ -102,7 +102,7 @@ function Movies() {
             <MovieCard
               key={movie.id}
               movie={movie}
-              onClick={() => handleOnClick(movie.id)}
+              onClick={handleOnClick}
             ></MovieCard>
           ))}
         </SimpleGrid>
