@@ -23,3 +23,12 @@
   font-weight: 700;
   text-transform: uppercase;
 }
+
+.slides {
+  cursor: pointer;
+  transition: transform 0.8s ease;
+}
+
+.slides :hover {
+  filter: brightness(80%);
+}

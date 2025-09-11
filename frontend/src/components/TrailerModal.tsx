@@ -8,7 +8,7 @@ function TrailerModal({
 }: {
   opened: any;
   close: any;
-  movieId: number;
+  movieId: number | undefined;
 }) {
   return (
     <>
