@@ -11,7 +11,6 @@ function TrailerModal({
   close: any;
   movieId: number | undefined;
 }) {
-  console.log("modal rendered");
   return (
     <>
       <Modal

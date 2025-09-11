@@ -16,7 +16,7 @@ import {
 } from "../api/movieApi";
 import { useDisclosure } from "@mantine/hooks";
 import TrailerModal from "../components/TrailerModal";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 function Movies() {
   const [movies, setMovies] = useState<any>(null);
@@ -57,10 +57,13 @@ function Movies() {
     setSearchParams({ search: searchInput.current?.value });
   };
 
-  const handleOnClick = (id: number) => {
-    open();
-    setSelectedMovieId(id);
-  };
+  const handleOnClick = useCallback(
+    (id: number) => {
+      open();
+      setSelectedMovieId(id);
+    },
+    [open]
+  );
 
   const handleOnChange = async (page: number) => {
     setSearchParams({

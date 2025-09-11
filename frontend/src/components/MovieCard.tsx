@@ -17,7 +17,7 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import classes from "../css/ArticleCard.module.css";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { useMovieContext } from "../contexts/MovieContext";
 
 function MovieCard({ movie, onClick }: { movie: any; onClick: any }) {
@@ -111,4 +111,4 @@ function MovieCard({ movie, onClick }: { movie: any; onClick: any }) {
   );
 }
 
-export default MovieCard;
+export default memo(MovieCard);

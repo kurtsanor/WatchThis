@@ -12,7 +12,6 @@ interface props {
 function HeroHeader({ movie }: props) {
   const [opened, { open, close }] = useDisclosure(false);
 
-  console.log("hero header render");
   return (
     <>
       <div
@@ -49,13 +48,12 @@ function HeroHeader({ movie }: props) {
           </Button>
         </Container>
       </div>
-      {opened && (
-        <TrailerModal
-          opened={opened}
-          close={close}
-          movieId={movie?.results[0]?.id}
-        ></TrailerModal>
-      )}
+
+      <TrailerModal
+        opened={opened}
+        close={close}
+        movieId={movie?.results[0]?.id}
+      ></TrailerModal>
     </>
   );
 }
