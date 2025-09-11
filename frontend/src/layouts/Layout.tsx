@@ -4,7 +4,7 @@ import { Outlet, useLocation } from "react-router-dom";
 
 function Layout() {
   const location = useLocation();
-  const inHeroPage = location.pathname === "/learn";
+  const inHeroPage = location.pathname === "/";
 
   return (
     <div
