@@ -34,6 +34,10 @@
     );
   }
 
+  @media (max-width: 61em) {
+    padding: 1rem;
+  }
+
   &[data-active] {
     background-color: light-dark(
       var(--mantine-color-gray-0),
