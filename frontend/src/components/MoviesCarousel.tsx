@@ -10,7 +10,6 @@ interface CardProps {
 }
 
 const Card = memo(function Card({ image }: CardProps) {
-  console.log("card render");
   return (
     <Paper
       shadow="md"
