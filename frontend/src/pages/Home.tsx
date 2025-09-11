@@ -13,7 +13,6 @@ function Home() {
     const init = async () => {
       try {
         const data = await getPlayingNowMovies();
-        console.log(data);
         setMovies(data);
       } catch (error) {
         console.error(error);

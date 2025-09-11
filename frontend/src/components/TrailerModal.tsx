@@ -1,5 +1,6 @@
 import { FocusTrap, Modal, TextInput } from "@mantine/core";
 import MovieTrailer from "./MovieTrailer";
+import { memo } from "react";
 
 function TrailerModal({
   opened,
@@ -10,6 +11,7 @@ function TrailerModal({
   close: any;
   movieId: number | undefined;
 }) {
+  console.log("modal rendered");
   return (
     <>
       <Modal
@@ -25,4 +27,4 @@ function TrailerModal({
     </>
   );
 }
-export default TrailerModal;
+export default memo(TrailerModal);

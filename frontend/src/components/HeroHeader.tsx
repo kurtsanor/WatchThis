@@ -3,6 +3,7 @@ import classes from "../css/HeroContentLeft.module.css";
 import { IconPlayerPlay } from "@tabler/icons-react";
 import TrailerModal from "./TrailerModal";
 import { useDisclosure } from "@mantine/hooks";
+import { memo, useState } from "react";
 
 interface props {
   movie: any;
@@ -11,6 +12,7 @@ interface props {
 function HeroHeader({ movie }: props) {
   const [opened, { open, close }] = useDisclosure(false);
 
+  console.log("hero header render");
   return (
     <>
       <div
@@ -47,13 +49,15 @@ function HeroHeader({ movie }: props) {
           </Button>
         </Container>
       </div>
-      <TrailerModal
-        opened={opened}
-        close={close}
-        movieId={movie?.results[0]?.id}
-      ></TrailerModal>
+      {opened && (
+        <TrailerModal
+          opened={opened}
+          close={close}
+          movieId={movie?.results[0]?.id}
+        ></TrailerModal>
+      )}
     </>
   );
 }
 
-export default HeroHeader;
+export default memo(HeroHeader);
