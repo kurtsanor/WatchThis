@@ -3,13 +3,14 @@ import { Button, Paper, Text, Title, useMantineTheme } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import classes from "../css/CardsCarousel.module.css";
 import TrailerModal from "./TrailerModal";
-import { useState } from "react";
+import { memo, useState } from "react";
 
 interface CardProps {
   image: any;
 }
 
-function Card({ image }: CardProps) {
+const Card = memo(function Card({ image }: CardProps) {
+  console.log("card render");
   return (
     <Paper
       shadow="md"
@@ -23,7 +24,7 @@ function Card({ image }: CardProps) {
       className={classes.card}
     ></Paper>
   );
-}
+});
 
 interface CarouselsProps {
   movie: any;
