@@ -2,7 +2,7 @@ import { Loader, Skeleton, Text } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
 import { getMovieTrailerById } from "../api/movieApi";
 
-function MovieTrailer({ movieId }: { movieId: number }) {
+function MovieTrailer({ movieId }: { movieId: number | undefined }) {
   const [trailerUrl, setTrailerUrl] = useState<string | undefined>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 

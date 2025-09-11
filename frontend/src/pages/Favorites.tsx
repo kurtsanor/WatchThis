@@ -3,8 +3,6 @@ import { useState } from "react";
 import { SimpleGrid } from "@mantine/core";
 import MovieCard from "../components/MovieCard";
 import { useMovieContext } from "../contexts/MovieContext";
-import { useCallback } from "react";
-import { getMovieTrailerById } from "../api/movieApi";
 import TrailerModal from "../components/TrailerModal";
 import { useDisclosure } from "@mantine/hooks";
 
