@@ -18,27 +18,26 @@ import {
 } from "@mantine/core";
 import classes from "../css/ArticleCard.module.css";
 import { memo, useState } from "react";
-import { useMovieContext } from "../contexts/MovieContext";
 
 interface MovieCardProps {
   movie: any;
   onClick: (id: number) => void;
+  addToFavorites: (movie: any) => void;
+  removeFromFavorites: (movieId: number) => void;
+  favorite: boolean;
 }
 
-function MovieCard({ movie, onClick }: MovieCardProps) {
+function MovieCard({
+  movie,
+  onClick,
+  addToFavorites,
+  removeFromFavorites,
+  favorite,
+}: MovieCardProps) {
   const theme = useMantineTheme();
 
-  const { addToFavorites, removeFromFavorites, isFavorite } =
-    useMovieContext()!;
-
-  const favorite = isFavorite(movie.id);
-
   const handleOnClick = () => {
-    if (isFavorite(movie.id)) {
-      removeFromFavorites(movie.id);
-    } else {
-      addToFavorites(movie);
-    }
+    favorite ? removeFromFavorites(movie.id) : addToFavorites(movie);
   };
 
   console.log("movie card render");

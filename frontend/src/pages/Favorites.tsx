@@ -7,16 +7,21 @@ import TrailerModal from "../components/TrailerModal";
 import { useDisclosure } from "@mantine/hooks";
 
 function Favorites() {
-  const { favorites } = useMovieContext()!;
   const [opened, { open, close }] = useDisclosure(false);
   const [selectedMovieId, setSelectedMovieId] = useState<number | undefined>(
     undefined
   );
 
-  const handleOnClick = useCallback((id: number) => {
-    open();
-    setSelectedMovieId(id);
-  }, []);
+  const { addToFavorites, removeFromFavorites, isFavorite, favorites } =
+    useMovieContext()!;
+
+  const handleOnClick = useCallback(
+    (id: number) => {
+      open();
+      setSelectedMovieId(id);
+    },
+    [open]
+  );
 
   return (
     <div>
@@ -29,17 +34,25 @@ function Favorites() {
       <Title order={3} mb={"xl"}>
         Your Favorites
       </Title>
+
       {favorites && (
         <SimpleGrid cols={{ base: 1, sm: 4 }}>
-          {favorites.map((movie: any) => (
-            <MovieCard
-              key={movie.id}
-              movie={movie}
-              onClick={handleOnClick}
-            ></MovieCard>
-          ))}
+          {favorites.map((movie: any) => {
+            const favorite = isFavorite(movie.id);
+            return (
+              <MovieCard
+                key={movie.id}
+                movie={movie}
+                onClick={handleOnClick}
+                addToFavorites={addToFavorites}
+                removeFromFavorites={removeFromFavorites}
+                favorite={favorite}
+              ></MovieCard>
+            );
+          })}
         </SimpleGrid>
       )}
+
       {favorites.length < 1 && (
         <Text ta={"center"}>You have no favorites.</Text>
       )}

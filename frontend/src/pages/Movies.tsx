@@ -17,6 +17,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import TrailerModal from "../components/TrailerModal";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useMovieContext } from "../contexts/MovieContext";
 
 function Movies() {
   const [movies, setMovies] = useState<any>(null);
@@ -30,6 +31,9 @@ function Movies() {
   const searchInput = useRef<HTMLInputElement>(null);
   const searched = searchParams.get("search");
   const currentPage = searchParams.get("page") || 1;
+
+  const { addToFavorites, removeFromFavorites, isFavorite } =
+    useMovieContext()!;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -98,13 +102,19 @@ function Movies() {
       {isLoading && <MovieCardSkeleton></MovieCardSkeleton>}
       {movies && !isLoading && (
         <SimpleGrid cols={{ base: 1, sm: 4 }}>
-          {movies.results.map((movie: any) => (
-            <MovieCard
-              key={movie.id}
-              movie={movie}
-              onClick={handleOnClick}
-            ></MovieCard>
-          ))}
+          {movies.results.map((movie: any) => {
+            const favorite = isFavorite(movie.id);
+            return (
+              <MovieCard
+                key={movie.id}
+                movie={movie}
+                onClick={handleOnClick}
+                favorite={favorite}
+                addToFavorites={addToFavorites}
+                removeFromFavorites={removeFromFavorites}
+              ></MovieCard>
+            );
+          })}
         </SimpleGrid>
       )}
       {movies?.total_pages > 1 && (

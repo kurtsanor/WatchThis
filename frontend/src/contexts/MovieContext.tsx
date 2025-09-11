@@ -1,5 +1,6 @@
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -34,17 +35,20 @@ export const MovieProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem("favorites", JSON.stringify(favorites));
   }, [favorites]);
 
-  const addToFavorites = (movie: any) => {
+  const addToFavorites = useCallback((movie: any) => {
     setFavorites((prev) => [...prev, movie]);
-  };
+  }, []);
 
-  const removeFromFavorites = (movieId: number) => {
+  const removeFromFavorites = useCallback((movieId: number) => {
     setFavorites((prev) => prev.filter((curr) => curr.id !== movieId));
-  };
+  }, []);
 
-  const isFavorite = (movieId: number) => {
-    return favorites.some((movie) => movie.id === movieId);
-  };
+  const isFavorite = useCallback(
+    (movieId: number) => {
+      return favorites.some((movie) => movie.id === movieId);
+    },
+    [favorites]
+  );
 
   const value = {
     favorites,
