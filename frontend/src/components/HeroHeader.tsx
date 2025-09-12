@@ -9,6 +9,8 @@ interface props {
   movie: any;
 }
 
+const randomFeaturedMovie = Math.floor(Math.random() * 4);
+
 function HeroHeader({ movie }: props) {
   const [opened, { open, close }] = useDisclosure(false);
 
@@ -20,7 +22,7 @@ function HeroHeader({ movie }: props) {
           backgroundImage:
             movie &&
             `url(https://image.tmdb.org/t/p/original/${encodeURIComponent(
-              movie?.results[0]?.backdrop_path
+              movie?.results[randomFeaturedMovie]?.backdrop_path
             )})`,
         }}
       >
@@ -30,7 +32,10 @@ function HeroHeader({ movie }: props) {
           zIndex={0}
         />
         <Container className={classes.container} size="100%" pl="xl" pr="xl">
-          <Title className={classes.title}>{movie?.results[0].title}</Title>
+          <Title className={classes.title}>
+            {movie?.results[randomFeaturedMovie].title ||
+              movie?.results[randomFeaturedMovie].original_name}
+          </Title>
           <Text
             className={classes.description}
             size="lg"
@@ -38,7 +43,7 @@ function HeroHeader({ movie }: props) {
             lineClamp={4}
             c={"dimmed"}
           >
-            {movie?.results[0]?.overview}
+            {movie?.results[randomFeaturedMovie]?.overview}
           </Text>
           <Button
             size="lg"
@@ -58,7 +63,8 @@ function HeroHeader({ movie }: props) {
       <TrailerModal
         opened={opened}
         close={close}
-        movieId={movie?.results[0]?.id}
+        movieId={movie?.results[randomFeaturedMovie]?.id}
+        type={movie?.results[randomFeaturedMovie]?.media_type}
       ></TrailerModal>
     </>
   );

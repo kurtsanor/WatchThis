@@ -29,24 +29,27 @@ interface CarouselsProps {
   movie: any;
 }
 
+interface MovieDetails {
+  movieId: number;
+  type: string;
+}
+
 function MoviesCarousel({ movie }: CarouselsProps) {
   const [opened, { open, close }] = useDisclosure(false);
-  const [selectedMovieId, setSelectedMovieId] = useState<number | undefined>(
-    undefined
-  );
+  const [movieDetails, setMovieDetails] = useState<MovieDetails>();
 
   const theme = useMantineTheme();
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
 
-  const handleClick = async (movieId: number) => {
+  const handleClick = async (movie: any) => {
     open();
-    setSelectedMovieId(movieId);
+    setMovieDetails({ movieId: movie.id, type: movie.media_type });
   };
 
   const slides = movie?.results?.map((item: any) => (
     <Carousel.Slide
-      key={item.title}
-      onClick={() => handleClick(item.id)}
+      key={item.id}
+      onClick={() => handleClick(item)}
       className={classes.slides}
     >
       <Card image={item.poster_path} />
@@ -67,7 +70,8 @@ function MoviesCarousel({ movie }: CarouselsProps) {
       <TrailerModal
         opened={opened}
         close={close}
-        movieId={selectedMovieId}
+        movieId={movieDetails?.movieId!}
+        type={movieDetails?.type!}
       ></TrailerModal>
     </>
   );

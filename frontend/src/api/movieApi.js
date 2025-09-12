@@ -56,8 +56,8 @@ export async function searchMoviesByNameAndPage(searchQuery, page) {
   }
 }
 
-export async function getMovieTrailerById(movieId) {
-  const url = `https://api.themoviedb.org/3/movie/${encodeURIComponent(
+export async function getTrailerByIdAndType(movieId, type) {
+  const url = `https://api.themoviedb.org/3/${type}/${encodeURIComponent(
     movieId
   )}/videos?api_key=${encodeURIComponent(API_KEY)}&language=en-US`;
 
@@ -71,7 +71,7 @@ export async function getMovieTrailerById(movieId) {
 }
 
 export async function getPlayingNowMovies() {
-  const url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${encodeURIComponent(
+  const url = `https://api.themoviedb.org/3/trending/all/week?api_key=${encodeURIComponent(
     API_KEY
   )}`;
 

@@ -47,6 +47,7 @@ function Movies() {
           ? await searchMoviesByNameAndPage(searched, currentPage)
           : await getPopularMoviesByPage(currentPage);
         setMovies(data);
+        console.log(data);
       } catch (error) {
         alert(error);
       } finally {
@@ -76,14 +77,13 @@ function Movies() {
     });
   };
 
-  console.log("render");
-
   return (
     <>
       <TrailerModal
         opened={opened}
         close={close}
         movieId={selectedMovieId!}
+        type={movies?.results[0]?.media_type ? "tv" : "movie"}
       ></TrailerModal>
 
       <Container mb={"2rem"} size="xs" p={0}>

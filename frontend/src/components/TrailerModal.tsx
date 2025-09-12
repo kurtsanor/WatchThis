@@ -2,15 +2,15 @@ import { FocusTrap, Modal, TextInput } from "@mantine/core";
 import MovieTrailer from "./MovieTrailer";
 import { memo } from "react";
 
-function TrailerModal({
-  opened,
-  close,
-  movieId,
-}: {
-  opened: any;
-  close: any;
-  movieId: number | undefined;
-}) {
+interface TrailerModalProps {
+  opened: boolean;
+  close: () => void;
+  movieId: number;
+  type: string;
+}
+
+function TrailerModal({ opened, close, movieId, type }: TrailerModalProps) {
+  console.log(type);
   return (
     <>
       <Modal
@@ -21,9 +21,10 @@ function TrailerModal({
         size={"xl"}
       >
         <FocusTrap.InitialFocus></FocusTrap.InitialFocus>
-        <MovieTrailer movieId={movieId}></MovieTrailer>
+        <MovieTrailer movieId={movieId} type={type}></MovieTrailer>
       </Modal>
     </>
   );
 }
+
 export default memo(TrailerModal);

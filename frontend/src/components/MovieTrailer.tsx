@@ -1,8 +1,13 @@
 import { Loader, Skeleton, Text } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
-import { getMovieTrailerById } from "../api/movieApi";
+import { getTrailerByIdAndType } from "../api/movieApi";
 
-function MovieTrailer({ movieId }: { movieId: number | undefined }) {
+interface TrailerProps {
+  movieId: number | undefined;
+  type: string;
+}
+
+function MovieTrailer({ movieId, type }: TrailerProps) {
   const [trailerUrl, setTrailerUrl] = useState<string | undefined>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -10,7 +15,7 @@ function MovieTrailer({ movieId }: { movieId: number | undefined }) {
     setIsLoading(true);
     const fetchData = async () => {
       try {
-        const data = await getMovieTrailerById(movieId);
+        const data = await getTrailerByIdAndType(movieId, type);
         const trailer = data.results.find(
           (vid: any) => vid.type === "Trailer" && vid.site === "YouTube"
         );

@@ -15,6 +15,7 @@ function Home() {
       try {
         const data = await getPlayingNowMovies();
         setMovies(data);
+        console.log(data);
       } catch (error) {
         console.error(error);
       } finally {
@@ -32,7 +33,7 @@ function Home() {
           <HeroHeader movie={movies} />
           <main style={{ padding: "2rem" }}>
             <Title order={2} mb="xl" mt="xl">
-              Top Rated
+              Trending
             </Title>
             <MoviesCarousel movie={movies}></MoviesCarousel>
           </main>
