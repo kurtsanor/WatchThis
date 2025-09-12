@@ -2,6 +2,7 @@ import MovieCard from "../components/MovieCard";
 import {
   Button,
   Center,
+  Container,
   Group,
   Pagination,
   SimpleGrid,
@@ -18,6 +19,7 @@ import { useDisclosure } from "@mantine/hooks";
 import TrailerModal from "../components/TrailerModal";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useMovieContext } from "../contexts/MovieContext";
+import { IconSearch } from "@tabler/icons-react";
 
 function Movies() {
   const [movies, setMovies] = useState<any>(null);
@@ -54,10 +56,8 @@ function Movies() {
     init();
   }, [searched, currentPage]);
 
-  const handleSearch = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-
-    if (!searchInput.current?.value.trim()) return;
+  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!searchInput.current?.value.trim() || e.key !== "Enter") return;
     setSearchParams({ search: searchInput.current?.value });
   };
 
@@ -76,6 +76,8 @@ function Movies() {
     });
   };
 
+  console.log("render");
+
   return (
     <>
       <TrailerModal
@@ -84,16 +86,16 @@ function Movies() {
         movieId={selectedMovieId!}
       ></TrailerModal>
 
-      <form onSubmit={handleSearch}>
-        <Group justify="center" mb={"2rem"}>
-          <TextInput
-            placeholder="Search movie name.."
-            ref={searchInput}
-            required
-          ></TextInput>
-          <Button type="submit">Search</Button>
-        </Group>
-      </form>
+      <Container mb={"2rem"} size="xs" p={0}>
+        <TextInput
+          placeholder="Enter movie title..."
+          ref={searchInput}
+          required
+          onKeyDown={handleSearch}
+          leftSection={<IconSearch></IconSearch>}
+        ></TextInput>
+      </Container>
+
       {movies?.results.length < 1 && (
         <Text fz="h2" ta={"center"}>
           No results found!
