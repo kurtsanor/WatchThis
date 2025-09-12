@@ -21,14 +21,19 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useMovieContext } from "../contexts/MovieContext";
 import { IconSearch } from "@tabler/icons-react";
 
+interface MovieDetails {
+  id: number;
+  type: string;
+}
+
+const type = "movie";
+
 function Movies() {
   const [movies, setMovies] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [opened, { open, close }] = useDisclosure(false);
-  const [selectedMovieId, setSelectedMovieId] = useState<number | undefined>(
-    undefined
-  );
+  const [movieDetails, setMovieDetails] = useState<MovieDetails>();
 
   const searchInput = useRef<HTMLInputElement>(null);
   const searched = searchParams.get("search");
@@ -62,9 +67,9 @@ function Movies() {
   };
 
   const handleOnClick = useCallback(
-    (id: number) => {
+    (movie: any) => {
       open();
-      setSelectedMovieId(id);
+      setMovieDetails({ id: movie.id, type: type });
     },
     [open]
   );
@@ -81,8 +86,8 @@ function Movies() {
       <TrailerModal
         opened={opened}
         close={close}
-        movieId={selectedMovieId!}
-        type={movies?.results[0]?.media_type ? "tv" : "movie"}
+        movieId={movieDetails?.id!}
+        type={movieDetails?.type!}
       ></TrailerModal>
 
       <Container mb={"2rem"} size="xs" p={0}>

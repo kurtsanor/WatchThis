@@ -77,7 +77,7 @@ function MovieCard({
           ta={"left"}
           className={classes.title}
           fw={500}
-          onClick={() => onClick(movie.id)}
+          onClick={() => onClick(movie)}
           style={{ cursor: "pointer" }}
         >
           {movie.title}
