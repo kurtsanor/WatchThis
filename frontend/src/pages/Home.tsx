@@ -15,7 +15,6 @@ function Home() {
       try {
         const data = await getPlayingNowMovies();
         setMovies(data);
-        console.log(data);
       } catch (error) {
         console.error(error);
       } finally {

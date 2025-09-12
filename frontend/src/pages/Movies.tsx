@@ -47,7 +47,6 @@ function Movies() {
           ? await searchMoviesByNameAndPage(searched, currentPage)
           : await getPopularMoviesByPage(currentPage);
         setMovies(data);
-        console.log(data);
       } catch (error) {
         alert(error);
       } finally {

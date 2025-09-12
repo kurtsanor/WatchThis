@@ -10,7 +10,6 @@ interface TrailerModalProps {
 }
 
 function TrailerModal({ opened, close, movieId, type }: TrailerModalProps) {
-  console.log(type);
   return (
     <>
       <Modal
