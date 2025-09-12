@@ -21,7 +21,7 @@ import { memo, useState } from "react";
 
 interface MovieCardProps {
   movie: any;
-  onClick: (id: number) => void;
+  onClick: (movie: any) => void;
   addToFavorites: (movie: any) => void;
   removeFromFavorites: (movieId: number) => void;
   favorite: boolean;
@@ -45,7 +45,7 @@ function MovieCard({
   return (
     <Card withBorder radius="md" className={classes.card}>
       <Card.Section
-        onClick={() => onClick(movie.id)}
+        onClick={() => onClick(movie)}
         style={{ cursor: "pointer" }}
       >
         <Container className={classes.img} p={0}>

@@ -6,19 +6,22 @@ import { useMovieContext } from "../contexts/MovieContext";
 import TrailerModal from "../components/TrailerModal";
 import { useDisclosure } from "@mantine/hooks";
 
+interface MovieDetails {
+  movieId: number;
+  type: string;
+}
+
 function Favorites() {
   const [opened, { open, close }] = useDisclosure(false);
-  const [selectedMovieId, setSelectedMovieId] = useState<number | undefined>(
-    undefined
-  );
+  const [movieDetails, setMovieDetails] = useState<MovieDetails>();
 
   const { addToFavorites, removeFromFavorites, isFavorite, favorites } =
     useMovieContext()!;
 
   const handleOnClick = useCallback(
-    (id: number) => {
+    (movie: any) => {
       open();
-      setSelectedMovieId(id);
+      setMovieDetails({ movieId: movie.id, type: movie.media_type || "movie" });
     },
     [open]
   );
@@ -28,7 +31,8 @@ function Favorites() {
       <TrailerModal
         opened={opened}
         close={close}
-        movieId={selectedMovieId!}
+        movieId={movieDetails?.movieId!}
+        type={movieDetails?.type!}
       ></TrailerModal>
 
       <Title order={3} mb={"xl"}>
