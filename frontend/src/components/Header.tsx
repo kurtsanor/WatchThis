@@ -1,7 +1,14 @@
-import { Anchor, Burger, Drawer, Group, Text } from "@mantine/core";
+import {
+  Anchor,
+  Burger,
+  Drawer,
+  Group,
+  Text,
+  useMantineTheme,
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "../css/HeaderSimple.module.css";
-import { IconMovie } from "@tabler/icons-react";
+import { IconMovie, IconStereoGlasses } from "@tabler/icons-react";
 import { Link, useLocation } from "react-router-dom";
 
 const links = [
@@ -30,8 +37,11 @@ function Header() {
     <header className={classes.header}>
       <Group className={classes.inner}>
         <Group gap={5}>
-          <Group gap={"xs"} ml={"lg"}>
-            <IconMovie height={"30px"} width={"40px"}></IconMovie>
+          <Group gap={0} ml={"lg"}>
+            <IconStereoGlasses
+              height={"25px"}
+              width={"30px"}
+            ></IconStereoGlasses>
             <Text>
               <Anchor href="/" fw={"bolder"} size="1.5rem" td={"none"}>
                 WatchThis
