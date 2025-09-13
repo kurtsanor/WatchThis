@@ -3,38 +3,55 @@ import classes from "../css/HeroContentLeft.module.css";
 import { IconPlayerPlay } from "@tabler/icons-react";
 import TrailerModal from "./TrailerModal";
 import { useDisclosure } from "@mantine/hooks";
-import { memo, useState } from "react";
+import { memo, useCallback, useRef, useState } from "react";
 import { Carousel } from "@mantine/carousel";
 import HeroMovie from "./HeroMovie";
+import Autoplay from "embla-carousel-autoplay";
 
 interface props {
   movie: any;
 }
 
-const randomFeaturedMovie = Math.floor(Math.random() * 4);
+interface MovieDetails {
+  id: number;
+  type: string;
+}
 
 function HeroHeader({ movie }: props) {
   const [opened, { open, close }] = useDisclosure(false);
+  const [movieDetails, setMovieDetails] = useState<MovieDetails>();
+  const autoplay = useRef(Autoplay({ delay: 6000 }));
 
-  const slides = movie?.results?.map((movie: any) => (
+  const handleClick = useCallback(
+    (movie: any) => {
+      open();
+      setMovieDetails({ id: movie.id, type: movie.media_type });
+    },
+    [open]
+  );
+
+  const slides = movie?.results?.slice(0, 4).map((movie: any) => (
     <Carousel.Slide key={movie.id}>
-      <HeroMovie
-        randomFeaturedMovie={randomFeaturedMovie}
-        movie={movie}
-        open={open}
-      ></HeroMovie>
+      <HeroMovie movie={movie} handleClick={handleClick}></HeroMovie>
     </Carousel.Slide>
   ));
 
   return (
     <>
-      <Carousel>{slides}</Carousel>
+      <Carousel
+        withIndicators
+        withControls={false}
+        emblaOptions={{ loop: true }}
+        plugins={[autoplay.current]}
+      >
+        {slides}
+      </Carousel>
 
       <TrailerModal
         opened={opened}
         close={close}
-        movieId={movie?.results[randomFeaturedMovie]?.id}
-        type={movie?.results[randomFeaturedMovie]?.media_type}
+        movieId={movieDetails?.id!}
+        type={movieDetails?.type!}
       ></TrailerModal>
     </>
   );

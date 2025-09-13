@@ -1,14 +1,14 @@
 import { Button, Container, Overlay, Space, Text, Title } from "@mantine/core";
 import classes from "../css/HeroContentLeft.module.css";
 import { IconPlayerPlay } from "@tabler/icons-react";
+import { memo } from "react";
 
 interface HeroMovieProps {
-  randomFeaturedMovie: number;
   movie: any;
-  open: () => void;
+  handleClick: (movie: any) => void;
 }
 
-function HeroMovie({ randomFeaturedMovie, movie, open }: HeroMovieProps) {
+function HeroMovie({ movie, handleClick }: HeroMovieProps) {
   return (
     <div
       className={classes.hero}
@@ -44,7 +44,7 @@ function HeroMovie({ randomFeaturedMovie, movie, open }: HeroMovieProps) {
           className={classes.control}
           variant="white"
           color="dark"
-          onClick={open}
+          onClick={() => handleClick(movie)}
         >
           <IconPlayerPlay size={30} fill={""}></IconPlayerPlay>
           <Space w={"sm"}></Space>
@@ -55,4 +55,4 @@ function HeroMovie({ randomFeaturedMovie, movie, open }: HeroMovieProps) {
   );
 }
 
-export default HeroMovie;
+export default memo(HeroMovie);

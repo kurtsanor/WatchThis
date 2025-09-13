@@ -28,7 +28,7 @@ function Home() {
 
   return (
     <>
-      {isLoading && <Skeleton width="100%" height="100vh"></Skeleton>}
+      {isLoading && <Skeleton width="100%" height="92vh"></Skeleton>}
       {!isLoading && (
         <>
           <HeroHeader movie={movies} />
