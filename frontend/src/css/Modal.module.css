@@ -1,0 +1,5 @@
+.modal {
+  @media (max-width: 768px) {
+    size: "xl";
+  }
+}
