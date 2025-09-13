@@ -4,6 +4,8 @@ import { IconPlayerPlay } from "@tabler/icons-react";
 import TrailerModal from "./TrailerModal";
 import { useDisclosure } from "@mantine/hooks";
 import { memo, useState } from "react";
+import { Carousel } from "@mantine/carousel";
+import HeroMovie from "./HeroMovie";
 
 interface props {
   movie: any;
@@ -14,51 +16,19 @@ const randomFeaturedMovie = Math.floor(Math.random() * 4);
 function HeroHeader({ movie }: props) {
   const [opened, { open, close }] = useDisclosure(false);
 
+  const slides = movie?.results?.map((movie: any) => (
+    <Carousel.Slide key={movie.id}>
+      <HeroMovie
+        randomFeaturedMovie={randomFeaturedMovie}
+        movie={movie}
+        open={open}
+      ></HeroMovie>
+    </Carousel.Slide>
+  ));
+
   return (
     <>
-      <div
-        className={classes.hero}
-        style={{
-          backgroundImage:
-            movie &&
-            `url(https://image.tmdb.org/t/p/original/${encodeURIComponent(
-              movie?.results[randomFeaturedMovie]?.backdrop_path
-            )})`,
-        }}
-      >
-        <Overlay
-          gradient="linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, .65) 40%)"
-          opacity={1}
-          zIndex={0}
-        />
-        <Container className={classes.container} size="100%" pl="xl" pr="xl">
-          <Title className={classes.title}>
-            {movie?.results[randomFeaturedMovie].title ||
-              movie?.results[randomFeaturedMovie].original_name}
-          </Title>
-          <Text
-            className={classes.description}
-            size="lg"
-            mt="xl"
-            lineClamp={4}
-            c={"dimmed"}
-          >
-            {movie?.results[randomFeaturedMovie]?.overview}
-          </Text>
-          <Button
-            size="lg"
-            radius="md"
-            className={classes.control}
-            variant="white"
-            color="dark"
-            onClick={open}
-          >
-            <IconPlayerPlay size={30} fill={""}></IconPlayerPlay>
-            <Space w={"sm"}></Space>
-            Watch now
-          </Button>
-        </Container>
-      </div>
+      <Carousel>{slides}</Carousel>
 
       <TrailerModal
         opened={opened}
