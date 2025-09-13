@@ -17,7 +17,7 @@ function TrailerModal({ opened, close, movieId, type }: TrailerModalProps) {
         onClose={close}
         title="Trailer"
         centered
-        size={"xl"}
+        size={"70%"}
       >
         <FocusTrap.InitialFocus></FocusTrap.InitialFocus>
         <MovieTrailer movieId={movieId} type={type}></MovieTrailer>

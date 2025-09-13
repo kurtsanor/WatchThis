@@ -7,6 +7,10 @@
   position: relative;
 }
 
+.image {
+  height: 30vh;
+}
+
 .playIcon {
   position: absolute;
   top: 50%;

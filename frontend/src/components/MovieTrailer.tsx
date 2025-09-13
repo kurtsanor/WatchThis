@@ -35,7 +35,7 @@ function MovieTrailer({ movieId, type }: TrailerProps) {
 
   return (
     <>
-      {isLoading && <Skeleton height={"400px"}></Skeleton>}
+      {isLoading && <Skeleton style={{ height: "78vh" }}></Skeleton>}
       {!trailerUrl && !isLoading && (
         <Text ta={"center"}>Trailer unavailable</Text>
       )}
@@ -46,8 +46,7 @@ function MovieTrailer({ movieId, type }: TrailerProps) {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
           width={"100%"}
-          height={"400px"}
-          style={{ border: "none", borderRadius: "0.30rem" }}
+          style={{ border: "none", borderRadius: "0.30rem", height: "77vh" }}
         />
       )}
     </>
