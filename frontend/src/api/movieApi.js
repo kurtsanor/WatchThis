@@ -1,4 +1,4 @@
-const API_KEY = "368c646199ed46c46b08bced54349719";
+const API_KEY = import.meta.env.VITE_TMBD_API_KEY;
 
 export async function searchMoviesByNameAndPage(searchQuery, page) {
   const searchUrl = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(
