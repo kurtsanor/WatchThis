@@ -14,8 +14,8 @@ import { Link, useLocation } from "react-router-dom";
 const links = [
   { link: "/", label: "Home" },
   { link: "/movies", label: "Movies" },
+  { link: "/tvshows", label: "TV Shows" },
   { link: "/favorites", label: "Favorites" },
-  { link: "/community", label: "Community" },
 ];
 
 function Header() {

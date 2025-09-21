@@ -12,30 +12,27 @@ import {
 } from "@mantine/core";
 import MovieCardSkeleton from "../components/MovieCardSkeleton";
 import { useSearchParams } from "react-router-dom";
-import {
-  getMoviesByGenreAndPage,
-  searchMoviesByNameAndPage,
-} from "../api/movieApi";
 import { useDisclosure } from "@mantine/hooks";
 import TrailerModal from "../components/TrailerModal";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useMovieContext } from "../contexts/MovieContext";
 import { IconSearch } from "@tabler/icons-react";
 import { genreMap, genres } from "../constants/Genre";
+import { getShowsByGenreAndPage, searchShowsByNameAndPage } from "../api/tvApi";
 
-interface MovieDetails {
+interface tvShowDetails {
   id: number;
   type: string;
 }
 
-const type = "movie";
+const type = "tv";
 
-function Movies() {
-  const [movies, setMovies] = useState<any>(null);
+function TvShows() {
+  const [tvShows, setTvShows] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [opened, { open, close }] = useDisclosure(false);
-  const [movieDetails, setMovieDetails] = useState<MovieDetails>();
+  const [tvShowDetails, setTvShowDetails] = useState<tvShowDetails>();
   const [genreId, setGenreId] = useState<number | null>(null);
 
   const searchInput = useRef<HTMLInputElement>(null);
@@ -52,9 +49,9 @@ function Movies() {
     const init = async () => {
       try {
         const data = searched
-          ? await searchMoviesByNameAndPage(searched, currentPage)
-          : await getMoviesByGenreAndPage(genreId, currentPage);
-        setMovies(data);
+          ? await searchShowsByNameAndPage(searched, currentPage)
+          : await getShowsByGenreAndPage(genreId, currentPage);
+        setTvShows(data);
       } catch (error) {
         alert(error);
       } finally {
@@ -73,7 +70,7 @@ function Movies() {
   const handleOnClick = useCallback(
     (movie: any) => {
       open();
-      setMovieDetails({ id: movie.id, type: type });
+      setTvShowDetails({ id: movie.id, type: type });
     },
     [open]
   );
@@ -95,8 +92,8 @@ function Movies() {
       <TrailerModal
         opened={opened}
         close={close}
-        movieId={movieDetails?.id!}
-        type={movieDetails?.type!}
+        movieId={tvShowDetails?.id!}
+        type={tvShowDetails?.type!}
       ></TrailerModal>
 
       <Container mb={"2rem"} size="xs" p={0}>
@@ -119,15 +116,15 @@ function Movies() {
         ></SegmentedControl>
       )}
 
-      {movies?.results.length < 1 && (
+      {tvShows?.results.length < 1 && (
         <Text fz="h2" ta={"center"}>
           No results found!
         </Text>
       )}
       {isLoading && <MovieCardSkeleton></MovieCardSkeleton>}
-      {movies && !isLoading && (
+      {tvShows && !isLoading && (
         <SimpleGrid cols={{ base: 1, sm: 4 }}>
-          {movies.results.map((movie: any) => {
+          {tvShows.results.map((movie: any) => {
             const favorite = isFavorite(movie.id);
             return (
               <MovieCard
@@ -142,10 +139,10 @@ function Movies() {
           })}
         </SimpleGrid>
       )}
-      {movies?.total_pages > 1 && (
+      {tvShows?.total_pages > 1 && (
         <Center mt={"xl"}>
           <Pagination
-            total={Math.min(movies.total_pages, 500)}
+            total={Math.min(tvShows.total_pages, 500)}
             withControls={false}
             value={
               typeof currentPage !== "number"
@@ -159,4 +156,4 @@ function Movies() {
     </>
   );
 }
-export default Movies;
+export default TvShows;

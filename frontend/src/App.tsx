@@ -7,6 +7,7 @@ import { MovieProvider } from "./contexts/MovieContext";
 import NotFound from "./pages/NotFound";
 import Movies from "./pages/Movies";
 import Home from "./pages/Home";
+import TvShows from "./pages/TvShows";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<Home></Home>}></Route>
           <Route path="/favorites" element={<Favorites></Favorites>}></Route>
           <Route path="/movies" element={<Movies></Movies>}></Route>
+          <Route path="/tvshows" element={<TvShows></TvShows>}></Route>
         </Route>
         <Route path="/*" element={<NotFound></NotFound>}></Route>
       </Routes>

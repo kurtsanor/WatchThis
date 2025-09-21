@@ -21,7 +21,7 @@ function Favorites() {
   const handleOnClick = useCallback(
     (movie: any) => {
       open();
-      setMovieDetails({ movieId: movie.id, type: movie.media_type || "movie" });
+      setMovieDetails({ movieId: movie.id, type: movie.name ? "tv" : "movie" });
     },
     [open]
   );

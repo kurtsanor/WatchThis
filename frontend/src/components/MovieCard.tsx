@@ -80,7 +80,7 @@ function MovieCard({
           onClick={() => onClick(movie)}
           style={{ cursor: "pointer" }}
         >
-          {movie.title}
+          {movie.title || movie.name}
         </Text>
         <Text ta={"left"} fz="sm" c="dimmed" lineClamp={4}>
           {movie.overview}
@@ -90,7 +90,7 @@ function MovieCard({
       <Group justify="space-between" className={classes.footer} mt={"auto"}>
         <Center>
           <Text fz="sm" inline fw={"bold"}>
-            {movie.release_date}
+            {movie.release_date || movie.first_air_date}
           </Text>
         </Center>
 
