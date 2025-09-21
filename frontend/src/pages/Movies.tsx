@@ -5,6 +5,7 @@ import {
   Container,
   Group,
   Pagination,
+  SegmentedControl,
   SimpleGrid,
   Text,
   TextInput,
@@ -12,6 +13,7 @@ import {
 import MovieCardSkeleton from "../components/MovieCardSkeleton";
 import { useSearchParams } from "react-router-dom";
 import {
+  getMoviesByGenreAndPage,
   getPopularMoviesByPage,
   searchMoviesByNameAndPage,
 } from "../api/movieApi";
@@ -20,6 +22,7 @@ import TrailerModal from "../components/TrailerModal";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useMovieContext } from "../contexts/MovieContext";
 import { IconSearch } from "@tabler/icons-react";
+import { genreMap, genres } from "../constants/Genre";
 
 interface MovieDetails {
   id: number;
@@ -34,6 +37,7 @@ function Movies() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [opened, { open, close }] = useDisclosure(false);
   const [movieDetails, setMovieDetails] = useState<MovieDetails>();
+  const [genreId, setGenreId] = useState<number | null>(null);
 
   const searchInput = useRef<HTMLInputElement>(null);
   const searched = searchParams.get("search");
@@ -50,7 +54,7 @@ function Movies() {
       try {
         const data = searched
           ? await searchMoviesByNameAndPage(searched, currentPage)
-          : await getPopularMoviesByPage(currentPage);
+          : await getMoviesByGenreAndPage(genreId, currentPage);
         setMovies(data);
       } catch (error) {
         alert(error);
@@ -59,11 +63,12 @@ function Movies() {
       }
     };
     init();
-  }, [searched, currentPage]);
+  }, [searched, currentPage, genreId]);
 
   const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (!searchInput.current?.value.trim() || e.key !== "Enter") return;
     setSearchParams({ search: searchInput.current?.value });
+    setGenreId(null);
   };
 
   const handleOnClick = useCallback(
@@ -79,6 +84,11 @@ function Movies() {
       ...(searched ? { search: searched } : {}),
       page: page.toString(),
     });
+  };
+
+  const handleGenreChange = (genre: string) => {
+    const id = genreMap[genre as keyof typeof genreMap];
+    setGenreId(id);
   };
 
   return (
@@ -99,6 +109,16 @@ function Movies() {
           leftSection={<IconSearch></IconSearch>}
         ></TextInput>
       </Container>
+
+      {!searched && (
+        <SegmentedControl
+          fullWidth
+          data={genres}
+          mb="1rem"
+          color="blue"
+          onChange={handleGenreChange}
+        ></SegmentedControl>
+      )}
 
       {movies?.results.length < 1 && (
         <Text fz="h2" ta={"center"}>

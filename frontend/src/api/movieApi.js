@@ -83,3 +83,16 @@ export async function getPlayingNowMovies() {
     console.log(error);
   }
 }
+
+export async function getMoviesByGenreAndPage(genre, page) {
+  const url = genre
+    ? `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&page=${page}&sort_by=popularity.desc&with_genres=${genre}}`
+    : `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&page=${page}&sort_by=popularity.desc`;
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
