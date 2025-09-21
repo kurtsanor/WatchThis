@@ -67,7 +67,6 @@ function Movies() {
   const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (!searchInput.current?.value.trim() || e.key !== "Enter") return;
     setSearchParams({ search: searchInput.current?.value });
-    setGenreId(null);
   };
 
   const handleOnClick = useCallback(
