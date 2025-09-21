@@ -1,4 +1,4 @@
-const API_KEY = import.meta.env.VITE_TMBD_API_KEY;
+const API_KEY = "368c646199ed46c46b08bced54349719";
 
 export async function getShowsByGenreAndPage(genre, page) {
   const url = genre
