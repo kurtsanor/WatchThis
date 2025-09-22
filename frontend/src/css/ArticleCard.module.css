@@ -9,6 +9,11 @@
 
 .image {
   height: 30vh;
+  transition: transform 0.6s ease;
+}
+
+.image:hover {
+  transform: scale(1.05);
 }
 
 .playIcon {
