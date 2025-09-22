@@ -6,13 +6,13 @@ Download and install Node.js (version 18.x or higher recommended) from the [offi
 
 ---
 
-### 2. Open your terminal and move to the project directory
+### 2. First, open VS Code, then open its terminal and move to the project directory
 
-Open your terminal application of choice:
+Open VS Code, then open its integrated terminal (View > Terminal or Ctrl+`):
 
-- **Windows:** PowerShell or Git Bash
-- **macOS:** Terminal
-- **Linux:** Any terminal emulator
+- **Windows:** VS Code terminal (PowerShell or Git Bash)
+- **macOS:** VS Code terminal
+- **Linux:** VS Code terminal
 
 Then, run the following commands:
 
