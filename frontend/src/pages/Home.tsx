@@ -39,7 +39,7 @@ function Home() {
                 paddingLeft: "0.5rem",
               }}
             >
-              <Title order={2} mb="xl" mt="xl">
+              <Title order={2} mb="xl">
                 Trending
               </Title>
             </div>

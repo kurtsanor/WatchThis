@@ -43,6 +43,15 @@ function HeroHeader({ movie }: props) {
         withControls={false}
         emblaOptions={{ loop: true }}
         plugins={[autoplay.current]}
+        style={{
+          WebkitMaskImage:
+            "linear-gradient(to bottom, black 60%, transparent 100%)",
+          WebkitMaskRepeat: "no-repeat",
+          WebkitMaskSize: "100% 100%",
+          maskImage: "linear-gradient(to bottom, black 97%, transparent 100%)",
+          maskRepeat: "no-repeat",
+          maskSize: "100% 100%",
+        }}
       >
         {slides}
       </Carousel>
