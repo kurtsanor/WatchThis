@@ -43,7 +43,7 @@ function MoviesCarousel({ movie }: CarouselsProps) {
 
   const handleClick = async (movie: any) => {
     open();
-    setMovieDetails({ movieId: movie.id, type: movie.media_type });
+    setMovieDetails({ movieId: movie.id, type: movie.name ? "tv" : "movie" });
   };
 
   const slides = movie?.results?.map((item: any) => (

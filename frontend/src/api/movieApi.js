@@ -42,6 +42,20 @@ export async function getPlayingNowMovies() {
   }
 }
 
+export async function getOnTheAirTvShows() {
+  const url = `https://api.themoviedb.org/3/tv/on_the_air?api_key=${encodeURIComponent(
+    API_KEY
+  )}`;
+
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function getMoviesByGenreAndPage(genre, page) {
   const url = genre
     ? `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&page=${page}&sort_by=popularity.desc&with_genres=${genre}}`
