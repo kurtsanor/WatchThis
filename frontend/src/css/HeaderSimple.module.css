@@ -10,6 +10,14 @@
   overflow: hidden;
 }
 
+.leftGroup {
+  margin-left: 3rem;
+}
+
+.rightGroup {
+  margin-right: 3rem;
+}
+
 .inner {
   height: 56px;
   display: flex;

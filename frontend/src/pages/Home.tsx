@@ -32,7 +32,7 @@ function Home() {
       {!isLoading && (
         <>
           <HeroHeader movie={movies} />
-          <main style={{ padding: "2rem" }}>
+          <main style={{ padding: "3.2rem" }}>
             <div
               style={{
                 borderLeft: `solid 5px ${theme.colors.blue[6]}`,

@@ -37,7 +37,7 @@ function Header() {
     <header className={classes.header}>
       <Group className={classes.inner}>
         <Group gap={5}>
-          <Group gap={0} ml={"lg"}>
+          <Group gap={0} className={classes.leftGroup}>
             <IconStereoGlasses
               height={"25px"}
               width={"30px"}
@@ -49,7 +49,7 @@ function Header() {
             </Text>
           </Group>
         </Group>
-        <Group visibleFrom="md" mr="lg">
+        <Group visibleFrom="md" className={classes.rightGroup}>
           {items}
         </Group>
         <Burger
@@ -57,7 +57,7 @@ function Header() {
           onClick={open}
           hiddenFrom="md"
           size="sm"
-          mr={"lg"}
+          className={classes.rightGroup}
         />
       </Group>
       <Drawer position="right" size={"50%"} opened={menuOpened} onClose={close}>

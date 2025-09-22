@@ -15,7 +15,7 @@ function Layout() {
       }}
     >
       <Header></Header>
-      <main style={{ padding: inHeroPage ? 0 : "2rem", flex: 1 }}>
+      <main style={{ padding: inHeroPage ? 0 : "3.2rem", flex: 1 }}>
         <Outlet></Outlet>
       </main>
       <Footer></Footer>

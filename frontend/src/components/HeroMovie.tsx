@@ -39,7 +39,7 @@ function HeroMovie({ movie, handleClick }: HeroMovieProps) {
           {movie?.overview}
         </Text>
         <Button
-          size="lg"
+          size="md"
           radius="md"
           className={classes.control}
           variant="white"
