@@ -1,11 +1,4 @@
-import {
-  Anchor,
-  Burger,
-  Drawer,
-  Group,
-  Text,
-  useMantineTheme,
-} from "@mantine/core";
+import { Anchor, Burger, Drawer, Group, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "../css/HeaderSimple.module.css";
 import { IconMovie, IconStereoGlasses } from "@tabler/icons-react";

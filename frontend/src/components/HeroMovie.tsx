@@ -34,7 +34,7 @@ function HeroMovie({ movie, handleClick }: HeroMovieProps) {
           size="lg"
           mt="xl"
           lineClamp={4}
-          c={"dimmed"}
+          c={"gray"}
         >
           {movie?.overview}
         </Text>
@@ -48,7 +48,7 @@ function HeroMovie({ movie, handleClick }: HeroMovieProps) {
         >
           <IconPlayerPlay size={30} fill={""}></IconPlayerPlay>
           <Space w={"sm"}></Space>
-          Watch now
+          Watch
         </Button>
       </Container>
     </div>

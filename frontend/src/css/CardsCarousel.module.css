@@ -26,9 +26,9 @@
 
 .slides {
   cursor: pointer;
-  transition: transform 0.8s ease;
+  transition: transform 0.2s ease-in-out;
 }
 
-.slides :hover {
+.slides:hover {
   filter: brightness(80%);
 }

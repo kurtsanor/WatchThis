@@ -32,14 +32,18 @@ function Home() {
       {!isLoading && (
         <>
           <HeroHeader movie={movies} />
-          <main style={{ padding: "3.2rem" }}>
+          <main style={{ padding: "3.2rem", paddingTop: "1rem" }}>
             <div
               style={{
                 borderLeft: `solid 5px ${theme.colors.blue[6]}`,
                 paddingLeft: "0.5rem",
               }}
             >
-              <Title order={2} mb="xl">
+              <Title
+                order={3}
+                mb="xs"
+                style={{ fontFamily: "sans-serif, Arial, Helvetica" }}
+              >
                 Trending
               </Title>
             </div>
