@@ -136,7 +136,6 @@ function Movies() {
                 favorite={favorite}
                 addToFavorites={addToFavorites}
                 removeFromFavorites={removeFromFavorites}
-                mediaType={"movies"}
               ></MovieCard>
             );
           })}

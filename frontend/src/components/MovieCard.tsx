@@ -21,7 +21,6 @@ interface MovieCardProps {
   addToFavorites: (movie: any) => void;
   removeFromFavorites: (movieId: number) => void;
   favorite: boolean;
-  mediaType: string;
 }
 
 function MovieCard({
@@ -30,7 +29,6 @@ function MovieCard({
   addToFavorites,
   removeFromFavorites,
   favorite,
-  mediaType,
 }: MovieCardProps) {
   const theme = useMantineTheme();
   const navigate = useNavigate();
@@ -40,7 +38,7 @@ function MovieCard({
   };
 
   const handleMoreInfoOnClick = () => {
-    navigate(`/${mediaType}/${movie.id}`);
+    navigate(`/${movie.release_date ? "movies" : "tvshows"}/${movie.id}`);
   };
 
   console.log("movie card render");
