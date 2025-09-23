@@ -1,9 +1,4 @@
-import {
-  IconArrowRight,
-  IconHeart,
-  IconHeartFilled,
-  IconPlayerPlay,
-} from "@tabler/icons-react";
+import { IconHeart, IconInfoCircle, IconPlayerPlay } from "@tabler/icons-react";
 import {
   ActionIcon,
   Badge,
@@ -17,7 +12,8 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import classes from "../css/ArticleCard.module.css";
-import { memo, useState } from "react";
+import { memo } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface MovieCardProps {
   movie: any;
@@ -25,6 +21,7 @@ interface MovieCardProps {
   addToFavorites: (movie: any) => void;
   removeFromFavorites: (movieId: number) => void;
   favorite: boolean;
+  mediaType: string;
 }
 
 function MovieCard({
@@ -33,11 +30,17 @@ function MovieCard({
   addToFavorites,
   removeFromFavorites,
   favorite,
+  mediaType,
 }: MovieCardProps) {
   const theme = useMantineTheme();
+  const navigate = useNavigate();
 
   const handleOnClick = () => {
     favorite ? removeFromFavorites(movie.id) : addToFavorites(movie);
+  };
+
+  const handleMoreInfoOnClick = () => {
+    navigate(`/${mediaType}/${movie.id}`);
   };
 
   console.log("movie card render");
@@ -95,6 +98,15 @@ function MovieCard({
         </Center>
 
         <Group gap={8} mr={0}>
+          <Tooltip label="More Info" color="gray" withArrow>
+            <ActionIcon
+              className={classes.action}
+              onClick={handleMoreInfoOnClick}
+            >
+              <IconInfoCircle size={20} color={theme.colors.gray[5]} />
+            </ActionIcon>
+          </Tooltip>
+
           <Tooltip
             label={favorite ? "Unfavorite" : "Favorite"}
             color="gray"

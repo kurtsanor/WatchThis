@@ -26,3 +26,26 @@ export async function searchShowsByNameAndPage(searchQuery, page) {
     console.log(error);
   }
 }
+
+export async function getShowDetailsById(showId) {
+  const url = `https://api.themoviedb.org/3/tv/${showId}?&api_key=${API_KEY}`;
+
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getShowCreditsById(showId) {
+  const url = `https://api.themoviedb.org/3/tv/${showId}/credits?&api_key=${API_KEY}`;
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}

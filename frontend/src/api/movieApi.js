@@ -68,3 +68,26 @@ export async function getMoviesByGenreAndPage(genre, page) {
     console.error(error);
   }
 }
+
+export async function getMovieDetailsById(movieId) {
+  const url = `https://api.themoviedb.org/3/movie/${movieId}?&api_key=${API_KEY}`;
+
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getMovieCreditsById(movieId) {
+  const url = `https://api.themoviedb.org/3/movie/${movieId}/credits?&api_key=${API_KEY}`;
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}

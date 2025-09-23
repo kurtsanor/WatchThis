@@ -133,6 +133,7 @@ function TvShows() {
                 favorite={favorite}
                 addToFavorites={addToFavorites}
                 removeFromFavorites={removeFromFavorites}
+                mediaType={"tvshows"}
               ></MovieCard>
             );
           })}
