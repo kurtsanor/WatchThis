@@ -8,3 +8,7 @@ export function formatRuntime(minutes: number) {
 export function getYear(year: string) {
   return year.split("-")[0];
 }
+
+export function formatDecimal(input: number) {
+  return input.toFixed(1);
+}

@@ -1,13 +1,27 @@
-import { Box, Flex, Group, Image, Text, Title } from "@mantine/core";
+import {
+  Box,
+  Flex,
+  Group,
+  Image,
+  rem,
+  Text,
+  Title,
+  Tooltip,
+} from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useParams } from "react-router-dom";
 import ActorCard from "../components/ActorCard";
 import { Carousel } from "@mantine/carousel";
 import { useEffect, useState } from "react";
 import { getMovieCreditsById, getMovieDetailsById } from "../api/movieApi";
-import { formatRuntime, getYear } from "../utilities/TimeFormatter";
+import {
+  formatDecimal,
+  formatRuntime,
+  getYear,
+} from "../utilities/TimeFormatter";
 import MovieDetailsSkeletion from "../components/MovieDetailsSkeleton";
 import { getShowCreditsById, getShowDetailsById } from "../api/tvApi";
+import { IconStarFilled } from "@tabler/icons-react";
 
 interface MediaDetailsProps {
   mediaType: string;
@@ -78,11 +92,31 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
             w={isMobile ? "100%" : "30vw"}
             h="80vh"
             mr="3rem"
+            style={{
+              WebkitMaskImage:
+                "linear-gradient(to bottom, black 60%, transparent 100%)",
+              WebkitMaskRepeat: "no-repeat",
+              WebkitMaskSize: "100% 100%",
+              maskImage:
+                "linear-gradient(to bottom, black 97%, transparent 100%)",
+              maskRepeat: "no-repeat",
+              maskSize: "100% 100%",
+            }}
           ></Image>
           <Box miw={0}>
-            <Title order={1} mb="xs">
-              {media?.title || media?.name}
-            </Title>
+            <Flex justify="space-between">
+              <Title order={1} mb="xs">
+                {media?.title || media?.name}
+              </Title>
+
+              <Tooltip label="Rating" position="bottom" color="gray">
+                <Group>
+                  <Text fz={"h2"}>{formatDecimal(media.vote_average)}</Text>
+                  <IconStarFilled size={30} color="yellow"></IconStarFilled>
+                </Group>
+              </Tooltip>
+            </Flex>
+
             <Text mb="xl" c="dimmed">
               {getYear(media.release_date || media.first_air_date)} |{" "}
               {formatRuntime(media.runtime) ||
