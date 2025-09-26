@@ -68,7 +68,10 @@ function MovieCard({
       <Badge
         className={classes.rating}
         variant="gradient"
-        gradient={{ from: "yellow", to: "red" }}
+        gradient={{
+          from: `${theme.colors.blue[4]}`,
+          to: `${theme.colors.blue[9]}`,
+        }}
       >
         Popular
       </Badge>
