@@ -30,14 +30,11 @@ function Header() {
     <header className={classes.header}>
       <Group className={classes.inner}>
         <Group gap={5}>
-          <Group gap={0} className={classes.leftGroup}>
-            <IconStereoGlasses
-              height={"25px"}
-              width={"30px"}
-            ></IconStereoGlasses>
+          <Group gap={10} className={classes.leftGroup}>
+            <img src="/wtLogo.png" height={"40px"} width={"40px"}></img>
             <Text>
               <Anchor href="/" fw={"bolder"} size="1.5rem" td={"none"}>
-                WatchThis
+                <span style={{ color: "white" }}>Watch</span>This
               </Anchor>
             </Text>
           </Group>
