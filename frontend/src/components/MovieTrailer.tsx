@@ -1,6 +1,9 @@
 import { Loader, Skeleton, Text } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
 import { getTrailerByIdAndType } from "../api/movieApi";
+import videojs from "video.js";
+import "video.js/dist/video-js.css";
+import "videojs-youtube";
 
 interface TrailerProps {
   movieId: number | undefined;
@@ -10,6 +13,9 @@ interface TrailerProps {
 function MovieTrailer({ movieId, type }: TrailerProps) {
   const [trailerUrl, setTrailerUrl] = useState<string | undefined>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const playerRef = useRef<any>(null);
 
   useEffect(() => {
     setIsLoading(true);
@@ -21,7 +27,7 @@ function MovieTrailer({ movieId, type }: TrailerProps) {
         );
         let url;
         if (trailer) {
-          url = `https://www.youtube.com/embed/${trailer.key}?rel=0&autoplay=1`;
+          url = `https://www.youtube.com/watch?v=${trailer.key}&modestbranding=1&rel=0`;
         }
         setTrailerUrl(url);
       } catch (error) {
@@ -33,6 +39,27 @@ function MovieTrailer({ movieId, type }: TrailerProps) {
     fetchData();
   }, [movieId]);
 
+  useEffect(() => {
+    // Only initialize if trailerUrl exists AND videoRef.current is not null
+    if (trailerUrl && videoRef.current && !playerRef.current) {
+      playerRef.current = videojs(videoRef.current, {
+        techOrder: ["youtube"],
+        sources: [{ type: "video/youtube", src: trailerUrl }],
+        controls: true,
+        fluid: true,
+        autoplay: true,
+      });
+    }
+
+    // Dispose player on unmount
+    // return () => {
+    //   if (playerRef.current) {
+    //     playerRef.current.dispose();
+    //     playerRef.current = null;
+    //   }
+    // };
+  }, [trailerUrl]);
+
   return (
     <>
       {isLoading && <Skeleton style={{ height: "78vh" }}></Skeleton>}
@@ -40,14 +67,14 @@ function MovieTrailer({ movieId, type }: TrailerProps) {
         <Text ta={"center"}>Trailer unavailable</Text>
       )}
       {trailerUrl && !isLoading && (
-        <iframe
-          src={trailerUrl}
-          title="Movie Trailer"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          width={"100%"}
-          style={{ border: "none", borderRadius: "0.30rem", height: "77vh" }}
-        />
+        <video
+          id="my-video"
+          className="video-js vjs-theme-custom"
+          controls
+          width="640"
+          height="360"
+          ref={videoRef}
+        ></video>
       )}
     </>
   );

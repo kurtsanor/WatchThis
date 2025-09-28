@@ -100,7 +100,7 @@ function Movies() {
 
       <Container mb={"2rem"} size="xs" p={0}>
         <TextInput
-          placeholder="Enter movie title..."
+          placeholder="Enter Movie Title..."
           ref={searchInput}
           required
           onKeyDown={handleSearch}
