@@ -50,14 +50,6 @@ function MovieTrailer({ movieId, type }: TrailerProps) {
         autoplay: true,
       });
     }
-
-    // Dispose player on unmount
-    // return () => {
-    //   if (playerRef.current) {
-    //     playerRef.current.dispose();
-    //     playerRef.current = null;
-    //   }
-    // };
   }, [trailerUrl]);
 
   return (
