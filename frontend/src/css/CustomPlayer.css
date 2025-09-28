@@ -1,0 +1,39 @@
+/* Import base Video.js styles */
+@import "video.js/dist/video-js.css";
+
+/* Custom theme for your trailer player */
+.video-js {
+  width: 100%;
+  max-width: 900px;
+  height: 500px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  background-color: #8a3f3f;
+}
+
+/* Control bar styling */
+.vjs-theme-custom .vjs-control-bar {
+  background-color: #1b1b1b;
+  font-size: 14px;
+}
+
+.vjs-big-play-button {
+  display: none !important;
+}
+
+/* Progress bar color */
+.vjs-play-progress {
+  background-color: rgb(51, 154, 240) !important;
+}
+
+/* Volume slider */
+.vjs-volume-level {
+  background-color: rgb(51, 154, 240) !important;
+}
+
+/* Loading spinner */
+.vjs-loading-spinner {
+  border-color: rgb(51, 154, 240);
+}

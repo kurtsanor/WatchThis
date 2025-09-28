@@ -4,6 +4,7 @@ import { getTrailerByIdAndType } from "../api/movieApi";
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
 import "videojs-youtube";
+import "../css/CustomPlayer.css";
 
 interface TrailerProps {
   movieId: number | undefined;
@@ -37,6 +38,7 @@ function MovieTrailer({ movieId, type }: TrailerProps) {
       }
     };
     fetchData();
+    console.log("1st");
   }, [movieId]);
 
   useEffect(() => {
@@ -48,8 +50,15 @@ function MovieTrailer({ movieId, type }: TrailerProps) {
         controls: true,
         fluid: true,
         autoplay: true,
+        inactivityTimeout: 5000,
+        youtube: {
+          modestbranding: 1,
+          rel: 0,
+          vq: "highres",
+        },
       });
     }
+    console.log("2nd");
   }, [trailerUrl]);
 
   return (
@@ -60,12 +69,11 @@ function MovieTrailer({ movieId, type }: TrailerProps) {
       )}
       {trailerUrl && !isLoading && (
         <video
-          id="my-video"
           className="video-js vjs-theme-custom"
           controls
-          width="640"
-          height="360"
           ref={videoRef}
+          width={"100%"}
+          style={{ border: "none", borderRadius: "0.30rem", height: "77vh" }}
         ></video>
       )}
     </>
