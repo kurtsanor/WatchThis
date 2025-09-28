@@ -1,19 +1,20 @@
 .hero {
   position: relative;
   background-size: cover;
-  background-position: center;
-  padding-left: 1.3rem;
-  padding-right: 1.3em;
+  background-position: top;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  display: flex;
+  align-items: center;
 }
 
 .container {
   height: 80vh;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: flex-start;
-  padding-bottom: calc(var(--mantine-spacing-xl) * 6);
-
+  /* padding-bottom: calc(var(--mantine-spacing-xl) * 6); */
   position: relative;
 
   @media (max-width: 768px) {
@@ -30,6 +31,7 @@
   line-height: 1.1;
   font-family: sans-serif;
   text-transform: uppercase;
+  max-width: 600px;
 
   @media (max-width: 768px) {
     font-size: 40px;
@@ -52,7 +54,6 @@
     font-size: var(--mantine-font-size-sm);
   }
 }
-
 .control {
   margin-top: calc(var(--mantine-spacing-xl) * 1.5);
   font-family: sans-serif, Arial, Helvetica;

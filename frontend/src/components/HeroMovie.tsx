@@ -1,4 +1,12 @@
-import { Button, Container, Overlay, Space, Text, Title } from "@mantine/core";
+import {
+  Box,
+  Button,
+  Container,
+  Overlay,
+  Space,
+  Text,
+  Title,
+} from "@mantine/core";
 import classes from "../css/HeroContentLeft.module.css";
 import { IconPlayerPlay } from "@tabler/icons-react";
 import { memo } from "react";
@@ -25,7 +33,7 @@ function HeroMovie({ movie, handleClick }: HeroMovieProps) {
         opacity={1}
         zIndex={0}
       />
-      <Container className={classes.container} size="100%" pl="xl" pr="xl">
+      <Box className={classes.container}>
         <Title className={classes.title}>
           {movie?.title || movie?.original_name}
         </Title>
@@ -50,7 +58,7 @@ function HeroMovie({ movie, handleClick }: HeroMovieProps) {
           <Space w={"sm"}></Space>
           Watch
         </Button>
-      </Container>
+      </Box>
     </div>
   );
 }
