@@ -101,7 +101,7 @@ function TvShows() {
           ref={searchInput}
           required
           onKeyDown={handleSearch}
-          leftSection={<IconSearch></IconSearch>}
+          leftSection={<IconSearch size={17}></IconSearch>}
         ></TextInput>
       </Container>
 
