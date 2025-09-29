@@ -1,7 +1,6 @@
 /* Import base Video.js styles */
 @import "video.js/dist/video-js.css";
 
-/* Custom theme for your trailer player */
 .video-js {
   width: 100%;
   max-width: 900px;
@@ -10,7 +9,7 @@
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-  background-color: #8a3f3f;
+  background-color: #353535;
 }
 
 /* Control bar styling */
