@@ -28,7 +28,7 @@ function MovieTrailer({ movieId, type }: TrailerProps) {
         );
         let url;
         if (trailer) {
-          url = `https://www.youtube.com/watch?v=${trailer.key}&modestbranding=1&rel=0`;
+          url = `https://www.youtube.com/watch?v=${trailer.key}`;
         }
         setTrailerUrl(url);
       } catch (error) {
