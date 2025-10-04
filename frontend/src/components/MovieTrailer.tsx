@@ -12,7 +12,7 @@ interface TrailerProps {
 }
 
 function MovieTrailer({ movieId, type }: TrailerProps) {
-  const [trailerUrl, setTrailerUrl] = useState<string | undefined>("");
+  const [trailerUrl, setTrailerUrl] = useState<string | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -28,7 +28,7 @@ function MovieTrailer({ movieId, type }: TrailerProps) {
         );
         let url;
         if (trailer) {
-          url = `https://www.youtube.com/watch?v=${trailer.key}`;
+          url = `https://www.youtube.com/embed/${trailer.key}`;
         }
         setTrailerUrl(url);
       } catch (error) {
@@ -49,7 +49,7 @@ function MovieTrailer({ movieId, type }: TrailerProps) {
         sources: [{ type: "video/youtube", src: trailerUrl }],
         controls: true,
         fluid: true,
-        autoplay: true,
+        autoplay: false,
         inactivityTimeout: 5000,
         youtube: {
           modestbranding: 1,
@@ -59,6 +59,7 @@ function MovieTrailer({ movieId, type }: TrailerProps) {
       });
     }
     console.log("2nd");
+    console.log(trailerUrl);
   }, [trailerUrl]);
 
   return (
