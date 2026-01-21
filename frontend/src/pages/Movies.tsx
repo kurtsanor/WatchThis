@@ -12,10 +12,7 @@ import {
 } from "@mantine/core";
 import MovieCardSkeleton from "../components/MovieCardSkeleton";
 import { useSearchParams } from "react-router-dom";
-import {
-  getMoviesByGenreAndPage,
-  searchMoviesByNameAndPage,
-} from "../api/movieApi";
+import { findByGenreAndPage, searchByTitleAndPage } from "../api/movieApi";
 import { useDisclosure } from "@mantine/hooks";
 import TrailerModal from "../components/TrailerModal";
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
@@ -52,9 +49,9 @@ function Movies() {
     const init = async () => {
       try {
         const data = searched
-          ? await searchMoviesByNameAndPage(searched, currentPage)
-          : await getMoviesByGenreAndPage(genreId, currentPage);
-        setMovies(data);
+          ? await searchByTitleAndPage(searched, currentPage)
+          : await findByGenreAndPage(genreId, currentPage);
+        setMovies(data.data);
       } catch (error) {
         alert(error);
       } finally {
@@ -118,7 +115,7 @@ function Movies() {
         ></SegmentedControl>
       )}
 
-      {movies?.results.length < 1 && (
+      {movies?.results?.length < 1 && (
         <Text fz="h2" ta={"center"}>
           No results found!
         </Text>
@@ -126,7 +123,7 @@ function Movies() {
       {isLoading && <MovieCardSkeleton></MovieCardSkeleton>}
       {movies && !isLoading && (
         <SimpleGrid cols={{ base: 1, sm: 4 }}>
-          {movies.results.map((movie: any) => {
+          {movies?.results?.map((movie: any) => {
             const favorite = isFavorite(movie.id);
             return (
               <MovieCard

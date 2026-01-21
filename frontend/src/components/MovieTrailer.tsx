@@ -1,6 +1,6 @@
 import { Loader, Skeleton, Text } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
-import { getTrailerByIdAndType } from "../api/movieApi";
+import { findTrailerByTypeAndId } from "../api/movieApi";
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
 import "videojs-youtube";
@@ -22,9 +22,9 @@ function MovieTrailer({ movieId, type }: TrailerProps) {
     setIsLoading(true);
     const fetchData = async () => {
       try {
-        const data = await getTrailerByIdAndType(movieId, type);
-        const trailer = data.results.find(
-          (vid: any) => vid.type === "Trailer" && vid.site === "YouTube"
+        const data = await findTrailerByTypeAndId(type, movieId);
+        const trailer = data.data.results.find(
+          (vid: any) => vid.type === "Trailer" && vid.site === "YouTube",
         );
         let url;
         if (trailer) {
@@ -38,7 +38,6 @@ function MovieTrailer({ movieId, type }: TrailerProps) {
       }
     };
     fetchData();
-    console.log("1st");
   }, [movieId]);
 
   useEffect(() => {
@@ -58,8 +57,6 @@ function MovieTrailer({ movieId, type }: TrailerProps) {
         },
       });
     }
-    console.log("2nd");
-    console.log(trailerUrl);
   }, [trailerUrl]);
 
   return (

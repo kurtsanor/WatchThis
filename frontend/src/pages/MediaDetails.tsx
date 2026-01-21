@@ -13,7 +13,7 @@ import { useParams } from "react-router-dom";
 import ActorCard from "../components/ActorCard";
 import { Carousel } from "@mantine/carousel";
 import { useEffect, useState } from "react";
-import { getMovieCreditsById, getMovieDetailsById } from "../api/movieApi";
+import { findCreditsById, findDetailsById } from "../api/movieApi";
 import {
   formatDecimal,
   formatRuntime,
@@ -42,14 +42,14 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
       try {
         const data =
           mediaType === "movies"
-            ? await getMovieDetailsById(id)
+            ? await findDetailsById(id)
             : await getShowDetailsById(id);
         const castData =
           mediaType === "movies"
-            ? await getMovieCreditsById(id)
+            ? await findCreditsById(id)
             : await getShowCreditsById(id);
-        setMedia(data);
-        setCast(castData.cast.slice(0, 10));
+        setMedia(data.data);
+        setCast(castData.data.cast.slice(0, 10));
       } catch (error) {
         console.error(error);
       } finally {
@@ -131,9 +131,9 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
               <Text c="dimmed">Genre</Text>
               {genres}
             </Group>
-            <Title order={4} mb="sm" fw="normal">
+            <Text fz={"h4"} mb="sm" fw="normal" c="white">
               Starring
-            </Title>
+            </Text>
             <Carousel
               slideSize={{ base: "25%", sm: "15%" }}
               slideGap={15}

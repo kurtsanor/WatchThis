@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import HeroHeader from "../components/HeroHeader";
-import { getOnTheAirTvShows, getPlayingNowMovies } from "../api/movieApi";
+import { findOnTheAir, findPlayingNow } from "../api/movieApi";
 import { Skeleton, Title, useMantineTheme, Text } from "@mantine/core";
 import MoviesCarousel from "../components/MoviesCarousel";
 
@@ -16,10 +16,10 @@ function Home() {
     setIsLoading(true);
     const init = async () => {
       try {
-        const data = await getPlayingNowMovies();
-        const shows = await getOnTheAirTvShows();
-        setMovies(data);
-        setOnTheAirShows(shows);
+        const data = await findPlayingNow();
+        const shows = await findOnTheAir();
+        setMovies(data.data);
+        setOnTheAirShows(shows.data);
       } catch (error) {
         console.error(error);
       } finally {

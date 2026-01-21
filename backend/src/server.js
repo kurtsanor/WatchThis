@@ -1,3 +1,4 @@
+require("dotenv").config({ path: "../.env" }); // remove path if deploying
 const app = require("./app");
 const connectDb = require("./config/db");
 const userService = require("./services/userService");

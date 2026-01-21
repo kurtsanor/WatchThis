@@ -1,22 +1,22 @@
-import axios from "axios";
+import { axiosInstance } from "../utilities/axiosInstance";
 
 export const findFavoritesByUser = async (userId) => {
-  const response = axios
-    .get(`http://localhost:3000/favorites?userId=${userId}`)
+  const response = axiosInstance
+    .get(`/favorites?userId=${userId}`)
     .then((res) => res.data);
   return response;
 };
 
 export const addFavorite = (favoriteRequest) => {
-  const response = axios
-    .post("http://localhost:3000/favorites", favoriteRequest)
+  const response = axiosInstance
+    .post("/favorites", favoriteRequest)
     .then((res) => res.data);
   return response;
 };
 
 export const removeFavorite = (favoriteRequest) => {
-  const response = axios
-    .delete("http://localhost:3000/favorites", {
+  const response = axiosInstance
+    .delete("/favorites", {
       params: {
         userId: favoriteRequest.userId,
         mediaId: favoriteRequest.mediaId,

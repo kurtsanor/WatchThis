@@ -75,7 +75,7 @@ function Header() {
                   <Menu.Item
                     onClick={handleUserBtnClick}
                     color="red"
-                    leftSection={<IconLogout size={20} />}
+                    leftSection={<IconLogout size={16} />}
                   >
                     Logout
                   </Menu.Item>
