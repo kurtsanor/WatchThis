@@ -11,6 +11,7 @@ import App from "./App.tsx";
 import "@fontsource/inter/400.css";
 import "@fontsource/inter/500.css";
 import { AuthProvider } from "./contexts/AuthContext.tsx";
+import { FavoritesProvider } from "./contexts/FavoriteContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -18,7 +19,9 @@ createRoot(document.getElementById("root")!).render(
       <Notifications />
       <BrowserRouter>
         <AuthProvider>
-          <App />
+          <FavoritesProvider>
+            <App />
+          </FavoritesProvider>
         </AuthProvider>
       </BrowserRouter>
     </MantineProvider>

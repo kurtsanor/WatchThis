@@ -1,8 +1,8 @@
 import { Text, Title } from "@mantine/core";
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { SimpleGrid } from "@mantine/core";
 import MovieCard from "../components/MovieCard";
-import { useMovieContext } from "../contexts/MovieContext";
+import { FavoritesContext } from "../contexts/FavoriteContext";
 import TrailerModal from "../components/TrailerModal";
 import { useDisclosure } from "@mantine/hooks";
 
@@ -16,14 +16,14 @@ function Favorites() {
   const [movieDetails, setMovieDetails] = useState<MovieDetails>();
 
   const { addToFavorites, removeFromFavorites, isFavorite, favorites } =
-    useMovieContext()!;
+    useContext(FavoritesContext)!;
 
   const handleOnClick = useCallback(
     (movie: any) => {
       open();
       setMovieDetails({ movieId: movie.id, type: movie.name ? "tv" : "movie" });
     },
-    [open]
+    [open],
   );
 
   return (

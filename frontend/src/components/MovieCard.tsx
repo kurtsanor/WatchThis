@@ -2,6 +2,7 @@ import { IconHeart, IconInfoCircle, IconPlayerPlay } from "@tabler/icons-react";
 import {
   ActionIcon,
   Badge,
+  Button,
   Card,
   Center,
   Container,
@@ -18,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 interface MovieCardProps {
   movie: any;
   onClick: (movie: any) => void;
-  addToFavorites: (movie: any) => void;
+  addToFavorites: (mediaId: number, mediaType: string) => void;
   removeFromFavorites: (movieId: number) => void;
   favorite: boolean;
 }
@@ -33,15 +34,17 @@ function MovieCard({
   const theme = useMantineTheme();
   const navigate = useNavigate();
 
-  const handleOnClick = () => {
-    favorite ? removeFromFavorites(movie.id) : addToFavorites(movie);
+  const handleOnClick = async () => {
+    const mediaType = movie.release_date ? "movies" : "tvshows";
+
+    favorite
+      ? removeFromFavorites(movie.id)
+      : addToFavorites(movie.id, mediaType);
   };
 
   const handleMoreInfoOnClick = () => {
     navigate(`/${movie.release_date ? "movies" : "tvshows"}/${movie.id}`);
   };
-
-  console.log("movie card render");
 
   return (
     <Card withBorder radius="md" className={classes.card}>

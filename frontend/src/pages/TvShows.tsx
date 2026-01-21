@@ -14,8 +14,8 @@ import MovieCardSkeleton from "../components/MovieCardSkeleton";
 import { useSearchParams } from "react-router-dom";
 import { useDisclosure } from "@mantine/hooks";
 import TrailerModal from "../components/TrailerModal";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useMovieContext } from "../contexts/MovieContext";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { FavoritesContext } from "../contexts/FavoriteContext";
 import { IconSearch } from "@tabler/icons-react";
 import { genreMap, genres } from "../constants/Genre";
 import { getShowsByGenreAndPage, searchShowsByNameAndPage } from "../api/tvApi";
@@ -40,7 +40,7 @@ function TvShows() {
   const currentPage = searchParams.get("page") || 1;
 
   const { addToFavorites, removeFromFavorites, isFavorite } =
-    useMovieContext()!;
+    useContext(FavoritesContext)!;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -51,6 +51,8 @@ function TvShows() {
         const data = searched
           ? await searchShowsByNameAndPage(searched, currentPage)
           : await getShowsByGenreAndPage(genreId, currentPage);
+        console.log(data);
+
         setTvShows(data);
       } catch (error) {
         alert(error);
@@ -71,7 +73,7 @@ function TvShows() {
       open();
       setTvShowDetails({ id: movie.id, type: type });
     },
-    [open]
+    [open],
   );
 
   const handleOnChange = async (page: number) => {
