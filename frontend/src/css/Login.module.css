@@ -1,0 +1,58 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  min-height: 100vh;
+  background-color: light-dark(
+    var(--mantine-color-gray-0),
+    var(--mantine-color-dark-7)
+  );
+}
+
+.container__form {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  padding: 2rem;
+  border: solid 1px;
+  --tw-shadow:
+    0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)),
+    0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+  box-shadow:
+    var(--tw-inset-shadow), var(--tw-inset-ring-shadow),
+    var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  border-color: light-dark(
+    var(--mantine-color-body),
+    var(--mantine-color-dark-4)
+  );
+
+  background-color: light-dark(
+    var(--mantine-color-white),
+    var(--mantine-color-dark-6)
+  );
+  height: 100%;
+  border-radius: 10px;
+}
+
+.link {
+  color: light-dark(
+    var(--mantine-color-dark-6),
+    var(--mantine-color-white)
+  ) !important;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0;
+    height: 100%;
+  }
+
+  .container__form {
+    width: 100%;
+    padding: 1rem;
+  }
+}

@@ -1,8 +1,19 @@
-import { Anchor, Burger, Drawer, Group, Text } from "@mantine/core";
+import {
+  Anchor,
+  Burger,
+  Button,
+  Drawer,
+  Group,
+  Menu,
+  Text,
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "../css/HeaderSimple.module.css";
-import { IconMovie, IconStereoGlasses } from "@tabler/icons-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
+import { UserButton } from "./UserButton";
+import { IconLogout } from "@tabler/icons-react";
 
 const links = [
   { link: "/", label: "Home" },
@@ -14,6 +25,9 @@ const links = [
 function Header() {
   const [menuOpened, { open, close }] = useDisclosure(false);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const { user, setUser } = useContext(AuthContext);
 
   const items = links.map((link) => (
     <Link
@@ -25,6 +39,12 @@ function Header() {
       {link.label}
     </Link>
   ));
+
+  const handleUserBtnClick = () => {
+    setUser(null);
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
 
   return (
     <header className={classes.header}>
@@ -39,8 +59,45 @@ function Header() {
             </Text>
           </Group>
         </Group>
+        <Group visibleFrom="md">{items}</Group>
         <Group visibleFrom="md" className={classes.rightGroup}>
-          {items}
+          {user && (
+            <>
+              <Menu>
+                <Menu.Target>
+                  <UserButton
+                    firstName={user.firstName}
+                    lastName={user.lastName}
+                    email={user.email}
+                  />
+                </Menu.Target>
+                <Menu.Dropdown>
+                  <Menu.Item
+                    onClick={handleUserBtnClick}
+                    color="red"
+                    leftSection={<IconLogout size={20} />}
+                  >
+                    Logout
+                  </Menu.Item>
+                </Menu.Dropdown>
+              </Menu>
+            </>
+          )}
+          {!user && (
+            <>
+              <Button
+                fw={400}
+                radius={"md"}
+                variant="default"
+                onClick={() => navigate("/signup")}
+              >
+                Sign Up
+              </Button>
+              <Button fw={400} radius={"md"} onClick={() => navigate("/login")}>
+                Sign In
+              </Button>
+            </>
+          )}
         </Group>
         <Burger
           opened={menuOpened}

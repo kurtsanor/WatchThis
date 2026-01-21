@@ -52,7 +52,7 @@ function MovieCard({
         <Container className={classes.img} p={0}>
           <Image
             src={`https://image.tmdb.org/t/p/w500/${encodeURIComponent(
-              movie.backdrop_path
+              movie.backdrop_path,
             )}`}
             height={180}
             className={classes.image}
@@ -93,7 +93,7 @@ function MovieCard({
 
       <Group justify="space-between" className={classes.footer} mt={"auto"}>
         <Center>
-          <Text fz="sm" inline fw={"bold"}>
+          <Text fz="sm" inline c="white">
             {movie.release_date || movie.first_air_date}
           </Text>
         </Center>

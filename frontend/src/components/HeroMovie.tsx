@@ -24,7 +24,7 @@ function HeroMovie({ movie, handleClick }: HeroMovieProps) {
         backgroundImage:
           movie &&
           `url(https://image.tmdb.org/t/p/original/${encodeURIComponent(
-            movie?.backdrop_path
+            movie?.backdrop_path,
           )})`,
       }}
     >
@@ -34,9 +34,9 @@ function HeroMovie({ movie, handleClick }: HeroMovieProps) {
         zIndex={0}
       />
       <Box className={classes.container}>
-        <Title className={classes.title}>
+        <Text className={classes.title}>
           {movie?.title || movie?.original_name}
-        </Title>
+        </Text>
         <Text
           className={classes.description}
           size="lg"

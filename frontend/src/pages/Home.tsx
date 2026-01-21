@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import HeroHeader from "../components/HeroHeader";
 import { getOnTheAirTvShows, getPlayingNowMovies } from "../api/movieApi";
-import { Skeleton, Title, useMantineTheme } from "@mantine/core";
+import { Skeleton, Title, useMantineTheme, Text } from "@mantine/core";
 import MoviesCarousel from "../components/MoviesCarousel";
 
 function Home() {
@@ -42,13 +42,9 @@ function Home() {
                 paddingLeft: "0.5rem",
               }}
             >
-              <Title
-                order={3}
-                mb="xs"
-                style={{ fontFamily: "sans-serif, Arial, Helvetica" }}
-              >
+              <Text fw={500} fz={"h3"} mb="xs" c="white">
                 Trending
-              </Title>
+              </Text>
             </div>
 
             <MoviesCarousel movie={movies}></MoviesCarousel>
@@ -59,14 +55,9 @@ function Home() {
                 paddingLeft: "0.5rem",
               }}
             >
-              <Title
-                order={3}
-                mb="xs"
-                mt={"lg"}
-                style={{ fontFamily: "sans-serif, Arial, Helvetica" }}
-              >
+              <Text fw={500} fz={"h3"} mb="xs" mt={"lg"} c="white">
                 On The Air
-              </Title>
+              </Text>
             </div>
 
             <MoviesCarousel movie={onTheAirShows}></MoviesCarousel>

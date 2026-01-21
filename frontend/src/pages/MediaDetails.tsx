@@ -105,9 +105,9 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
           ></Image>
           <Box miw={0}>
             <Flex justify="space-between">
-              <Title order={1} mb="xs">
+              <Text fw={600} fz={"h1"} mb="xs" c="white">
                 {media?.title || media?.name}
-              </Title>
+              </Text>
 
               <Tooltip label="Rating" position="bottom" color="gray">
                 <Group>
@@ -123,9 +123,9 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
                 media.number_of_seasons + " Seasons"}{" "}
               | 16+
             </Text>
-            <Title order={3} mb="md">
+            <Text fw={600} fz={"h3"} mb="md" c="white">
               Overview
-            </Title>
+            </Text>
             <Text mb="lg">{media?.overview}</Text>
             <Group mb="xl">
               <Text c="dimmed">Genre</Text>

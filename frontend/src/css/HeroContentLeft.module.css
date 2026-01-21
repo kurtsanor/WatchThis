@@ -29,7 +29,7 @@
   font-size: 50px;
   font-weight: 800;
   line-height: 1.1;
-  font-family: sans-serif;
+  /* font-family: sans-serif; */
   text-transform: uppercase;
   max-width: 600px;
 
@@ -47,7 +47,7 @@
 .description {
   color: var(--mantine-color-white);
   max-width: 500px;
-  font-family: sans-serif, Arial, Helvetica;
+  /* font-family: sans-serif, Arial, Helvetica; */
 
   @media (max-width: 768px) {
     max-width: 100%;
@@ -56,7 +56,6 @@
 }
 .control {
   margin-top: calc(var(--mantine-spacing-xl) * 1.5);
-  font-family: sans-serif, Arial, Helvetica;
 
   @media (max-width: 768px) {
     width: 100%;
