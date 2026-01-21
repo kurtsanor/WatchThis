@@ -18,7 +18,7 @@ import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { FavoritesContext } from "../contexts/FavoriteContext";
 import { IconSearch } from "@tabler/icons-react";
 import { genreMap, genres } from "../constants/Genre";
-import { getShowsByGenreAndPage, searchShowsByNameAndPage } from "../api/tvApi";
+import { findByGenreAndPage, searchByTitleAndPage } from "../api/tvApi";
 
 interface tvShowDetails {
   id: number;
@@ -49,13 +49,11 @@ function TvShows() {
     const init = async () => {
       try {
         const data = searched
-          ? await searchShowsByNameAndPage(searched, currentPage)
-          : await getShowsByGenreAndPage(genreId, currentPage);
-        console.log(data);
-
-        setTvShows(data);
+          ? await searchByTitleAndPage(searched, currentPage)
+          : await findByGenreAndPage(genreId, currentPage);
+        setTvShows(data.data);
       } catch (error) {
-        alert(error);
+        console.log(error);
       } finally {
         setIsLoading(false);
       }
@@ -99,6 +97,7 @@ function TvShows() {
 
       <Container mb={"2rem"} size="xs" p={0}>
         <TextInput
+          radius={"md"}
           placeholder="Enter Show Title..."
           ref={searchInput}
           required

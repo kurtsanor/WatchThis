@@ -97,6 +97,7 @@ function Movies() {
 
       <Container mb={"2rem"} size="xs" p={0}>
         <TextInput
+          radius={"md"}
           placeholder="Enter Movie Title..."
           ref={searchInput}
           required

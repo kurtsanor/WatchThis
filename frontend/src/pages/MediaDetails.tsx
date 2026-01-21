@@ -20,7 +20,10 @@ import {
   getYear,
 } from "../utilities/TimeFormatter";
 import MovieDetailsSkeletion from "../components/MovieDetailsSkeleton";
-import { getShowCreditsById, getShowDetailsById } from "../api/tvApi";
+import {
+  findCreditsById as findTvCredits,
+  findDetailsById as findTvDetails,
+} from "../api/tvApi";
 import { IconStarFilled } from "@tabler/icons-react";
 
 interface MediaDetailsProps {
@@ -43,11 +46,11 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
         const data =
           mediaType === "movies"
             ? await findDetailsById(id)
-            : await getShowDetailsById(id);
+            : await findTvDetails(id);
         const castData =
           mediaType === "movies"
             ? await findCreditsById(id)
-            : await getShowCreditsById(id);
+            : await findTvCredits(id);
         setMedia(data.data);
         setCast(castData.data.cast.slice(0, 10));
       } catch (error) {

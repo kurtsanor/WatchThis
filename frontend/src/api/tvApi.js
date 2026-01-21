@@ -1,51 +1,37 @@
-const API_KEY = "368c646199ed46c46b08bced54349719";
+import { axiosInstance } from "../utilities/axiosInstance";
 
-export async function getShowsByGenreAndPage(genre, page) {
-  const url = genre
-    ? `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&language=en-US&page=${page}&sort_by=popularity.desc&with_genres=${genre}}`
-    : `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&language=en-US&page=${page}&sort_by=popularity.desc`;
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-  }
+export async function findByGenreAndPage(genre, page) {
+  const response = axiosInstance
+    .get("/tv", {
+      params: {
+        genre,
+        page,
+      },
+    })
+    .then((res) => res.data);
+  return response;
 }
 
-export async function searchShowsByNameAndPage(searchQuery, page) {
-  const searchUrl = `https://api.themoviedb.org/3/search/tv?query=${encodeURIComponent(
-    searchQuery
-  )}&api_key=${encodeURIComponent(API_KEY)}&page=${page}`;
-
-  try {
-    const res = await fetch(searchUrl);
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
+export async function searchByTitleAndPage(title, page) {
+  const response = axiosInstance
+    .get("/tv/search", {
+      params: {
+        query: title,
+        page,
+      },
+    })
+    .then((res) => res.data);
+  return response;
 }
 
-export async function getShowDetailsById(showId) {
-  const url = `https://api.themoviedb.org/3/tv/${showId}?&api_key=${API_KEY}`;
-
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-  }
+export async function findDetailsById(id) {
+  const response = axiosInstance.get(`/tv/${id}`).then((res) => res.data);
+  return response;
 }
 
-export async function getShowCreditsById(showId) {
-  const url = `https://api.themoviedb.org/3/tv/${showId}/credits?&api_key=${API_KEY}`;
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-  }
+export async function findCreditsById(id) {
+  const response = axiosInstance
+    .get(`/tv/${id}/credits`)
+    .then((res) => res.data);
+  return response;
 }

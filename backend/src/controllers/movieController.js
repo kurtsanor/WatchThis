@@ -64,7 +64,7 @@ const findDetailsById = async (req, res) => {
 const findCreditsById = async (req, res) => {
   try {
     const id = req.params.id;
-    const result = await movieService.findCredtisByIdApi(id);
+    const result = await movieService.findCreditsByIdApi(id);
     res.status(200).json({ data: result });
   } catch (error) {
     res.status(400).json({ message: error.message });

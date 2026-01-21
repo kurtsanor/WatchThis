@@ -3,6 +3,7 @@ const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes");
 const favoriteRoutes = require("./routes/favoriteRoutes");
 const movieRoutes = require("./routes/movieRoutes");
+const tvRoutes = require("./routes/tvRoutes");
 const cors = require("cors");
 
 const app = express();
@@ -20,6 +21,7 @@ app.use("/users", userRoutes);
 app.use("/auth", authRoutes);
 app.use("/favorites", favoriteRoutes);
 app.use("/movies", movieRoutes);
+app.use("/tv", tvRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello from express");

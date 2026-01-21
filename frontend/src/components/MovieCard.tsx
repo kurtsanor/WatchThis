@@ -15,6 +15,7 @@ import {
 import classes from "../css/ArticleCard.module.css";
 import { memo } from "react";
 import { useNavigate } from "react-router-dom";
+import { genreById } from "../constants/Genre";
 
 interface MovieCardProps {
   movie: any;
@@ -69,6 +70,7 @@ function MovieCard({
       </Card.Section>
 
       <Badge
+        fw={500}
         className={classes.rating}
         variant="gradient"
         gradient={{
@@ -76,7 +78,7 @@ function MovieCard({
           to: `${theme.colors.blue[9]}`,
         }}
       >
-        Popular
+        {genreById[movie.genre_ids[0]] || "Unknown"}
       </Badge>
 
       <Group gap={0} mb={"sm"}>
