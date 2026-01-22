@@ -33,4 +33,20 @@ const removeFavorite = async (req, res) => {
   }
 };
 
-module.exports = { addFavorite, findFavoritesByUser, removeFavorite };
+const findAllByUserWithDetails = async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    const result = await favoriteService.findAllByUserWithDetailsApi(userId);
+    res.status(200).json({ data: result });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+};
+
+module.exports = {
+  addFavorite,
+  findFavoritesByUser,
+  removeFavorite,
+  findAllByUserWithDetails,
+};

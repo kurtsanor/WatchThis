@@ -23,8 +23,4 @@ app.use("/favorites", favoriteRoutes);
 app.use("/movies", movieRoutes);
 app.use("/tv", tvRoutes);
 
-app.get("/", (req, res) => {
-  res.send("Hello from express");
-});
-
 module.exports = app;

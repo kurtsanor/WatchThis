@@ -53,7 +53,7 @@ function Movies() {
           : await findByGenreAndPage(genreId, currentPage);
         setMovies(data.data);
       } catch (error) {
-        alert(error);
+        console.log(error);
       } finally {
         setIsLoading(false);
       }

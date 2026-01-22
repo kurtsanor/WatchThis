@@ -69,16 +69,8 @@ function MovieCard({
         </Container>
       </Card.Section>
 
-      <Badge
-        fw={500}
-        className={classes.rating}
-        variant="gradient"
-        gradient={{
-          from: `${theme.colors.blue[4]}`,
-          to: `${theme.colors.blue[9]}`,
-        }}
-      >
-        {genreById[movie.genre_ids[0]] || "Unknown"}
+      <Badge fw={500} className={classes.rating} variant="gradient">
+        {genreById[movie?.genre_ids?.[0] || movie?.genres?.[0]?.id]}
       </Badge>
 
       <Group gap={0} mb={"sm"}>
@@ -109,7 +101,7 @@ function MovieCard({
               className={classes.action}
               onClick={handleMoreInfoOnClick}
             >
-              <IconInfoCircle size={20} color={theme.colors.gray[5]} />
+              <IconInfoCircle size={20} />
             </ActionIcon>
           </Tooltip>
 

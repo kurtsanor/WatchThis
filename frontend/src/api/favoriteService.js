@@ -25,3 +25,10 @@ export const removeFavorite = (favoriteRequest) => {
     .then((res) => res.data);
   return response;
 };
+
+export const findAllByUserWithDetails = (userId) => {
+  const response = axiosInstance
+    .get(`/favorites/user/${userId}`)
+    .then((res) => res.data);
+  return response;
+};

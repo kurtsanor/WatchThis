@@ -1,10 +1,12 @@
 import { Text, Title } from "@mantine/core";
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { SimpleGrid } from "@mantine/core";
 import MovieCard from "../components/MovieCard";
 import { FavoritesContext } from "../contexts/FavoriteContext";
 import TrailerModal from "../components/TrailerModal";
 import { useDisclosure } from "@mantine/hooks";
+import { findAllByUserWithDetails } from "../api/favoriteService";
+import { AuthContext } from "../contexts/AuthContext";
 
 interface MovieDetails {
   movieId: number;
@@ -14,9 +16,30 @@ interface MovieDetails {
 function Favorites() {
   const [opened, { open, close }] = useDisclosure(false);
   const [movieDetails, setMovieDetails] = useState<MovieDetails>();
+  const [userFavorites, setUserFavorites] = useState<any[]>([]);
 
   const { addToFavorites, removeFromFavorites, isFavorite, favorites } =
     useContext(FavoritesContext)!;
+
+  const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (!user) {
+      return;
+    }
+    findAllByUserWithDetails(user._id)
+      .then((res) => {
+        console.log(res.data);
+
+        setUserFavorites(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, [user]);
+
+  const customDelete = async (id: number) => {
+    await removeFromFavorites(id);
+    setUserFavorites((prev) => prev.filter((fav) => fav.id != id));
+  };
 
   const handleOnClick = useCallback(
     (movie: any) => {
@@ -35,13 +58,13 @@ function Favorites() {
         type={movieDetails?.type!}
       ></TrailerModal>
 
-      <Title order={3} mb={"xl"}>
+      <Text fz={"h3"} mb={"xl"} c="white">
         Your Favorites
-      </Title>
+      </Text>
 
-      {favorites && (
+      {userFavorites && (
         <SimpleGrid cols={{ base: 1, sm: 4 }}>
-          {favorites.map((movie: any) => {
+          {userFavorites?.map((movie: any) => {
             const favorite = isFavorite(movie.id);
             return (
               <MovieCard
@@ -49,7 +72,7 @@ function Favorites() {
                 movie={movie}
                 onClick={handleOnClick}
                 addToFavorites={addToFavorites}
-                removeFromFavorites={removeFromFavorites}
+                removeFromFavorites={customDelete}
                 favorite={favorite}
               ></MovieCard>
             );

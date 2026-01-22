@@ -1,3 +1,5 @@
+const tmdbAxios = require("../utils/axiosInstance");
+
 let db;
 
 function setDb(database) {
@@ -25,8 +27,20 @@ const removeFavoriteApi = async (favoriteRequest) => {
     userId: favoriteRequest.userId,
     mediaId: Number(favoriteRequest.mediaId),
   });
-  console.log(result);
 
+  return result;
+};
+
+const findAllByUserWithDetailsApi = async (userId) => {
+  const favorites = await findFavoritesByUserApi(userId);
+
+  const detailedFavorites = favorites.map(async (favorite) => {
+    const { mediaId, mediaType } = favorite;
+
+    const endpoint = mediaType === "movies" ? "movie" : "tv";
+    return tmdbAxios.get(`/${endpoint}/${mediaId}`).then((res) => res.data);
+  });
+  const result = await Promise.all(detailedFavorites);
   return result;
 };
 
@@ -35,4 +49,5 @@ module.exports = {
   findFavoritesByUserApi,
   addFavoriteApi,
   removeFavoriteApi,
+  findAllByUserWithDetailsApi,
 };
