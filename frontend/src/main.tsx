@@ -12,6 +12,12 @@ import "@fontsource/inter/400.css";
 import "@fontsource/inter/500.css";
 import { AuthProvider } from "./contexts/AuthContext.tsx";
 import { FavoritesProvider } from "./contexts/FavoriteContext.tsx";
+import { ModalsProvider } from "@mantine/modals";
+import ReviewModal from "./components/modals/ReviewModal.tsx";
+
+const modals = {
+  ReviewModal: ReviewModal,
+};
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -20,7 +26,9 @@ createRoot(document.getElementById("root")!).render(
       <BrowserRouter>
         <AuthProvider>
           <FavoritesProvider>
-            <App />
+            <ModalsProvider modals={modals}>
+              <App />
+            </ModalsProvider>
           </FavoritesProvider>
         </AuthProvider>
       </BrowserRouter>

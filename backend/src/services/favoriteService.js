@@ -1,51 +1,32 @@
+const Favorite = require("../models/Favorite");
 const tmdbAxios = require("../utils/axiosInstance");
 
-let db;
-
-function setDb(database) {
-  db = database;
-}
-
 const findFavoritesByUserApi = async (userId) => {
-  const collection = db.collection("favorites");
-  const result = await collection.find({ userId: userId });
-
-  return await result.toArray();
+  return await Favorite.find({ userId: userId });
 };
 
 const addFavoriteApi = async (favoriteRequest) => {
-  const collection = db.collection("favorites");
-  const result = await collection.insertOne(favoriteRequest);
-
-  return result;
+  return await Favorite.create(favoriteRequest);
 };
 
 const removeFavoriteApi = async (favoriteRequest) => {
-  const collection = db.collection("favorites");
-
-  const result = await collection.deleteOne({
+  return await Favorite.deleteOne({
     userId: favoriteRequest.userId,
-    mediaId: Number(favoriteRequest.mediaId),
+    mediaId: favoriteRequest.mediaId,
   });
-
-  return result;
 };
 
 const findAllByUserWithDetailsApi = async (userId) => {
   const favorites = await findFavoritesByUserApi(userId);
-
   const detailedFavorites = favorites.map(async (favorite) => {
     const { mediaId, mediaType } = favorite;
-
     const endpoint = mediaType === "movies" ? "movie" : "tv";
     return tmdbAxios.get(`/${endpoint}/${mediaId}`).then((res) => res.data);
   });
-  const result = await Promise.all(detailedFavorites);
-  return result;
+  return await Promise.all(detailedFavorites);
 };
 
 module.exports = {
-  setDb,
   findFavoritesByUserApi,
   addFavoriteApi,
   removeFavoriteApi,

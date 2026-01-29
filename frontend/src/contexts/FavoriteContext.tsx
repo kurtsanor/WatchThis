@@ -18,9 +18,9 @@ import {
 type FavoritesContextType = {
   favorites: any[];
   setFavorites: Dispatch<SetStateAction<any[]>>;
-  addToFavorites: (mediaId: number, mediaType: string) => void;
-  removeFromFavorites: (mediaId: number) => any;
-  isFavorite: any;
+  addToFavorites: (mediaId: number, mediaType: string) => Promise<void>;
+  removeFromFavorites: (mediaId: number) => Promise<void>;
+  isFavorite: (id: number) => boolean;
 };
 
 export const FavoritesContext = createContext<FavoritesContextType | undefined>(
@@ -46,7 +46,7 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
     async (mediaId: number, mediaType: string) => {
       try {
         const favoriteRequest = {
-          userId: user._id,
+          userId: user?._id,
           mediaId: mediaId,
           mediaType: mediaType,
         };
@@ -54,7 +54,7 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
         console.log(result);
         setFavorites((prev) => [...prev, { mediaId: mediaId }]);
       } catch (error) {
-        console.log(error);
+        throw error;
       }
     },
     [user],
@@ -70,7 +70,7 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
         const result = await removeFavorite(favoriteRequest);
         setFavorites((prev) => prev.filter((curr) => curr.mediaId !== mediaId));
       } catch (error) {
-        console.log(error);
+        throw error;
       }
     },
     [user],

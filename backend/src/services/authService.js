@@ -1,12 +1,6 @@
-const { MongoRuntimeError } = require("mongodb");
 const userService = require("./userService");
 const bcrypt = require("bcrypt");
-
-let db;
-
-function setDb(database) {
-  db = database;
-}
+const Credential = require("../models/Credential");
 
 const registerUserApi = async (registerRequest) => {
   const user = {
@@ -15,34 +9,25 @@ const registerUserApi = async (registerRequest) => {
     email: registerRequest.email,
   };
   const createdUser = await userService.createUserApi(user);
-
-  const collection = db.collection("credentials");
   const hashedPassword = await bcrypt.hash(registerRequest.password, 10);
   const credentials = {
-    userId: createdUser.insertedId,
+    userId: createdUser._id,
     password: hashedPassword,
   };
-  const result = await collection.insertOne(credentials);
+  await Credential.insertOne(credentials);
 };
 
 const loginApi = async (loginRequest) => {
-  const userCollection = db.collection("users");
-  const findResult = await userCollection.findOne({
-    email: loginRequest.email,
-  });
-
+  const findResult = await userService.findByEmailApi(loginRequest.email);
   if (!findResult) {
     throw new Error("Email does not exist");
   }
-
-  const credentialsCollection = db.collection("credentials");
-  const result = await credentialsCollection.findOne({
+  const result = await Credential.findOne({
     userId: findResult._id,
   });
-
   return (await bcrypt.compare(loginRequest.password, result.password))
     ? findResult
     : null;
 };
 
-module.exports = { setDb, registerUserApi, loginApi };
+module.exports = { registerUserApi, loginApi };

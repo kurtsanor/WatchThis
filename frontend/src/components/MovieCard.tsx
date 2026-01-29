@@ -1,4 +1,9 @@
-import { IconHeart, IconInfoCircle, IconPlayerPlay } from "@tabler/icons-react";
+import {
+  IconHeart,
+  IconInfoCircle,
+  IconPlayerPlay,
+  IconX,
+} from "@tabler/icons-react";
 import {
   ActionIcon,
   Badge,
@@ -13,15 +18,16 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import classes from "../css/ArticleCard.module.css";
-import { memo } from "react";
+import { memo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { genreById } from "../constants/Genre";
+import { notifications } from "@mantine/notifications";
 
 interface MovieCardProps {
   movie: any;
   onClick: (movie: any) => void;
-  addToFavorites: (mediaId: number, mediaType: string) => void;
-  removeFromFavorites: (movieId: number) => void;
+  addToFavorites: (mediaId: number, mediaType: string) => Promise<void>;
+  removeFromFavorites: (movieId: number) => Promise<void>;
   favorite: boolean;
 }
 
@@ -32,15 +38,29 @@ function MovieCard({
   removeFromFavorites,
   favorite,
 }: MovieCardProps) {
+  const [isLoading, setIsLoading] = useState(false);
   const theme = useMantineTheme();
   const navigate = useNavigate();
 
   const handleOnClick = async () => {
-    const mediaType = movie.release_date ? "movies" : "tvshows";
-
-    favorite
-      ? removeFromFavorites(movie.id)
-      : addToFavorites(movie.id, mediaType);
+    setIsLoading(true);
+    try {
+      const mediaType = movie.release_date ? "movies" : "tvshows";
+      favorite
+        ? await removeFromFavorites(movie.id)
+        : await addToFavorites(movie.id, mediaType);
+    } catch (error: any) {
+      notifications.show({
+        title: "Oops",
+        message: error.response.data.message,
+        color: "red",
+        icon: <IconX />,
+        position: "top-center",
+        withBorder: true,
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleMoreInfoOnClick = () => {
@@ -110,7 +130,11 @@ function MovieCard({
             color="gray"
             withArrow
           >
-            <ActionIcon className={classes.action} onClick={handleOnClick}>
+            <ActionIcon
+              className={classes.action}
+              onClick={handleOnClick}
+              loading={isLoading}
+            >
               <IconHeart
                 size={16}
                 color={theme.colors.red[6]}

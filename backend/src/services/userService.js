@@ -1,13 +1,11 @@
-let db;
-
-function setDb(database) {
-  db = database;
-}
+const User = require("../models/User");
 
 const createUserApi = async (user) => {
-  const collection = db.collection("users");
-  const result = await collection.insertOne(user);
-  return result;
+  return await User.create(user);
 };
 
-module.exports = { createUserApi, setDb };
+const findByEmailApi = async (email) => {
+  return await User.findOne({ email: email });
+};
+
+module.exports = { createUserApi, findByEmailApi };

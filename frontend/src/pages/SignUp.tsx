@@ -11,9 +11,11 @@ import {
   TextInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import classes from "../css/Login.module.css";
 import { registerUser } from "../api/authService";
+import { notifications } from "@mantine/notifications";
+import { IconCheck, IconX } from "@tabler/icons-react";
 
 export default function SignUp() {
   return (
@@ -42,6 +44,7 @@ function SignUpHeader() {
 }
 
 function SignUpForm() {
+  const navigate = useNavigate();
   const form = useForm({
     initialValues: {
       firstName: "",
@@ -62,8 +65,24 @@ function SignUpForm() {
     try {
       const response = await registerUser(form.values);
       console.log(response);
-    } catch (error) {
-      console.log(error);
+      notifications.show({
+        title: "Success",
+        message: response.message,
+        color: "teal",
+        icon: <IconCheck />,
+        position: "top-center",
+        withBorder: true,
+      });
+      navigate("/login");
+    } catch (error: any) {
+      notifications.show({
+        title: "Oops",
+        message: error.message,
+        color: "red",
+        icon: <IconX />,
+        position: "top-center",
+        withBorder: true,
+      });
     }
   };
 
