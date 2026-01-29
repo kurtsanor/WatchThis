@@ -5,11 +5,12 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import type { User } from "../types/user";
 
 export const AuthContext = createContext<any>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<any>();
+  const [user, setUser] = useState<User>();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

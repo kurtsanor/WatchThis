@@ -1,3 +1,4 @@
+const { overwriteMiddlewareResult } = require("mongoose");
 const reviewService = require("../services/reviewService");
 
 const createReview = async (req, res) => {
@@ -20,4 +21,15 @@ const findAllByMediaId = async (req, res) => {
   }
 };
 
-module.exports = { createReview, findAllByMediaId };
+const existsByMediaAndUser = async (req, res) => {
+  try {
+    const mediaId = req.query.mediaId;
+    const userId = req.query.userId;
+    const result = await reviewService.existsByMediaAndUserApi(mediaId, userId);
+    res.status(200).json({ data: Boolean(result) });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+module.exports = { createReview, findAllByMediaId, existsByMediaAndUser };

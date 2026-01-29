@@ -14,7 +14,7 @@ import { useMediaQuery } from "@mantine/hooks";
 import { useParams } from "react-router-dom";
 import ActorCard from "../components/ActorCard";
 import { Carousel } from "@mantine/carousel";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { findCreditsById, findDetailsById } from "../api/movieApi";
 import {
   formatDecimal,
@@ -26,11 +26,13 @@ import {
   findCreditsById as findTvCredits,
   findDetailsById as findTvDetails,
 } from "../api/tvApi";
-import { IconStarFilled } from "@tabler/icons-react";
+import { IconExclamationMark, IconStarFilled } from "@tabler/icons-react";
 import ReviewCard from "../components/ReviewCard";
 import { modals } from "@mantine/modals";
-import { findAllByMediaId } from "../api/reviewService";
+import { existsByMediaAndUser, findAllByMediaId } from "../api/reviewService";
 import type { Review } from "../types/review";
+import { AuthContext } from "../contexts/AuthContext";
+import { notifications } from "@mantine/notifications";
 
 interface MediaDetailsProps {
   mediaType: string;
@@ -43,7 +45,10 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
   const [media, setMedia] = useState<any>(null);
   const [cast, setCast] = useState<any>(null);
   const [reviews, setReviews] = useState<Review[]>([]);
+  const [hasReviewed, setHasReviewed] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -55,15 +60,18 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
         const fetchCastData =
           mediaType === "movies" ? findCreditsById : findTvCredits;
 
-        const [mediaData, castData, reviewsData] = await Promise.all([
-          fetchMediaData(id),
-          fetchCastData(id),
-          findAllByMediaId(Number(id)),
-        ]);
+        const [mediaData, castData, reviewsData, hasReviewed] =
+          await Promise.all([
+            fetchMediaData(id),
+            fetchCastData(id),
+            findAllByMediaId(Number(id)),
+            existsByMediaAndUser(id, user?._id),
+          ]);
 
         setMedia(mediaData.data);
         setCast(castData.data.cast.slice(0, 10));
         setReviews(reviewsData.data);
+        setHasReviewed(hasReviewed?.data);
       } catch (error) {
         console.error(error);
       } finally {
@@ -72,6 +80,28 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
     };
     fetchData();
   }, []);
+
+  const handleReviewClick = () => {
+    if (!user) {
+      notifications.show({
+        title: "Authentication Required",
+        message: "Sign in to leave a review for this show.",
+        color: "yellow",
+        icon: <IconExclamationMark />,
+        position: "top-center",
+        withBorder: true,
+      });
+      return;
+    }
+    modals.openContextModal({
+      title: "Write your review",
+      modal: "ReviewModal",
+      innerProps: { mediaId: media.id },
+      centered: true,
+      size: "lg",
+      radius: "md",
+    });
+  };
 
   const genres = (
     <Text>
@@ -171,20 +201,12 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
             variant="white"
             c={"black"}
             radius={"md"}
-            onClick={() =>
-              modals.openContextModal({
-                title: "Write your review",
-                modal: "ReviewModal",
-                innerProps: { mediaId: media.id },
-                centered: true,
-                size: "lg",
-                radius: "md",
-              })
-            }
+            onClick={handleReviewClick}
           >
-            Write a review
+            {hasReviewed ? "You've reviewed this" : "Write a review"}
           </Button>
           <Divider mb="xl" />
+          {reviewsList.length < 1 && <Text>This show has no reviews.</Text>}
           {reviewsList}
         </>
       )}

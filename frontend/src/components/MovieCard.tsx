@@ -1,4 +1,5 @@
 import {
+  IconExclamationMark,
   IconHeart,
   IconInfoCircle,
   IconPlayerPlay,
@@ -18,10 +19,11 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import classes from "../css/ArticleCard.module.css";
-import { memo, useState } from "react";
+import { memo, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { genreById } from "../constants/Genre";
 import { notifications } from "@mantine/notifications";
+import { AuthContext } from "../contexts/AuthContext";
 
 interface MovieCardProps {
   movie: any;
@@ -42,7 +44,20 @@ function MovieCard({
   const theme = useMantineTheme();
   const navigate = useNavigate();
 
+  const { user } = useContext(AuthContext);
+
   const handleOnClick = async () => {
+    if (!user) {
+      notifications.show({
+        title: "Authentication Required",
+        message: "Sign in to save your favorite movies and shows.",
+        color: "yellow",
+        icon: <IconExclamationMark />,
+        position: "top-center",
+        withBorder: true,
+      });
+      return;
+    }
     setIsLoading(true);
     try {
       const mediaType = movie.release_date ? "movies" : "tvshows";

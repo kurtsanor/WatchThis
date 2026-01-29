@@ -8,4 +8,9 @@ const findAllByMediaIdApi = async (mediaId) => {
   return await Review.find({ mediaId }).populate("userId");
 };
 
-module.exports = { create, findAllByMediaIdApi };
+// checks if user has already reviewed a show
+const existsByMediaAndUserApi = async (mediaId, userId) => {
+  return await Review.findOne({ mediaId, userId });
+};
+
+module.exports = { create, findAllByMediaIdApi, existsByMediaAndUserApi };

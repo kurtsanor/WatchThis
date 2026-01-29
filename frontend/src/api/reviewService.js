@@ -13,3 +13,15 @@ export const findAllByMediaId = (mediaId) => {
     .then((res) => res.data);
   return response;
 };
+
+export const existsByMediaAndUser = (mediaId, userId) => {
+  const response = axiosInstance
+    .get("/reviews/existence", {
+      params: {
+        mediaId,
+        userId,
+      },
+    })
+    .then((res) => res.data);
+  return response;
+};

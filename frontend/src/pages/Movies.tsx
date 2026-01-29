@@ -25,8 +25,6 @@ interface MovieDetails {
   type: string;
 }
 
-const type = "movie";
-
 function Movies() {
   const [movies, setMovies] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -41,6 +39,8 @@ function Movies() {
 
   const { addToFavorites, removeFromFavorites, isFavorite } =
     useContext(FavoritesContext)!;
+
+  const type = "movie";
 
   useEffect(() => {
     window.scrollTo(0, 0);
