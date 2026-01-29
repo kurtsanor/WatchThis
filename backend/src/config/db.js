@@ -15,6 +15,7 @@ async function getConnection() {
     // Connect the client to the server	(optional starting in v4.7)
     await mongoose.connect(process.env.MONGODB_URI, {
       autoIndex: true,
+      dbName: "watchthis_db",
     });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!",
