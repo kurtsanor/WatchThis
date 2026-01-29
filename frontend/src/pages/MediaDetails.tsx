@@ -6,6 +6,7 @@ import {
   Group,
   Image,
   rem,
+  Stack,
   Text,
   Title,
   Tooltip,
@@ -79,7 +80,7 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
       }
     };
     fetchData();
-  }, []);
+  }, [user, id, mediaType]);
 
   const handleReviewClick = () => {
     if (!user) {
@@ -93,14 +94,22 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
       });
       return;
     }
+    if (hasReviewed) {
+      return;
+    }
     modals.openContextModal({
       title: "Write your review",
       modal: "ReviewModal",
-      innerProps: { mediaId: media.id },
+      innerProps: { mediaId: media.id, addToList: addNewReviewToList },
       centered: true,
       size: "lg",
       radius: "md",
     });
+  };
+
+  const addNewReviewToList = (review: Review) => {
+    setReviews((prev) => [review, ...prev]);
+    setHasReviewed(true);
   };
 
   const genres = (
@@ -206,8 +215,10 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
             {hasReviewed ? "You've reviewed this" : "Write a review"}
           </Button>
           <Divider mb="xl" />
-          {reviewsList.length < 1 && <Text>This show has no reviews.</Text>}
-          {reviewsList}
+          <Stack>
+            {reviewsList.length < 1 && <Text>This show has no reviews.</Text>}
+            {reviewsList}
+          </Stack>
         </>
       )}
     </>

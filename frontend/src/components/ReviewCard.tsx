@@ -7,7 +7,7 @@ interface ReviewCardProps {
 
 const ReviewCard = ({ review }: ReviewCardProps) => {
   return (
-    <Stack>
+    <Stack gap={5}>
       <Group>
         <Avatar
           size={30}

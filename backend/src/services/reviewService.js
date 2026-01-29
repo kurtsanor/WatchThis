@@ -5,7 +5,9 @@ const create = async (review) => {
 };
 
 const findAllByMediaIdApi = async (mediaId) => {
-  return await Review.find({ mediaId }).populate("userId");
+  return await Review.find({ mediaId })
+    .populate("userId")
+    .sort({ createdAt: -1 });
 };
 
 // checks if user has already reviewed a show

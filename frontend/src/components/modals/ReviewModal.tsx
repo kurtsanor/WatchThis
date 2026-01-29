@@ -6,6 +6,7 @@ import { IconCheck, IconX } from "@tabler/icons-react";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { createReview } from "../../api/reviewService";
+import type { Review } from "../../types/review";
 
 const ReviewModal = ({
   id,
@@ -13,6 +14,7 @@ const ReviewModal = ({
   innerProps,
 }: ContextModalProps<{
   mediaId: number;
+  addToList: (review: Review) => void;
 }>) => {
   const { user } = useContext(AuthContext);
 
@@ -51,7 +53,19 @@ const ReviewModal = ({
         withBorder: true,
       });
       context.closeModal(id);
-      console.log(response);
+      const createdReview = {
+        ...response.data,
+        userId: {
+          ...response.data.userId,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+        },
+      };
+      console.log(createdReview);
+
+      innerProps.addToList(createdReview);
+      console.log(response.data);
     } catch (error: any) {
       notifications.show({
         title: "Oops",

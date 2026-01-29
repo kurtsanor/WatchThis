@@ -5,7 +5,7 @@ const createReview = async (req, res) => {
   try {
     const review = req.body;
     const result = await reviewService.create(review);
-    res.status(200).json({ message: result });
+    res.status(200).json({ data: result });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
