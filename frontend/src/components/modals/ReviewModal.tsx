@@ -5,8 +5,8 @@ import { notifications } from "@mantine/notifications";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
-import { createReview } from "../../api/reviewService";
-import type { Review } from "../../types/review";
+import { createReview, updateReview } from "../../api/reviewService";
+import type { Review, UpdateReviewRequest } from "../../types/review";
 
 const ReviewModal = ({
   id,
@@ -15,15 +15,19 @@ const ReviewModal = ({
 }: ContextModalProps<{
   mediaId: number;
   addToList: (review: Review) => void;
+  updateList: (review: Review) => void;
+  userReview: Review;
 }>) => {
   const { user } = useContext(AuthContext);
 
+  const isEditMode = Boolean(innerProps.userReview);
+
   const form = useForm({
     initialValues: {
-      mediaId: innerProps?.mediaId,
+      mediaId: innerProps?.mediaId || innerProps.userReview.mediaId,
       userId: user?._id,
-      rating: 0,
-      reviewText: "",
+      rating: innerProps?.userReview?.rating || 0,
+      reviewText: innerProps?.userReview?.reviewText || "",
     },
     validate: {
       rating: (val) =>
@@ -43,28 +47,40 @@ const ReviewModal = ({
 
   const submitReview = async () => {
     try {
-      const response = await createReview(form.values);
+      const updateReviewRequest: UpdateReviewRequest = {
+        _id: innerProps?.userReview?._id,
+        rating: form.values.rating,
+        reviewText: form.values.reviewText,
+      };
+
+      const response = isEditMode
+        ? await updateReview(updateReviewRequest)
+        : await createReview(form.values);
+
       notifications.show({
-        title: "Success",
-        message: "Your review has been posted",
+        title: "Thanks for sharing!",
+        message: `Your review has been ${isEditMode ? "updated" : "posted"}`,
         color: "teal",
         icon: <IconCheck />,
         position: "top-center",
         withBorder: true,
       });
       context.closeModal(id);
-      const createdReview = {
-        ...response.data,
-        userId: {
-          ...response.data.userId,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
-        },
-      };
-      console.log(createdReview);
+      if (isEditMode) {
+        innerProps.updateList(response?.data);
+      } else {
+        const createdReview = {
+          ...response.data,
+          userId: {
+            ...response.data.userId,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+          },
+        };
+        innerProps.addToList(createdReview);
+      }
 
-      innerProps.addToList(createdReview);
       console.log(response.data);
     } catch (error: any) {
       notifications.show({
@@ -115,7 +131,7 @@ const ReviewModal = ({
             type="submit"
             loading={form.submitting}
           >
-            Submit
+            {isEditMode ? "Update" : "Submit"}
           </Button>
         </Group>
       </Stack>

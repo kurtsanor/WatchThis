@@ -8,3 +8,9 @@ export interface Review {
   reviewText: string;
   createdAt: Date;
 }
+
+export interface UpdateReviewRequest {
+  _id: string;
+  rating: number;
+  reviewText: string;
+}

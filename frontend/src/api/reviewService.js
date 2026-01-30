@@ -25,3 +25,22 @@ export const existsByMediaAndUser = (mediaId, userId) => {
     .then((res) => res.data);
   return response;
 };
+
+export const findByMediaAndUser = (mediaId, userId) => {
+  const response = axiosInstance
+    .get("/reviews/find", {
+      params: {
+        mediaId,
+        userId,
+      },
+    })
+    .then((res) => res.data);
+  return response;
+};
+
+export const updateReview = (reviewUpdateRequest) => {
+  const response = axiosInstance
+    .patch(`/reviews/${reviewUpdateRequest._id}`, reviewUpdateRequest)
+    .then((res) => res.data);
+  return response;
+};

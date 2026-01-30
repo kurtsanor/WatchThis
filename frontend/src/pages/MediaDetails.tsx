@@ -30,7 +30,11 @@ import {
 import { IconExclamationMark, IconStarFilled } from "@tabler/icons-react";
 import ReviewCard from "../components/ReviewCard";
 import { modals } from "@mantine/modals";
-import { existsByMediaAndUser, findAllByMediaId } from "../api/reviewService";
+import {
+  existsByMediaAndUser,
+  findAllByMediaId,
+  findByMediaAndUser,
+} from "../api/reviewService";
 import type { Review } from "../types/review";
 import { AuthContext } from "../contexts/AuthContext";
 import { notifications } from "@mantine/notifications";
@@ -82,7 +86,7 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
     fetchData();
   }, [user, id, mediaType]);
 
-  const handleReviewClick = () => {
+  const handleReviewClick = async () => {
     if (!user) {
       notifications.show({
         title: "Authentication Required",
@@ -95,12 +99,27 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
       return;
     }
     if (hasReviewed) {
+      const userReview = await findByMediaAndUser(id, user._id);
+      modals.openContextModal({
+        title: "Edit your review",
+        modal: "ReviewModal",
+        innerProps: {
+          userReview: userReview.data,
+          updateList: updateNewReviewInList,
+        },
+        centered: true,
+        size: "lg",
+        radius: "md",
+      });
       return;
     }
     modals.openContextModal({
       title: "Write your review",
       modal: "ReviewModal",
-      innerProps: { mediaId: media.id, addToList: addNewReviewToList },
+      innerProps: {
+        mediaId: media.id,
+        addToList: addNewReviewToList,
+      },
       centered: true,
       size: "lg",
       radius: "md",
@@ -110,6 +129,21 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
   const addNewReviewToList = (review: Review) => {
     setReviews((prev) => [review, ...prev]);
     setHasReviewed(true);
+  };
+
+  const updateNewReviewInList = (review: Review) => {
+    setReviews((prev) =>
+      prev.map((rev) => {
+        if (rev._id === review._id) {
+          return {
+            ...rev,
+            rating: review.rating,
+            reviewText: review.reviewText,
+          };
+        }
+        return rev;
+      }),
+    );
   };
 
   const genres = (

@@ -65,14 +65,13 @@ function LoginForm() {
       const response = await login(form.values);
       localStorage.setItem("user", JSON.stringify(response.user));
       setUser(response.user);
-
       navigate("/");
     } catch (error: any) {
       notifications.show({
-        title: "Oops",
+        title: "Authentication Failed",
         message: error.response.data.message,
-        color: "red",
-        icon: <IconX />,
+        color: "white",
+        icon: <IconX color="black" />,
         position: "top-center",
         withBorder: true,
       });

@@ -32,4 +32,31 @@ const existsByMediaAndUser = async (req, res) => {
   }
 };
 
-module.exports = { createReview, findAllByMediaId, existsByMediaAndUser };
+const findByMediaAndUser = async (req, res) => {
+  try {
+    const mediaId = req.query.mediaId;
+    const userId = req.query.userId;
+    const result = await reviewService.existsByMediaAndUserApi(mediaId, userId);
+    res.status(200).json({ data: result });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+const updateReview = async (req, res) => {
+  try {
+    const updateRequest = req.body;
+    const result = await reviewService.updateApi(updateRequest);
+    res.status(200).json({ data: result });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+module.exports = {
+  createReview,
+  findAllByMediaId,
+  existsByMediaAndUser,
+  findByMediaAndUser,
+  updateReview,
+};
