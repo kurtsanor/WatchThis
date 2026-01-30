@@ -44,3 +44,10 @@ export const updateReview = (reviewUpdateRequest) => {
     .then((res) => res.data);
   return response;
 };
+
+export const deleteReviewById = (reviewId) => {
+  const response = axiosInstance
+    .delete(`/reviews/${reviewId}`)
+    .then((res) => res.data);
+  return response;
+};

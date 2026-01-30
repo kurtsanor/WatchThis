@@ -1,13 +1,36 @@
-import { Avatar, Group, Rating, Stack, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Avatar,
+  Group,
+  Menu,
+  Rating,
+  Stack,
+  Text,
+} from "@mantine/core";
 import type { Review } from "../types/review";
+import {
+  IconDots,
+  IconDotsVertical,
+  IconEdit,
+  IconTrash,
+} from "@tabler/icons-react";
+import classes from "../css/ReviewCard.module.css";
 
 interface ReviewCardProps {
   review: Review;
+  onEditClick: () => Promise<void>;
+  onDeleteClick: () => Promise<void>;
+  isEditable: boolean;
 }
 
-const ReviewCard = ({ review }: ReviewCardProps) => {
+const ReviewCard = ({
+  review,
+  onEditClick,
+  onDeleteClick,
+  isEditable,
+}: ReviewCardProps) => {
   return (
-    <Stack gap={5}>
+    <Stack gap={5} pos={"relative"}>
       <Group>
         <Avatar
           size={30}
@@ -20,8 +43,33 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
           </Text>
         </Stack>
       </Group>
-      <Rating size={"md"} readOnly defaultValue={review.rating} />
+      <Rating size={"md"} readOnly value={review.rating} />
       <Text>{review.reviewText}</Text>
+      {isEditable && (
+        <Menu position="bottom-end">
+          <Menu.Target>
+            <ActionIcon
+              className={classes.iconDots}
+              radius={"lg"}
+              variant="default"
+            >
+              <IconDotsVertical />
+            </ActionIcon>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Item leftSection={<IconEdit />} onClick={onEditClick}>
+              Edit
+            </Menu.Item>
+            <Menu.Item
+              color="red"
+              leftSection={<IconTrash />}
+              onClick={onDeleteClick}
+            >
+              Delete
+            </Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
+      )}
     </Stack>
   );
 };

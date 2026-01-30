@@ -72,13 +72,14 @@ const ReviewModal = ({
         const createdReview = {
           ...response.data,
           userId: {
-            ...response.data.userId,
+            _id: response.data.userId,
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
           },
         };
         innerProps.addToList(createdReview);
+        console.log("created: ", createdReview);
       }
 
       console.log(response.data);

@@ -28,9 +28,14 @@ const updateApi = async (reviewUpdateRequest) => {
   );
 };
 
+const deleteApi = async (reviewId) => {
+  return await Review.deleteOne({ _id: reviewId });
+};
+
 module.exports = {
   create,
   findAllByMediaIdApi,
   existsByMediaAndUserApi,
   updateApi,
+  deleteApi,
 };

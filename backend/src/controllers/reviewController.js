@@ -53,10 +53,21 @@ const updateReview = async (req, res) => {
   }
 };
 
+const deleteReview = async (req, res) => {
+  try {
+    const reviewId = req.params.reviewId;
+    const result = await reviewService.deleteApi(reviewId);
+    res.status(204).json({ data: result });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 module.exports = {
   createReview,
   findAllByMediaId,
   existsByMediaAndUser,
   findByMediaAndUser,
   updateReview,
+  deleteReview,
 };

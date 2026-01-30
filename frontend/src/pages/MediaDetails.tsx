@@ -27,10 +27,15 @@ import {
   findCreditsById as findTvCredits,
   findDetailsById as findTvDetails,
 } from "../api/tvApi";
-import { IconExclamationMark, IconStarFilled } from "@tabler/icons-react";
+import {
+  IconCheck,
+  IconExclamationMark,
+  IconStarFilled,
+} from "@tabler/icons-react";
 import ReviewCard from "../components/ReviewCard";
 import { modals } from "@mantine/modals";
 import {
+  deleteReviewById,
   existsByMediaAndUser,
   findAllByMediaId,
   findByMediaAndUser,
@@ -99,18 +104,6 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
       return;
     }
     if (hasReviewed) {
-      const userReview = await findByMediaAndUser(id, user._id);
-      modals.openContextModal({
-        title: "Edit your review",
-        modal: "ReviewModal",
-        innerProps: {
-          userReview: userReview.data,
-          updateList: updateNewReviewInList,
-        },
-        centered: true,
-        size: "lg",
-        radius: "md",
-      });
       return;
     }
     modals.openContextModal({
@@ -123,6 +116,44 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
       centered: true,
       size: "lg",
       radius: "md",
+    });
+  };
+
+  const handleEdit = async () => {
+    if (!user) {
+      notifications.show({
+        title: "Authentication Required",
+        message: "Sign in to leave a review for this show.",
+        color: "yellow",
+        icon: <IconExclamationMark />,
+        position: "top-center",
+        withBorder: true,
+      });
+      return;
+    }
+    const userReview = await findByMediaAndUser(id, user._id);
+    modals.openContextModal({
+      title: "Edit your review",
+      modal: "ReviewModal",
+      innerProps: {
+        userReview: userReview.data,
+        updateList: updateNewReviewInList,
+      },
+      centered: true,
+      size: "lg",
+      radius: "md",
+    });
+  };
+
+  const onDeleteClick = async (reviewId: string) => {
+    modals.openConfirmModal({
+      title: <Text fw={500}>Delete comment</Text>,
+      centered: true,
+      children: "Delete your review permanently?",
+      labels: { confirm: "Yes, delete", cancel: "No, don't delete it" },
+      confirmProps: { color: "red", fw: 400 },
+      cancelProps: { fw: 400 },
+      onConfirm: async () => deleteReview(reviewId),
     });
   };
 
@@ -146,6 +177,31 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
     );
   };
 
+  const deleteReview = async (reviewId: string) => {
+    try {
+      await deleteReviewById(reviewId);
+      setReviews((prev) => prev.filter((rev) => rev._id !== reviewId));
+      setHasReviewed(false);
+      notifications.show({
+        title: "Review deleted",
+        message: "Your review has been succesfully removed.",
+        color: "white",
+        icon: <IconCheck color="black" />,
+        position: "top-center",
+        withBorder: true,
+      });
+    } catch (error: any) {
+      notifications.show({
+        title: "There was a problem deleting your review",
+        message: error.message,
+        color: "yellow",
+        icon: <IconExclamationMark />,
+        position: "top-center",
+        withBorder: true,
+      });
+    }
+  };
+
   const genres = (
     <Text>
       {media?.genres?.map((genre: { name: string }) => genre.name).join(" | ")}
@@ -159,7 +215,13 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
   ));
 
   const reviewsList = reviews?.map((review: Review) => (
-    <ReviewCard key={review._id} review={review} />
+    <ReviewCard
+      key={review._id}
+      review={review}
+      onEditClick={handleEdit}
+      isEditable={user?._id === review.userId._id}
+      onDeleteClick={() => onDeleteClick(review._id)}
+    />
   ));
 
   return (
