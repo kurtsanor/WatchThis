@@ -29,21 +29,36 @@ export default function Login() {
 }
 
 function LoginHeader() {
-  const theme = useMantineTheme();
-
   return (
-    <>
-      <Group justify="center" gap={10}>
-        <Center>
-          <img src="/wtLogo.png" height={"100px"} width={"100px"}></img>
-        </Center>
+    <Stack align="center" gap={0} mb="xl">
+      <Group justify="center" gap={12} mb={5}>
+        <img
+          src="/wtLogo.png"
+          height="60px"
+          width="60px"
+          alt="WatchThis Logo"
+          style={{ objectFit: "contain" }}
+        />
+        <Text
+          c="white"
+          fw={700}
+          size="32px"
+          style={{
+            letterSpacing: "-0.5px",
+            lineHeight: 1,
+          }}
+        >
+          WatchThis
+        </Text>
       </Group>
-      <Text c="white" size="md" fw={400} ta={"center"} mb="xl">
+
+      <Text c="dimmed" size="sm" fw={400} ta="center">
         Enjoy the world of entertainment
       </Text>
-    </>
+    </Stack>
   );
 }
+
 function LoginForm() {
   const { setUser } = useContext(AuthContext);
 
@@ -103,7 +118,7 @@ function LoginForm() {
           Log In
         </Button>
       </Group>
-      <Text size="sm" ta="center" mb="md" c="dimmed">
+      <Text size="sm" ta="center" mb="md">
         Dont have an account?{" "}
         <Anchor
           component={Link}
@@ -120,20 +135,15 @@ function LoginForm() {
 function LoginFooter() {
   return (
     <Stack gap={0}>
-      <Text size="xs" ta="center" c="dimmed">
+      <Text size="xs" ta="center">
         By logging in, you agree to our{" "}
-        <Anchor td="underline" c="dimmed">
-          Terms of Use
-        </Anchor>
+        <Anchor td="underline">Terms of Use</Anchor>
       </Text>
-      <Text size="xs" mb="xs" ta="center" c="dimmed">
+      <Text size="xs" mb="xs" ta="center">
         and acknowledge that you have read our{" "}
-        <Anchor td="underline" c="dimmed">
-          Privacy Policy
-        </Anchor>
-        .
+        <Anchor td="underline">Privacy Policy</Anchor>.
       </Text>
-      <Text size="xs" ta="center" c="dimmed" mb="xs" mt="md">
+      <Text size="xs" ta="center" mb="xs" mt="md">
         2026 © WatchThis. All Rights Reserved.
       </Text>
     </Stack>

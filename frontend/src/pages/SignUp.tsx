@@ -27,19 +27,40 @@ export default function SignUp() {
 }
 
 function SignUpHeader() {
-  const theme = useMantineTheme();
-
   return (
-    <>
-      <Group justify="center" gap={10}>
-        <Center>
-          <img src="/wtLogo.png" height={"100px"} width={"100px"}></img>
-        </Center>
+    <Stack align="center" gap={0} mb="xl">
+      <Group justify="center" gap={12} mb={5}>
+        <img
+          src="/wtLogo.png"
+          height="60px"
+          width="60px"
+          alt="WatchThis Logo"
+          style={{ objectFit: "contain" }}
+        />
+        <Text
+          c="white"
+          fw={700}
+          size="32px"
+          style={{
+            fontFamily: "Inter, sans-serif",
+            letterSpacing: "-0.5px",
+            lineHeight: 1,
+          }}
+        >
+          WatchThis
+        </Text>
       </Group>
-      <Text c="white" size="md" fw={400} ta={"center"} mb="xl">
+
+      <Text
+        c="dimmed"
+        size="sm"
+        fw={400}
+        ta="center"
+        style={{ fontFamily: "Inter, sans-serif", opacity: 0.8 }}
+      >
         Enjoy the world of entertainment
       </Text>
-    </>
+    </Stack>
   );
 }
 
@@ -89,24 +110,23 @@ function SignUpForm() {
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack gap={"xs"}>
-        <SimpleGrid cols={2}>
-          <TextInput
-            radius="md"
-            label="First Name"
-            placeholder="eg., John"
-            withAsterisk
-            {...form.getInputProps("firstName")}
-            disabled={form.submitting}
-          />
-          <TextInput
-            radius="md"
-            label="Last Name"
-            placeholder="eg., Doe"
-            withAsterisk
-            {...form.getInputProps("lastName")}
-            disabled={form.submitting}
-          />
-        </SimpleGrid>
+        <TextInput
+          radius="md"
+          label="First Name"
+          placeholder="eg., John"
+          withAsterisk
+          {...form.getInputProps("firstName")}
+          disabled={form.submitting}
+        />
+        <TextInput
+          radius="md"
+          label="Last Name"
+          placeholder="eg., Doe"
+          withAsterisk
+          {...form.getInputProps("lastName")}
+          disabled={form.submitting}
+        />
+
         <TextInput
           radius="md"
           label="Email Address"
@@ -129,10 +149,11 @@ function SignUpForm() {
           type="submit"
           radius="md"
           mt="xs"
+          mb={"sm"}
         >
           Sign Up
         </Button>
-        <Text size="sm" ta="center" c="dimmed">
+        <Text size="sm" ta="center">
           Already have an account?{" "}
           <Anchor
             component={Link}

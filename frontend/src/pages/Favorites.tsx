@@ -7,6 +7,7 @@ import TrailerModal from "../components/TrailerModal";
 import { useDisclosure } from "@mantine/hooks";
 import { findAllByUserWithDetails } from "../api/favoriteService";
 import { AuthContext } from "../contexts/AuthContext";
+import MovieCardSkeleton from "../components/MovieCardSkeleton";
 
 interface MovieDetails {
   movieId: number;
@@ -17,6 +18,7 @@ function Favorites() {
   const [opened, { open, close }] = useDisclosure(false);
   const [movieDetails, setMovieDetails] = useState<MovieDetails>();
   const [userFavorites, setUserFavorites] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { addToFavorites, removeFromFavorites, isFavorite, favorites } =
     useContext(FavoritesContext)!;
@@ -24,16 +26,16 @@ function Favorites() {
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
+    setIsLoading(true);
     if (!user) {
       return;
     }
     findAllByUserWithDetails(user._id)
       .then((res) => {
-        console.log(res.data);
-
         setUserFavorites(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoading(false));
   }, [user]);
 
   const customDelete = async (id: number) => {
@@ -48,6 +50,10 @@ function Favorites() {
     },
     [open],
   );
+
+  if (isLoading) {
+    return <MovieCardSkeleton />;
+  }
 
   return (
     <div>
