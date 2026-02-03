@@ -53,3 +53,35 @@ After installing Node.js and moving to the project directory, follow these steps
    Open your browser and go to [http://localhost:5173](http://localhost:5173) (or the port shown in your terminal).
 
 ---
+
+## Backend
+
+The repository now includes a Node/Express backend in the `backend` folder. Below are the setup and run instructions.
+
+### Prerequisites
+- Node.js (v16+ recommended)
+- npm
+- A MongoDB connection (Atlas or self-hosted)
+- A TMDB API key (https://www.themoviedb.org/settings/api)
+
+### Install dependencies
+From the project root:
+```bash
+cd backend
+npm install
+```
+
+### Environment variables
+Create a `.env` file in the `backend` folder (the backend root, next to `server.js`) with the following variables:
+
+```
+MONGODB_URI=<your-mongodb-connection-string>
+TMDB_API_KEY=<your-tmdb-api-key>
+```
+### Run the backend
+From the `backend` folder:
+
+- To run with Node:
+```bash
+node server.js
+```
