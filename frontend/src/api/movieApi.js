@@ -1,4 +1,4 @@
-import { axiosInstance } from "../utilities/axiosInstance";
+import axiosInstance from "../utilities/axiosInstance";
 
 export async function searchByTitleAndPage(title, page) {
   const response = axiosInstance

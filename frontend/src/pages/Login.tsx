@@ -60,7 +60,7 @@ function LoginHeader() {
 }
 
 function LoginForm() {
-  const { setUser } = useContext(AuthContext);
+  const { setToken } = useContext(AuthContext);
 
   const navigate = useNavigate();
   const form = useForm({
@@ -78,8 +78,8 @@ function LoginForm() {
   const handleLogin = async () => {
     try {
       const response = await login(form.values);
-      localStorage.setItem("user", JSON.stringify(response.user));
-      setUser(response.user);
+      localStorage.setItem("token", response.token);
+      setToken(response.token);
       navigate("/");
     } catch (error: any) {
       notifications.show({

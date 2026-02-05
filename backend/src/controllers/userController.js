@@ -11,4 +11,17 @@ const createUser = async (req, res) => {
   }
 };
 
-module.exports = { createUser };
+const findById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = await userService.findByIdApi(id);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    res.status(200).json({ data: user });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = { createUser, findById };

@@ -8,4 +8,8 @@ const findByEmailApi = async (email) => {
   return await User.findOne({ email: email });
 };
 
-module.exports = { createUserApi, findByEmailApi };
+const findByIdApi = async (id) => {
+  return await User.findById(id);
+};
+
+module.exports = { createUserApi, findByEmailApi, findByIdApi };

@@ -27,7 +27,7 @@ function Header() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { user, setUser } = useContext(AuthContext);
+  const { user, setUser, setToken } = useContext(AuthContext);
 
   const items = links.map((link) => (
     <Link
@@ -41,8 +41,9 @@ function Header() {
   ));
 
   const handleUserBtnClick = () => {
+    localStorage.removeItem("token");
     setUser(null);
-    localStorage.removeItem("user");
+    setToken(null);
     navigate("/login");
   };
 

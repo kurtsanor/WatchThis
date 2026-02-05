@@ -11,11 +11,13 @@ const registerUser = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const userFound = await authService.loginApi(req.body);
-    if (!userFound) {
+    const loginResponse = await authService.loginApi(req.body);
+    if (!loginResponse) {
       return res.status(400).json({ message: "Invalid email or password" });
     }
-    return res.status(200).json({ user: userFound });
+    return res
+      .status(200)
+      .json({ message: "Login sucessful", token: loginResponse });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

@@ -1,4 +1,4 @@
-import { axiosInstance } from "../utilities/axiosInstance";
+import axiosInstance from "../utilities/axiosInstance";
 
 export const findFavoritesByUser = async (userId) => {
   const response = axiosInstance

@@ -6,26 +6,36 @@ import {
   type ReactNode,
 } from "react";
 import type { User } from "../types/user";
+import { jwtDecode, type JwtPayload } from "jwt-decode";
+import { findById } from "../api/userService";
+
+interface CustomJwtPayload extends JwtPayload {
+  id: string;
+  email: string;
+}
 
 export const AuthContext = createContext<any>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User>();
+  const [token, setToken] = useState(localStorage.getItem("token"));
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (!user) {
+    if (!token) {
+      setIsLoading(false);
       return;
     }
-    const parsedUser = JSON.parse(user);
-    setUser(parsedUser);
+    const decoded = jwtDecode<CustomJwtPayload>(token);
+    console.log(decoded);
+    findById(decoded.id).then((res) => setUser(res.data));
     setIsLoading(false);
-  }, []);
+  }, [token]);
 
   const value = {
     user,
     isLoading,
+    setToken,
     setUser,
   };
 

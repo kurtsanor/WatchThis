@@ -1,4 +1,4 @@
-import { axiosInstance } from "../utilities/axiosInstance";
+import axiosInstance from "../utilities/axiosInstance";
 
 export async function findByGenreAndPage(genre, page) {
   const response = axiosInstance
