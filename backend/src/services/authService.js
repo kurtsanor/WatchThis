@@ -1,6 +1,7 @@
 const userService = require("./userService");
 const bcrypt = require("bcrypt");
 const Credential = require("../models/Credential");
+const jwt = require("jsonwebtoken");
 
 const registerUserApi = async (registerRequest) => {
   const user = {
@@ -20,14 +21,17 @@ const registerUserApi = async (registerRequest) => {
 const loginApi = async (loginRequest) => {
   const findResult = await userService.findByEmailApi(loginRequest.email);
   if (!findResult) {
-    throw new Error("Email does not exist");
+    throw new Error("Email does not exist.");
   }
   const result = await Credential.findOne({
     userId: findResult._id,
   });
-  return (await bcrypt.compare(loginRequest.password, result.password))
-    ? findResult
-    : null;
+  const isMatch = await bcrypt.compare(loginRequest.password, result.password);
+  if (!isMatch) {
+    throw new Error("Incorrect login credentials");
+  }
+  const payload = { id: findResult._id, email: findResult.email };
+  return jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: "7d" });
 };
 
 module.exports = { registerUserApi, loginApi };
