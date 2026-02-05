@@ -28,6 +28,7 @@ function Favorites() {
   useEffect(() => {
     setIsLoading(true);
     if (!user) {
+      setIsLoading(false);
       return;
     }
     findAllByUserWithDetails(user._id)

@@ -14,6 +14,7 @@ import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { UserButton } from "./UserButton";
 import { IconLogout } from "@tabler/icons-react";
+import { FavoritesContext } from "../contexts/FavoriteContext";
 
 const links = [
   { link: "/", label: "Home" },
@@ -28,6 +29,7 @@ function Header() {
   const navigate = useNavigate();
 
   const { user, setUser, setToken } = useContext(AuthContext);
+  const { setFavorites } = useContext(FavoritesContext)!;
 
   const items = links.map((link) => (
     <Link
@@ -44,6 +46,7 @@ function Header() {
     localStorage.removeItem("token");
     setUser(null);
     setToken(null);
+    setFavorites([]);
     navigate("/login");
   };
 
