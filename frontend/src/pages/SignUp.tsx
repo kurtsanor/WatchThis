@@ -9,13 +9,14 @@ import {
   PasswordInput,
   SimpleGrid,
   TextInput,
+  Divider,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { Link, useNavigate } from "react-router-dom";
 import classes from "../css/Login.module.css";
 import { registerUser } from "../api/authService";
 import { notifications } from "@mantine/notifications";
-import { IconCheck, IconX } from "@tabler/icons-react";
+import { IconCheck, IconX, IconBrandGoogleFilled } from "@tabler/icons-react";
 
 export default function SignUp() {
   return (
@@ -153,6 +154,22 @@ function SignUpForm() {
         >
           Sign Up
         </Button>
+
+        <Divider my="md" label="Or continue with" labelPosition="center" />
+
+        <Button
+          fullWidth
+          variant="default"
+          radius="md"
+          mb="md"
+          leftSection={<IconBrandGoogleFilled size={18} />}
+          onClick={() => {
+            window.location.href = "http://localhost:3000/auth/google";
+          }}
+        >
+          Sign up using Google
+        </Button>
+        
         <Text size="sm" ta="center">
           Already have an account?{" "}
           <Anchor

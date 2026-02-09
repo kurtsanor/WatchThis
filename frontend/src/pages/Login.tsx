@@ -8,8 +8,9 @@ import {
   Button,
   PasswordInput,
   TextInput,
+  Divider,
 } from "@mantine/core";
-import { IconShieldCheckeredFilled, IconX } from "@tabler/icons-react";
+import { IconShieldCheckeredFilled, IconX, IconBrandGoogleFilled, } from "@tabler/icons-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "@mantine/form";
 import classes from "../css/Login.module.css";
@@ -118,6 +119,23 @@ function LoginForm() {
           Log In
         </Button>
       </Group>
+
+      <Divider my="md" label="Or continue with" labelPosition="center" />
+
+      <Button
+        fullWidth
+        variant="default"
+        radius="md"
+        mb="md"
+        leftSection={<IconBrandGoogleFilled size={18} />}
+        onClick={() => {
+          window.location.href = "http://localhost:3000/auth/google";
+        }}
+      >
+        Continue with Google
+      </Button>
+
+
       <Text size="sm" ta="center" mb="md">
         Dont have an account?{" "}
         <Anchor
