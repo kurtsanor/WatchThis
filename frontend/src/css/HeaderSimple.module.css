@@ -1,9 +1,8 @@
 .header {
   height: 56px;
-  /* margin-bottom: 2rem; */
-  background-color: var(--mantine-color-body);
-  border-bottom: 1px solid
-    light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  background-color: rgba(32, 32, 32, 0.7); /* slightly transparent */
+  backdrop-filter: blur(10px); /* blur behind it */
+  -webkit-backdrop-filter: blur(10px); /* for Safari */
   position: sticky;
   top: 0;
   z-index: 99;

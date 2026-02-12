@@ -1,4 +1,5 @@
 import {
+  IconCalendar,
   IconExclamationMark,
   IconHeart,
   IconInfoCircle,
@@ -12,6 +13,7 @@ import {
   Card,
   Center,
   Container,
+  Divider,
   Group,
   Image,
   Text,
@@ -24,6 +26,7 @@ import { useNavigate } from "react-router-dom";
 import { genreById } from "../constants/Genre";
 import { notifications } from "@mantine/notifications";
 import { AuthContext } from "../contexts/AuthContext";
+import { formatDate } from "../utilities/dateFormatter";
 
 interface MovieCardProps {
   movie: any;
@@ -82,6 +85,10 @@ function MovieCard({
     navigate(`/${movie.release_date ? "movies" : "tvshows"}/${movie.id}`);
   };
 
+  const releaseDate =
+    (movie.release_date || movie.first_air_date) &&
+    formatDate(movie.release_date || movie.first_air_date);
+
   return (
     <Card withBorder radius="md" className={classes.card}>
       <Card.Section
@@ -108,7 +115,7 @@ function MovieCard({
         {genreById[movie?.genre_ids?.[0] || movie?.genres?.[0]?.id]}
       </Badge>
 
-      <Group gap={0} mb={"sm"}>
+      <Group gap={0} mb={"sm"} className={classes.info}>
         <Text
           ta={"left"}
           className={classes.title}
@@ -125,8 +132,9 @@ function MovieCard({
 
       <Group justify="space-between" className={classes.footer} mt={"auto"}>
         <Center>
-          <Text fz="sm" inline c="white">
-            {movie.release_date || movie.first_air_date}
+          <IconCalendar />
+          <Text fz="sm" inline c="white" ml={"xs"}>
+            {releaseDate}
           </Text>
         </Center>
 
@@ -136,7 +144,7 @@ function MovieCard({
               className={classes.action}
               onClick={handleMoreInfoOnClick}
             >
-              <IconInfoCircle size={20} />
+              <IconInfoCircle size={25} />
             </ActionIcon>
           </Tooltip>
 
@@ -151,7 +159,7 @@ function MovieCard({
               loading={isLoading}
             >
               <IconHeart
-                size={16}
+                size={25}
                 color={theme.colors.red[6]}
                 fill={favorite ? theme.colors.red[6] : "none"}
               />

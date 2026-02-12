@@ -142,6 +142,7 @@ function Movies() {
       {movies?.total_pages > 1 && (
         <Center mt={"xl"}>
           <Pagination
+            disabled={isLoading}
             total={Math.min(movies.total_pages, 500)}
             withControls={false}
             value={

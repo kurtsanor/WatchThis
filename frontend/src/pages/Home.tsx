@@ -19,6 +19,8 @@ function Home() {
         const data = await findPlayingNow();
         const shows = await findOnTheAir();
         setMovies(data.data);
+        console.log(data.data);
+
         setOnTheAirShows(shows.data);
       } catch (error) {
         console.error(error);
@@ -36,29 +38,15 @@ function Home() {
         <>
           <HeroHeader movie={movies} />
           <main style={{ padding: "3.2rem", paddingTop: "1rem" }}>
-            <div
-              style={{
-                borderLeft: `solid 5px ${theme.colors.blue[6]}`,
-                paddingLeft: "0.5rem",
-              }}
-            >
-              <Text fw={500} fz={"h3"} mb="xs" c="white">
-                Trending
-              </Text>
-            </div>
+            <Text fw={500} fz={"h3"} mb="xs" c="white">
+              Trending
+            </Text>
 
             <MoviesCarousel movie={movies}></MoviesCarousel>
 
-            <div
-              style={{
-                borderLeft: `solid 5px ${theme.colors.blue[6]}`,
-                paddingLeft: "0.5rem",
-              }}
-            >
-              <Text fw={500} fz={"h3"} mb="xs" mt={"lg"} c="white">
-                On The Air
-              </Text>
-            </div>
+            <Text fw={500} fz={"h3"} mb="xs" mt={"lg"} c="white">
+              On The Air
+            </Text>
 
             <MoviesCarousel movie={onTheAirShows}></MoviesCarousel>
           </main>

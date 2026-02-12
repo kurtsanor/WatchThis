@@ -2,13 +2,12 @@ function Footer() {
   return (
     <footer
       style={{
+        padding: "1rem",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        marginBottom: "1rem",
-        marginTop: "4rem",
-        borderTop: "solid 1px #404040",
+        background: "var(--mantine-color-dark-8)",
       }}
     >
       <p style={{ textAlign: "center", fontSize: "0.85rem" }}>

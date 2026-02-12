@@ -27,7 +27,7 @@ function HeroHeader({ movie }: props) {
       open();
       setMovieDetails({ id: movie.id, type: movie.media_type });
     },
-    [open]
+    [open],
   );
 
   const slides = movie?.results?.slice(0, 4).map((movie: any) => (
@@ -48,7 +48,7 @@ function HeroHeader({ movie }: props) {
             "linear-gradient(to bottom, black 60%, transparent 100%)",
           WebkitMaskRepeat: "no-repeat",
           WebkitMaskSize: "100% 100%",
-          maskImage: "linear-gradient(to bottom, black 97%, transparent 100%)",
+          maskImage: "linear-gradient(to bottom, black 90%, transparent 100%)",
           maskRepeat: "no-repeat",
           maskSize: "100% 100%",
         }}
