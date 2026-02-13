@@ -13,7 +13,7 @@ export const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
   ({ firstName, lastName, email, ...others }: UserButtonProps, ref) => (
     <UnstyledButton ref={ref} className={classes.user} {...others}>
       <Group>
-        <IconUser />
+        <Avatar name={firstName + " " + lastName} />
         <div style={{ flex: 1 }}>
           <Text size="sm" fw={500}>
             {firstName + " " + lastName}

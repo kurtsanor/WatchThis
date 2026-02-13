@@ -1,5 +1,12 @@
 import { Carousel } from "@mantine/carousel";
-import { Button, Paper, Text, Title, useMantineTheme } from "@mantine/core";
+import {
+  Button,
+  Image,
+  Paper,
+  Text,
+  Title,
+  useMantineTheme,
+} from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import classes from "../css/CardsCarousel.module.css";
 import TrailerModal from "./TrailerModal";
@@ -11,17 +18,13 @@ interface CardProps {
 
 const Card = memo(function Card({ image }: CardProps) {
   return (
-    <Paper
-      shadow="md"
-      p="xl"
-      radius="md"
-      style={{
-        backgroundImage: `url(https://image.tmdb.org/t/p/w500/${encodeURIComponent(
-          image,
-        )})`,
-      }}
-      className={classes.card}
-    ></Paper>
+    <Image
+      src={`https://image.tmdb.org/t/p/w500/${image}`}
+      h={250}
+      w={175}
+      fit="fill"
+      radius={"md"}
+    />
   );
 });
 
@@ -59,7 +62,7 @@ function MoviesCarousel({ movie }: CarouselsProps) {
   return (
     <>
       <Carousel
-        slideSize={{ base: "70%", sm: "20%" }}
+        slideSize={{ base: "10%", sm: "10%" }}
         slideGap={10}
         emblaOptions={{ align: "start", slidesToScroll: mobile ? 1 : 3 }}
         controlSize={50}
