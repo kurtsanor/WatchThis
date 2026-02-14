@@ -5,6 +5,7 @@ const favoriteRoutes = require("./routes/favoriteRoutes");
 const movieRoutes = require("./routes/movieRoutes");
 const tvRoutes = require("./routes/tvRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
+const trailerRoutes = require("./routes/trailerRoutes");
 const cors = require("cors");
 
 const app = express();
@@ -24,5 +25,6 @@ app.use("/favorites", favoriteRoutes);
 app.use("/movies", movieRoutes);
 app.use("/tv", tvRoutes);
 app.use("/reviews", reviewRoutes);
+app.use("/trailers", trailerRoutes);
 
 module.exports = app;
