@@ -86,7 +86,6 @@ function SignUpForm() {
   const handleSubmit = async () => {
     try {
       const response = await registerUser(form.values);
-      console.log(response);
       notifications.show({
         title: "Success",
         message: response.message,
@@ -99,7 +98,7 @@ function SignUpForm() {
     } catch (error: any) {
       notifications.show({
         title: "Oops",
-        message: error.message,
+        message: error.response.data.message,
         color: "red",
         icon: <IconX />,
         position: "top-center",
@@ -155,21 +154,6 @@ function SignUpForm() {
           Sign Up
         </Button>
 
-        <Divider my="md" label="Or continue with" labelPosition="center" />
-
-        <Button
-          fullWidth
-          variant="default"
-          radius="md"
-          mb="md"
-          leftSection={<IconBrandGoogleFilled size={18} />}
-          onClick={() => {
-            window.location.href = "http://localhost:3000/auth/google";
-          }}
-        >
-          Sign up using Google
-        </Button>
-        
         <Text size="sm" ta="center">
           Already have an account?{" "}
           <Anchor

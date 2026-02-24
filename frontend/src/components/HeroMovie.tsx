@@ -35,7 +35,7 @@ function HeroMovie({ movie, handleClick }: HeroMovieProps) {
   const navigate = useNavigate();
 
   const genres = (
-    <Text>
+    <Text c={"white"}>
       {movie?.genre_ids
         ?.map((genreId: number) => genreById[genreId])
         .join(" | ")}
@@ -68,11 +68,13 @@ function HeroMovie({ movie, handleClick }: HeroMovieProps) {
         </Text>
         <Group>
           <IconStarFilled color={themes.colors.yellow[6]} size={25} />
-          <Text>{formatDecimal(movie.vote_average)}</Text>
-          <Text>{getYear(movie.release_date || movie.first_air_date)} </Text>
+          <Text c={"white"}>{formatDecimal(movie.vote_average)}</Text>
+          <Text c={"white"}>
+            {getYear(movie.release_date || movie.first_air_date)}{" "}
+          </Text>
           {genres}
         </Group>
-        <Text className={classes.description} mt="xl" lineClamp={4} c={"gray"}>
+        <Text className={classes.description} mt="xl" lineClamp={4}>
           {movie?.overview}
         </Text>
         <Group mt={"xl"}>

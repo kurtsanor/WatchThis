@@ -3,6 +3,8 @@ export interface User {
   email: string;
   firstName: string;
   lastName: string;
+  google_id: string;
+  avatar: string;
   createdAt: Date;
   updatedAt: Date;
 }

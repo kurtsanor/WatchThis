@@ -10,7 +10,11 @@ import {
   TextInput,
   Divider,
 } from "@mantine/core";
-import { IconShieldCheckeredFilled, IconX, IconBrandGoogleFilled, } from "@tabler/icons-react";
+import {
+  IconShieldCheckeredFilled,
+  IconX,
+  IconBrandGoogleFilled,
+} from "@tabler/icons-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "@mantine/form";
 import classes from "../css/Login.module.css";
@@ -127,6 +131,7 @@ function LoginForm() {
         variant="default"
         radius="md"
         mb="md"
+        fw={400}
         leftSection={<IconBrandGoogleFilled size={18} />}
         onClick={() => {
           window.location.href = "http://localhost:3000/auth/google";
@@ -134,7 +139,6 @@ function LoginForm() {
       >
         Continue with Google
       </Button>
-
 
       <Text size="sm" ta="center" mb="md">
         Dont have an account?{" "}
@@ -153,13 +157,11 @@ function LoginForm() {
 function LoginFooter() {
   return (
     <Stack gap={0}>
-      <Text size="xs" ta="center">
-        By logging in, you agree to our{" "}
-        <Anchor td="underline">Terms of Use</Anchor>
+      <Text size="xs" ta="center" c="dimmed">
+        By logging in, you agree to our Terms of Use
       </Text>
-      <Text size="xs" mb="xs" ta="center">
-        and acknowledge that you have read our{" "}
-        <Anchor td="underline">Privacy Policy</Anchor>.
+      <Text size="xs" mb="xs" ta="center" c="dimmed">
+        and acknowledge that you have read our Privacy Policy.
       </Text>
       <Text size="xs" ta="center" mb="xs" mt="md">
         2026 © WatchThis. All Rights Reserved.

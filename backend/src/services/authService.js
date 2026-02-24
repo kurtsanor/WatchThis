@@ -1,9 +1,13 @@
 const userService = require("./userService");
 const bcrypt = require("bcrypt");
 const Credential = require("../models/Credential");
-const jwt = require("jsonwebtoken");
+const jwtUtil = require("../utils/jwtUtil");
 
 const registerUserApi = async (registerRequest) => {
+  const isExistingUser = userService.findByEmailApi(registerRequest.email);
+  if (isExistingUser) {
+    throw new Error("Email is already in use.");
+  }
   const user = {
     firstName: registerRequest.firstName,
     lastName: registerRequest.lastName,
@@ -26,12 +30,14 @@ const loginApi = async (loginRequest) => {
   const result = await Credential.findOne({
     userId: findResult._id,
   });
+  if (findResult.googleId && !result?.password) {
+    throw new Error("This email is registered via Google. Log in with that.");
+  }
   const isMatch = await bcrypt.compare(loginRequest.password, result.password);
   if (!isMatch) {
     throw new Error("Incorrect login credentials");
   }
-  const payload = { id: findResult._id, email: findResult.email };
-  return jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: "7d" });
+  return jwtUtil.generateToken(findResult);
 };
 
 module.exports = { registerUserApi, loginApi };

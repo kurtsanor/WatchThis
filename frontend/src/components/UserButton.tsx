@@ -7,13 +7,14 @@ interface UserButtonProps extends React.ComponentPropsWithoutRef<"button"> {
   firstName: string;
   lastName: string;
   email: string;
+  avatar: string | null;
 }
 
 export const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
-  ({ firstName, lastName, email, ...others }: UserButtonProps, ref) => (
+  ({ firstName, lastName, email, avatar, ...others }: UserButtonProps, ref) => (
     <UnstyledButton ref={ref} className={classes.user} {...others}>
       <Group>
-        <Avatar name={firstName + " " + lastName} />
+        <Avatar src={avatar} name={firstName + " " + lastName} />
         <div style={{ flex: 1 }}>
           <Text size="sm" fw={500}>
             {firstName + " " + lastName}
