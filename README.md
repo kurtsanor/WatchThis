@@ -8,7 +8,7 @@ Not sure what movie to watch? **WatchThis** lets you preview trailers so you can
 - 🔍 **Search & Filter** - Search by title and filter by genres
 - ⭐ **User Reviews & Ratings** - Read and write reviews, rate your favorite content
 - ❤️ **Favorites** - Save your favorite movies and TV shows for later
-- 🎥 **Trailer Preview** - Watch trailers directly in the app
+- 🎥 **Trailer Preview** - Watch trailers directly
 - 👤 **User Authentication** - Create an account, login, and manage your profile
 - 🔐 **Google OAuth** - Quick sign-up with Google
 - 📱 **Responsive Design** - Works seamlessly on desktop and mobile devices
@@ -21,7 +21,7 @@ Not sure what movie to watch? **WatchThis** lets you preview trailers so you can
 - **npm** (comes with Node.js)
 - **MongoDB** connection (Atlas or self-hosted)
 - **TMDB API key** - [Get it here](https://www.themoviedb.org/settings/api)
-- **Google OAuth credentials** (optional, for OAuth login)
+- **Google OAuth credentials** (for OAuth login)
 
 ### Step 1: Clone the Repository
 
@@ -115,7 +115,7 @@ BACKEND_URL=http://localhost:3000
 ### Step 4: Start the Backend Server
 
 ```bash
-node server.js
+node src/server.js
 ```
 
 The backend will be running at `http://localhost:3000`
@@ -128,7 +128,7 @@ To run the complete application:
    ```bash
    cd backend
    npm install
-   node server.js
+   node src/server.js
    ```
 
 2. **Terminal 2** - Start the frontend:
@@ -179,21 +179,8 @@ WatchThis/
 
 ### Backend
 
-- `node server.js` - Start the server
-- `npm test` - Run tests (if configured)
-
-## Attribution
-
-This application uses data and images from [The Movie Database (TMDb)](https://www.themoviedb.org/). This product uses the TMDb API but is not endorsed or certified by TMDb.
-
-## License
-
-This project is licensed under the ISC License.
+- `node src/server.js` - Start the server
 
 ## Support
 
 For issues or questions, please open an issue on the [GitHub repository](https://github.com/kurtsanor/WatchThis/issues).
-
----
-
-© 2026 WatchThis. All Rights Reserved.
