@@ -35,7 +35,7 @@ function Favorites() {
       .then((res) => {
         setUserFavorites(res.data);
       })
-      .catch((err) => console.log(err))
+      .catch((err) => console.log(err.response.status))
       .finally(() => setIsLoading(false));
   }, [user]);
 
