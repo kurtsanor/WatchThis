@@ -1,88 +1,186 @@
-## Installation
+# WatchThis
 
-### 1. Install Node.js
+Not sure what movie to watch? **WatchThis** lets you preview trailers so you can get a quick glimpse before deciding. Discover trending films, explore genres, and find your next watch in seconds.
 
-Download and install Node.js (version 18.x or higher recommended) from the [official Node.js website](https://nodejs.org/).
+## Features
 
----
+- 🎬 **Browse Movies & TV Shows** - Explore trending and upcoming movies and TV shows
+- 🔍 **Search & Filter** - Search by title and filter by genres
+- ⭐ **User Reviews & Ratings** - Read and write reviews, rate your favorite content
+- ❤️ **Favorites** - Save your favorite movies and TV shows for later
+- 🎥 **Trailer Preview** - Watch trailers directly
+- 👤 **User Authentication** - Create an account, login, and manage your profile
+- 🔐 **Google OAuth** - Quick sign-up with Google
+- 📱 **Responsive Design** - Works seamlessly on desktop and mobile devices
 
-### 2. First, open VS Code, then open its terminal and move to the project directory
+## Installation & Setup
 
-Open VS Code, then open its integrated terminal (View > Terminal or Ctrl+`):
+### Prerequisites
 
-- **Windows:** VS Code terminal (PowerShell or Git Bash)
-- **macOS:** VS Code terminal
-- **Linux:** VS Code terminal
+- **Node.js** (version 18.x or higher) - [Download here](https://nodejs.org/)
+- **npm** (comes with Node.js)
+- **MongoDB** connection (Atlas or self-hosted)
+- **TMDB API key** - [Get it here](https://www.themoviedb.org/settings/api)
+- **Google OAuth credentials** (for OAuth login)
 
-Then, run the following commands:
+### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/kurtsanor/Watchthis.git
+git clone https://github.com/kurtsanor/WatchThis.git
+cd WatchThis
 ```
+
+## Frontend Setup
+
+### Step 1: Navigate to Frontend Directory
 
 ```bash
 cd frontend
 ```
 
----
+### Step 2: Install Dependencies
 
-## Project Setup
-
-After installing Node.js and moving to the project directory, follow these steps:
-
-1. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-   Or, if you use yarn:
-   ```bash
-   yarn install
-   ```
-
-2. **Start the development server:**
-   ```bash
-   npm run dev
-   ```
-   Or, with yarn:
-   ```bash
-   yarn dev
-   ```
-
-3. **Open the app:**
-
-   Open your browser and go to [http://localhost:5173](http://localhost:5173) (or the port shown in your terminal).
-
----
-
-## Backend
-
-The repository now includes a Node/Express backend in the `backend` folder. Below are the setup and run instructions.
-
-### Prerequisites
-- Node.js (v16+ recommended)
-- npm
-- A MongoDB connection (Atlas or self-hosted)
-- A TMDB API key (https://www.themoviedb.org/settings/api)
-
-### Install dependencies
-From the project root:
 ```bash
-cd backend
 npm install
 ```
 
-### Environment variables
-Create a `.env` file in the `backend` folder (the backend root, next to `server.js`) with the following variables:
+### Step 3: Configure Environment Variables
 
-```
-MONGODB_URI=<your-mongodb-connection-string>
-TMDB_API_KEY=<your-tmdb-api-key>
-JWT_SECRET_KEY=<your-jwt-secret-key>
-```
-### Run the backend
-From the `backend` folder:
+Create a `.env` file in the `frontend` folder by copying from `.env.example`:
 
-- To run with Node:
 ```bash
-node server.js
+cp .env.example .env
 ```
+
+Edit the `.env` file with your backend URL:
+
+```
+VITE_BACKEND_URL=http://localhost:3000
+```
+
+### Step 4: Start Development Server
+
+```bash
+npm run dev
+```
+
+The frontend will be available at `http://localhost:5173`
+
+## Backend Setup
+
+### Step 1: Navigate to Backend Directory
+
+```bash
+cd backend
+```
+
+### Step 2: Install Dependencies
+
+```bash
+npm install
+```
+
+### Step 3: Configure Environment Variables
+
+Create a `.env` file in the `backend` folder by copying from `.env.example`:
+
+```bash
+cp .env.example .env
+```
+
+Edit the `.env` file with your configuration:
+
+```
+TMDB_API_KEY=your_tmdb_api_key_here
+MONGODB_URI=mongodb+srv://<username>:<password>@mycluster.xpmrkwp.mongodb.net/?appName=myCluster
+JWT_SECRET_KEY=your_jwt_secret_key_here
+
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+
+FRONTEND_URL=http://localhost:5173
+BACKEND_URL=http://localhost:3000
+```
+
+#### Environment Variables Guide:
+
+- **TMDB_API_KEY** - Your The Movie Database API key (required)
+- **MONGODB_URI** - MongoDB connection string with username and password (required)
+- **JWT_SECRET_KEY** - Secret key for JWT token generation (required)
+- **GOOGLE_CLIENT_ID** - Google OAuth client ID (optional, for Google login)
+- **GOOGLE_CLIENT_SECRET** - Google OAuth client secret (optional, for Google login)
+- **FRONTEND_URL** - Frontend application URL (default: http://localhost:5173)
+- **BACKEND_URL** - Backend application URL (default: http://localhost:3000)
+
+### Step 4: Start the Backend Server
+
+```bash
+node src/server.js
+```
+
+The backend will be running at `http://localhost:3000`
+
+## Running Both Frontend & Backend
+
+To run the complete application:
+
+1. **Terminal 1** - Start the backend:
+   ```bash
+   cd backend
+   npm install
+   node src/server.js
+   ```
+
+2. **Terminal 2** - Start the frontend:
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
+
+3. Open your browser and navigate to `http://localhost:5173`
+
+## Project Structure
+
+```
+WatchThis/
+├── backend/
+│   ├── src/
+│   │   ├── controllers/
+│   │   ├── routes/
+│   │   ├── models/
+│   │   ├── services/
+│   │   └── middlewares/
+│   ├── .env.example
+│   ├── package.json
+│   └── server.js
+├─�� frontend/
+│   ├── src/
+│   │   ├── pages/
+│   │   ├── components/
+│   │   ├── layouts/
+│   │   ├── api/
+│   │   └── utilities/
+│   ├── .env.example
+│   ├── package.json
+│   ├── index.html
+│   └── vite.config.ts
+└── README.md
+```
+
+## Available Scripts
+
+### Frontend
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run lint` - Run ESLint
+- `npm run preview` - Preview production build
+
+### Backend
+
+- `node src/server.js` - Start the server
+
+## Support
+
+For issues or questions, please open an issue on the [GitHub repository](https://github.com/kurtsanor/WatchThis/issues).
