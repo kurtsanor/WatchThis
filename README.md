@@ -77,6 +77,7 @@ Create a `.env` file in the `backend` folder (the backend root, next to `server.
 ```
 MONGODB_URI=<your-mongodb-connection-string>
 TMDB_API_KEY=<your-tmdb-api-key>
+JWT_SECRET_KEY=<your-jwt-secret-key>
 ```
 ### Run the backend
 From the `backend` folder:
