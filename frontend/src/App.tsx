@@ -9,10 +9,14 @@ import MediaDetails from "./pages/MediaDetails";
 import AuthLayout from "./layouts/AuthLayout";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import OAuthSuccess from "./pages/OAuthSuccess";
+
 
 function App() {
   return (
     <Routes>
+      <Route path="/oauth-success" element={<OAuthSuccess />} />
+      
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
