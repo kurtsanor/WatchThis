@@ -11,15 +11,18 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import OAuthSuccess from "./pages/OAuthSuccess";
 import SearchResults from "./pages/SearchResults";
+import GuestRoute from "./routes/GuestRoute";
 
 function App() {
   return (
     <Routes>
       <Route path="/oauth-success" element={<OAuthSuccess />} />
 
-      <Route element={<AuthLayout />}>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+      <Route element={<GuestRoute />}>
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+        </Route>
       </Route>
 
       <Route element={<Layout />}>
