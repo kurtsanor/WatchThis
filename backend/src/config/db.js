@@ -1,29 +1,31 @@
-const { MongoClient, ServerApiVersion } = require("mongodb");
 const mongoose = require("mongoose");
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-// const client = new MongoClient(process.env.MONGODB_URI, {
-//   serverApi: {
-//     version: ServerApiVersion.v1,
-//     strict: true,
-//     deprecationErrors: true,
-//   },
-// });
+let cached = global.mongoose;
+if (!cached) cached = global.mongoose = { conn: null, promise: null };
 
 async function getConnection() {
-  try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await mongoose.connect(process.env.MONGODB_URI, {
-      autoIndex: true,
-      dbName: "watchthis_db",
-    });
-    console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!",
-    );
-  } catch (err) {
-    console.error("MongoDB connection failed:", err);
-    process.exit(1); // stop server if DB fails
+  if (cached.conn) return cached.conn;
+
+  if (!cached.promise) {
+    cached.promise = mongoose
+      .connect(process.env.MONGODB_URI, {
+        autoIndex: true,
+        dbName: "watchthis_db",
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      })
+      .then((mongoose) => {
+        console.log("MongoDB connected");
+        return mongoose;
+      })
+      .catch((err) => {
+        console.error("MongoDB connection failed:", err);
+        throw err;
+      });
   }
+
+  cached.conn = await cached.promise;
+  return cached.conn;
 }
 
 module.exports = getConnection;
