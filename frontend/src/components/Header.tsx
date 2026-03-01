@@ -203,8 +203,10 @@ function Header() {
         </Group>
       </Drawer>
       <Spotlight.Root
+        returnFocus={false}
         query={searchQuery}
         onQueryChange={setSearchQuery}
+        onFocus={() => setResult(null)}
         onBlur={() => setResult(null)}
       >
         <Spotlight.Search
@@ -212,6 +214,7 @@ function Header() {
           leftSection={<IconSearch stroke={1.5} />}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
+              setResult(null);
               navigate(
                 `/search?query=${encodeURIComponent(e.currentTarget.value)}`,
               );

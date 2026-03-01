@@ -77,7 +77,6 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
             findAllByMediaId(Number(id)),
             existsByMediaAndUser(id, user?._id),
           ]);
-        console.log(mediaData);
 
         setMedia(mediaData.data);
         setCast(castData.data.cast.slice(0, 10));
@@ -278,8 +277,8 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
                   getYear(media.release_date || media.first_air_date)}{" "}
                 |{" "}
                 {formatRuntime(media.runtime) ||
-                  media.number_of_seasons ||
-                  "none" + " Seasons"}{" "}
+                  media.number_of_seasons + " Seasons" ||
+                  "none"}{" "}
                 | 16+
               </Text>
               <Text fw={600} fz={"h3"} mb="md" c="white">

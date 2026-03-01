@@ -19,8 +19,6 @@ function Home() {
         const data = await findPlayingNow();
         const shows = await findOnTheAir();
         setMovies(data.data);
-        console.log(data.data);
-
         setOnTheAirShows(shows.data);
       } catch (error) {
         console.error(error);

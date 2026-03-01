@@ -73,7 +73,7 @@ const SearchResults = () => {
       )}
 
       <Text fz={"h3"} mb={"xl"} c="white">
-        Showing {contents?.total_results} results for "{searched}"
+        Showing {contents?.results?.length} results for "{searched}"
       </Text>
 
       {contents && !isLoading && (
