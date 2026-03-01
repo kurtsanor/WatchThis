@@ -76,6 +76,7 @@ const ReviewModal = ({
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
+            avatar: user.avatar,
           },
         };
         innerProps.addToList(createdReview);
