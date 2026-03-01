@@ -9,7 +9,7 @@ const cors = require("cors");
 
 const passport = require("passport");
 const initPassport = require("./config/passport");
-const getConnection = require("./config/db");
+// const getConnection = require("./config/db");
 
 const app = express();
 
@@ -26,14 +26,14 @@ app.use(passport.initialize());
 
 app.use(express.json());
 
-app.use(async (req, res, next) => {
-  try {
-    await getConnection();
-    next();
-  } catch (err) {
-    res.status(500).json({ error: "Database connection failed" });
-  }
-});
+// app.use(async (req, res, next) => {
+//   try {
+//     await getConnection();
+//     next();
+//   } catch (err) {
+//     res.status(500).json({ error: "Database connection failed" });
+//   }
+// });
 
 app.use("/users", userRoutes);
 app.use("/auth", authRoutes);

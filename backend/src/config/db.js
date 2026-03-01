@@ -17,7 +17,7 @@ async function getConnection() {
     console.log("Connected to MongoDB!");
   } catch (err) {
     console.error("MongoDB connection failed:", err);
-    throw err; // let app.js middleware handle it instead of killing the process
+    throw err;
   }
 }
 
