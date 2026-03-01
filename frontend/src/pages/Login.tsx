@@ -134,7 +134,7 @@ function LoginForm() {
         fw={400}
         leftSection={<IconBrandGoogleFilled size={18} />}
         onClick={() => {
-          window.location.href = `${import.meta.env.VITE_BACKEND_URL}}/auth/google`;
+          window.location.href = `${import.meta.env.VITE_BACKEND_URL}/auth/google`;
         }}
       >
         Continue with Google
