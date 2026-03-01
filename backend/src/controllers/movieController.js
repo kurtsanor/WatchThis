@@ -18,6 +18,8 @@ const findByGenreAndPage = async (req, res) => {
     const result = await movieService.findByGenreAndPageApi(genre, page);
     res.status(200).json({ data: result });
   } catch (error) {
+    console.log(error);
+
     res.status(500).json({ message: error.message });
   }
 };
@@ -71,6 +73,18 @@ const findCreditsById = async (req, res) => {
   }
 };
 
+const globalSearch = async (req, res) => {
+  try {
+    const query = req.query.query;
+    const page = req.query.page;
+
+    const result = await movieService.globalSearchApi(query, page);
+    res.status(200).json({ data: result });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 module.exports = {
   findByGenreAndPage,
   searchByTitleAndPage,
@@ -79,4 +93,5 @@ module.exports = {
   findOnTheAir,
   findDetailsById,
   findCreditsById,
+  globalSearch,
 };

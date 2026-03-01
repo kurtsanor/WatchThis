@@ -77,6 +77,7 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
             findAllByMediaId(Number(id)),
             existsByMediaAndUser(id, user?._id),
           ]);
+        console.log(mediaData);
 
         setMedia(mediaData.data);
         setCast(castData.data.cast.slice(0, 10));
@@ -240,8 +241,9 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
             <Image
               radius="md"
               src={
-                media &&
-                `https://image.tmdb.org/t/p/original/${media.backdrop_path}`
+                media && media.backdrop_path
+                  ? `https://image.tmdb.org/t/p/original/${media.backdrop_path}`
+                  : "https://placehold.co/600x400?text=Placeholder"
               }
               w={isMobile ? "100%" : "30vw"}
               h="80vh"
@@ -257,7 +259,7 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
                 maskSize: "100% 100%",
               }}
             ></Image>
-            <Box miw={0}>
+            <Box miw={0} flex={1}>
               <Flex justify="space-between">
                 <Text fw={600} fz={"h1"} mb="xs" c="white">
                   {media?.title || media?.name}
@@ -272,9 +274,12 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
               </Flex>
 
               <Text mb="xl" c="dimmed">
-                {getYear(media.release_date || media.first_air_date)} |{" "}
+                {media.release_date &&
+                  getYear(media.release_date || media.first_air_date)}{" "}
+                |{" "}
                 {formatRuntime(media.runtime) ||
-                  media.number_of_seasons + " Seasons"}{" "}
+                  media.number_of_seasons ||
+                  "none" + " Seasons"}{" "}
                 | 16+
               </Text>
               <Text fw={600} fz={"h3"} mb="md" c="white">

@@ -1,80 +1,61 @@
+import { Center, Pagination, SimpleGrid, Text } from "@mantine/core";
 import MovieCard from "../components/MovieCard";
-import {
-  Button,
-  Center,
-  Container,
-  Group,
-  Pagination,
-  SegmentedControl,
-  SimpleGrid,
-  Text,
-  TextInput,
-} from "@mantine/core";
-import MovieCardSkeleton from "../components/MovieCardSkeleton";
-import { useSearchParams } from "react-router-dom";
-import { findByGenreAndPage, searchByTitleAndPage } from "../api/movieApi";
-import { useDisclosure } from "@mantine/hooks";
 import TrailerModal from "../components/TrailerModal";
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { useDisclosure } from "@mantine/hooks";
+import MovieCardSkeleton from "../components/MovieCardSkeleton";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { FavoritesContext } from "../contexts/FavoriteContext";
-import { IconSearch } from "@tabler/icons-react";
-import { genreMap, genres } from "../constants/Genre";
+import { useSearchParams } from "react-router-dom";
+import { globalSearch } from "../api/movieApi";
 
 interface MovieDetails {
   id: number;
   type: string;
 }
 
-function Movies() {
-  const [movies, setMovies] = useState<any>(null);
+const SearchResults = () => {
+  const [contents, setContents] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [opened, { open, close }] = useDisclosure(false);
   const [movieDetails, setMovieDetails] = useState<MovieDetails>();
-  const [genreId, setGenreId] = useState<number | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const [opened, { open, close }] = useDisclosure(false);
 
   const currentPage = searchParams.get("page") || 1;
+  const searched = searchParams.get("query");
 
   const { addToFavorites, removeFromFavorites, isFavorite } =
     useContext(FavoritesContext)!;
 
-  const type = "movie";
-
   useEffect(() => {
     window.scrollTo(0, 0);
     setIsLoading(true);
-
-    const init = async () => {
-      try {
-        const data = await findByGenreAndPage(genreId, currentPage);
-        setMovies(data.data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    init();
-  }, [currentPage, genreId]);
+    globalSearch(searched, currentPage)
+      .then((res) => {
+        console.log(res);
+        setContents(res);
+      })
+      .finally(() => setIsLoading(false));
+  }, [currentPage, searched]);
 
   const handleOnClick = useCallback(
     (movie: any) => {
       open();
-      setMovieDetails({ id: movie.id, type: type });
+      setMovieDetails({ id: movie.id, type: movie.media_type });
     },
     [open],
   );
 
   const handleOnChange = async (page: number) => {
     setSearchParams({
+      ...(searched ? { query: searched } : {}),
       page: page.toString(),
     });
   };
 
-  const handleGenreChange = (genre: string) => {
-    const id = genreMap[genre as keyof typeof genreMap];
-    setGenreId(id);
-  };
+  if (isLoading) {
+    return <MovieCardSkeleton />;
+  }
 
   return (
     <>
@@ -85,24 +66,19 @@ function Movies() {
         type={movieDetails?.type!}
       ></TrailerModal>
 
-      <SegmentedControl
-        fullWidth
-        data={genres}
-        mb="1rem"
-        color="blue"
-        onChange={handleGenreChange}
-      ></SegmentedControl>
-
-      {movies?.results?.length < 1 && (
+      {contents?.results?.length < 1 && (
         <Text fz="h2" ta={"center"}>
           No results found!
         </Text>
       )}
 
-      {isLoading && <MovieCardSkeleton></MovieCardSkeleton>}
-      {movies && !isLoading && (
+      <Text fz={"h3"} mb={"xl"} c="white">
+        Showing {contents?.total_results} results for "{searched}"
+      </Text>
+
+      {contents && !isLoading && (
         <SimpleGrid cols={{ base: 1, xs: 2, md: 4 }}>
-          {movies?.results?.map((movie: any) => {
+          {contents?.results?.map((movie: any) => {
             const favorite = isFavorite(movie.id);
             return (
               <MovieCard
@@ -117,11 +93,12 @@ function Movies() {
           })}
         </SimpleGrid>
       )}
-      {movies?.total_pages > 1 && (
+
+      {contents?.total_pages > 1 && (
         <Center mt={"xl"}>
           <Pagination
             disabled={isLoading}
-            total={Math.min(movies.total_pages, 500)}
+            total={Math.min(contents.total_pages, 500)}
             withControls={false}
             value={
               typeof currentPage !== "number"
@@ -134,5 +111,6 @@ function Movies() {
       )}
     </>
   );
-}
-export default Movies;
+};
+
+export default SearchResults;

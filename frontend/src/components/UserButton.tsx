@@ -14,7 +14,7 @@ export const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
   ({ firstName, lastName, email, avatar, ...others }: UserButtonProps, ref) => (
     <UnstyledButton ref={ref} className={classes.user} {...others}>
       <Group>
-        <Avatar src={avatar} name={firstName + " " + lastName} />
+        <Avatar size={35} src={avatar} name={firstName + " " + lastName} />
         <div style={{ flex: 1 }}>
           <Text size="sm" fw={500}>
             {firstName + " " + lastName}

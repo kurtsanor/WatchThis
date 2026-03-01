@@ -56,6 +56,17 @@ const findCreditsByIdApi = async (id) => {
   return response;
 };
 
+const globalSearchApi = (searchQuery, page) => {
+  const params = {
+    query: searchQuery,
+    page,
+  };
+  const response = tmdbAxios
+    .get("/search/multi", { params })
+    .then((res) => res.data);
+  return response;
+};
+
 module.exports = {
   searchByTitleAndPageApi,
   findByGenreAndPageApi,
@@ -64,4 +75,5 @@ module.exports = {
   findOnTheAirApi,
   findDetailsByIdApi,
   findCreditsByIdApi,
+  globalSearchApi,
 };

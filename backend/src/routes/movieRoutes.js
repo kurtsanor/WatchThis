@@ -4,6 +4,7 @@ const movieController = require("../controllers/movieController");
 
 router.get("/", movieController.findByGenreAndPage);
 router.get("/search", movieController.searchByTitleAndPage);
+router.get("/search-global", movieController.globalSearch);
 router.get("/trailer/:type/:id", movieController.findTrailerByTypeAndId);
 router.get("/trending", movieController.findPlayingNow);
 router.get("/on_the_air", movieController.findOnTheAir);

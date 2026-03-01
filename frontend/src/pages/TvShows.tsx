@@ -95,26 +95,13 @@ function TvShows() {
         type={tvShowDetails?.type!}
       ></TrailerModal>
 
-      <Container mb={"2rem"} size="xs" p={0}>
-        <TextInput
-          radius={"md"}
-          placeholder="Enter Show Title..."
-          ref={searchInput}
-          required
-          onKeyDown={handleSearch}
-          leftSection={<IconSearch size={17}></IconSearch>}
-        ></TextInput>
-      </Container>
-
-      {!searched && (
-        <SegmentedControl
-          fullWidth
-          data={genres}
-          mb="1rem"
-          color="blue"
-          onChange={handleGenreChange}
-        ></SegmentedControl>
-      )}
+      <SegmentedControl
+        fullWidth
+        data={genres}
+        mb="1rem"
+        color="blue"
+        onChange={handleGenreChange}
+      ></SegmentedControl>
 
       {tvShows?.results.length < 1 && (
         <Text fz="h2" ta={"center"}>
@@ -123,7 +110,7 @@ function TvShows() {
       )}
       {isLoading && <MovieCardSkeleton></MovieCardSkeleton>}
       {tvShows && !isLoading && (
-        <SimpleGrid cols={{ base: 1, sm: 4 }}>
+        <SimpleGrid cols={{ base: 1, xs: 2, md: 4 }}>
           {tvShows.results.map((movie: any) => {
             const favorite = isFavorite(movie.id);
             return (

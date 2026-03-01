@@ -82,7 +82,7 @@ function MovieCard({
   };
 
   const handleMoreInfoOnClick = () => {
-    navigate(`/${movie.release_date ? "movies" : "tvshows"}/${movie.id}`);
+    navigate(`/${"release_date" in movie ? "movies" : "tvshows"}/${movie.id}`);
   };
 
   const releaseDate =
@@ -97,9 +97,13 @@ function MovieCard({
       >
         <Container className={classes.img} p={0}>
           <Image
-            src={`https://image.tmdb.org/t/p/w500/${encodeURIComponent(
-              movie.backdrop_path,
-            )}`}
+            src={
+              movie.backdrop_path
+                ? `https://image.tmdb.org/t/p/w500/${encodeURIComponent(
+                    movie.backdrop_path,
+                  )}`
+                : "https://placehold.co/600x400?text=Placeholder"
+            }
             height={180}
             className={classes.image}
           />

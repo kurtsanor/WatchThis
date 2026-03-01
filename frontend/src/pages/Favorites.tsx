@@ -70,7 +70,7 @@ function Favorites() {
       </Text>
 
       {userFavorites && (
-        <SimpleGrid cols={{ base: 1, sm: 4 }}>
+        <SimpleGrid cols={{ base: 1, xs: 2, md: 4 }}>
           {userFavorites?.map((movie: any) => {
             const favorite = isFavorite(movie.id);
             return (

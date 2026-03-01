@@ -10,13 +10,13 @@ import AuthLayout from "./layouts/AuthLayout";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import OAuthSuccess from "./pages/OAuthSuccess";
-
+import SearchResults from "./pages/SearchResults";
 
 function App() {
   return (
     <Routes>
       <Route path="/oauth-success" element={<OAuthSuccess />} />
-      
+
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
@@ -25,6 +25,7 @@ function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<Home></Home>} />
         <Route path="/favorites" element={<Favorites></Favorites>} />
+        <Route path="/search" element={<SearchResults />} />
 
         <Route path="/movies" element={<Movies></Movies>} />
         <Route

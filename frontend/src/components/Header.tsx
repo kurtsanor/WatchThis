@@ -1,20 +1,26 @@
 import {
+  ActionIcon,
   Anchor,
+  Badge,
   Burger,
   Button,
+  Center,
   Drawer,
   Group,
+  Image,
   Menu,
   Text,
 } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { useDebouncedValue, useDisclosure } from "@mantine/hooks";
 import classes from "../css/HeaderSimple.module.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { UserButton } from "./UserButton";
-import { IconLogout } from "@tabler/icons-react";
+import { IconLogout, IconSearch } from "@tabler/icons-react";
 import { FavoritesContext } from "../contexts/FavoriteContext";
+import { Spotlight, spotlight } from "@mantine/spotlight";
+import { globalSearch } from "../api/movieApi";
 
 const links = [
   { link: "/", label: "Home" },
@@ -24,12 +30,24 @@ const links = [
 ];
 
 function Header() {
+  const [result, setResult] = useState<any>(null);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const [debouncedSearch] = useDebouncedValue(searchQuery, 250);
+
   const [menuOpened, { open, close }] = useDisclosure(false);
   const location = useLocation();
   const navigate = useNavigate();
 
   const { token, user, setUser, setToken, isLoading } = useContext(AuthContext);
   const { setFavorites } = useContext(FavoritesContext)!;
+
+  useEffect(() => {
+    if (!searchQuery) return;
+    globalSearch(searchQuery).then((res) => {
+      setResult(res);
+    });
+  }, [debouncedSearch]);
 
   const items = links.map((link) => (
     <Link
@@ -51,6 +69,43 @@ function Header() {
     navigate("/login");
   };
 
+  const mockData = result?.results.map((item: any) => (
+    <Spotlight.Action
+      key={item.id}
+      onClick={() => {
+        navigate(
+          `/${item.media_type == "movie" ? "movies" : "tvshows"}/${item.id}`,
+        );
+      }}
+    >
+      <Group wrap="nowrap" w="100%">
+        <Center>
+          <Image
+            src={
+              item.backdrop_path
+                ? `https://image.tmdb.org/t/p/w500/${item.backdrop_path}`
+                : "https://placehold.co/600x400?text=Placeholder"
+            }
+            alt={item.original_title}
+            w={60}
+            h={60}
+            fallbackSrc="https://placehold.co/600x400?text=Placeholder"
+          />
+        </Center>
+
+        <div style={{ flex: 1 }}>
+          <Text>{item.title || item.name}</Text>
+
+          {item.overview && (
+            <Text opacity={0.6} size="xs" lineClamp={2}>
+              {item.overview}
+            </Text>
+          )}
+        </div>
+      </Group>
+    </Spotlight.Action>
+  ));
+
   return (
     <header className={classes.header}>
       <Group className={classes.inner}>
@@ -68,6 +123,14 @@ function Header() {
         <Group visibleFrom="md">{items}</Group>
 
         <Group visibleFrom="md" className={classes.rightGroup}>
+          <ActionIcon
+            tabIndex={-1}
+            variant="transparent"
+            size={35}
+            onClick={spotlight.open}
+          >
+            <IconSearch color="white" />
+          </ActionIcon>
           {token ? (
             user ? (
               <Menu>
@@ -139,6 +202,31 @@ function Header() {
           )}
         </Group>
       </Drawer>
+      <Spotlight.Root
+        query={searchQuery}
+        onQueryChange={setSearchQuery}
+        onBlur={() => setResult(null)}
+      >
+        <Spotlight.Search
+          placeholder="Search Movies or TV Shows..."
+          leftSection={<IconSearch stroke={1.5} />}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              navigate(
+                `/search?query=${encodeURIComponent(e.currentTarget.value)}`,
+              );
+              spotlight.close();
+            }
+          }}
+        />
+        <Spotlight.ActionsList style={{ maxHeight: 400, overflowY: "auto" }}>
+          {mockData?.length > 0 ? (
+            mockData
+          ) : (
+            <Spotlight.Empty>Nothing found...</Spotlight.Empty>
+          )}
+        </Spotlight.ActionsList>
+      </Spotlight.Root>
     </header>
   );
 }

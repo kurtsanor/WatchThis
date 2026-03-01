@@ -56,3 +56,21 @@ export async function findCreditsById(id) {
     .then((res) => res.data);
   return response;
 }
+
+export async function globalSearch(query, page) {
+  const params = {
+    query: query,
+    page,
+  };
+  const response = axiosInstance
+    .get("/movies/search-global", { params })
+    .then((res) => {
+      return {
+        ...res.data.data,
+        results: res.data.data.results.filter(
+          (item) => item.media_type !== "person",
+        ),
+      };
+    });
+  return response;
+}
