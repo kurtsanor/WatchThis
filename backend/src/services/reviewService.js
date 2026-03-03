@@ -32,10 +32,15 @@ const deleteApi = async (reviewId) => {
   return await Review.deleteOne({ _id: reviewId });
 };
 
+const findById = async (reviewId) => {
+  return await Review.findById(reviewId);
+};
+
 module.exports = {
   create,
   findAllByMediaIdApi,
   existsByMediaAndUserApi,
   updateApi,
   deleteApi,
+  findById,
 };

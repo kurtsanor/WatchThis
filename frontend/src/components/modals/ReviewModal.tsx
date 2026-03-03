@@ -25,7 +25,6 @@ const ReviewModal = ({
   const form = useForm({
     initialValues: {
       mediaId: innerProps?.mediaId || innerProps.userReview.mediaId,
-      userId: user?._id,
       rating: innerProps?.userReview?.rating || 0,
       reviewText: innerProps?.userReview?.reviewText || "",
     },

@@ -8,7 +8,7 @@ router.use(verifyJwt);
 
 router.post("/", favoriteController.addFavorite);
 router.get("/", favoriteController.findFavoritesByUser);
-router.delete("/", favoriteController.removeFavorite);
-router.get("/user/:id", favoriteController.findAllByUserWithDetails);
+router.get("/media", favoriteController.findAllByUserWithDetails);
+router.delete("/:mediaId", favoriteController.removeFavorite);
 
 module.exports = router;

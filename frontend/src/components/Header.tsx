@@ -139,7 +139,7 @@ function Header() {
                     firstName={user.firstName}
                     lastName={user.lastName}
                     email={user.email}
-                    avatar={user.avatar || null}
+                    avatar={user.avatar}
                   />
                 </Menu.Target>
                 <Menu.Dropdown>

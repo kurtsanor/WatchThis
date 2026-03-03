@@ -1,9 +1,11 @@
-const { overwriteMiddlewareResult } = require("mongoose");
 const reviewService = require("../services/reviewService");
 
 const createReview = async (req, res) => {
   try {
-    const review = req.body;
+    const review = {
+      ...req.body,
+      userId: req.user.id,
+    };
     const result = await reviewService.create(review);
     res.status(200).json({ data: result });
   } catch (error) {
@@ -55,10 +57,12 @@ const updateReview = async (req, res) => {
 
 const deleteReview = async (req, res) => {
   try {
-    const reviewId = req.params.reviewId;
-    const result = await reviewService.deleteApi(reviewId);
+    // access the review mongoose document sent by middleware
+    const result = await req.review.deleteOne();
     res.status(204).json({ data: result });
   } catch (error) {
+    console.log(error);
+
     res.status(400).json({ message: error.message });
   }
 };

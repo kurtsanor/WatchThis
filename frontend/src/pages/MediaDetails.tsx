@@ -193,7 +193,7 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
     } catch (error: any) {
       notifications.show({
         title: "There was a problem deleting your review",
-        message: error.message,
+        message: error.response.data.message,
         color: "yellow",
         icon: <IconExclamationMark />,
         position: "top-center",

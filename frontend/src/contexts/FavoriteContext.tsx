@@ -37,7 +37,7 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
     if (!user) {
       return;
     }
-    findFavoritesByUser(user._id).then((res) => {
+    findFavoritesByUser().then((res) => {
       setFavorites(res.data);
     });
   }, [user]);
@@ -46,7 +46,6 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
     async (mediaId: number, mediaType: string) => {
       try {
         const favoriteRequest = {
-          userId: user?._id,
           mediaId: mediaId,
           mediaType: mediaType,
         };
@@ -64,7 +63,6 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
     async (mediaId: number) => {
       try {
         const favoriteRequest = {
-          userId: user._id,
           mediaId: mediaId,
         };
         const result = await removeFavorite(favoriteRequest);

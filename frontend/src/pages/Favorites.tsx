@@ -31,7 +31,7 @@ function Favorites() {
       setIsLoading(false);
       return;
     }
-    findAllByUserWithDetails(user._id)
+    findAllByUserWithDetails()
       .then((res) => {
         setUserFavorites(res.data);
       })

@@ -1,9 +1,7 @@
 import axiosInstance from "../utilities/axiosInstance";
 
-export const findFavoritesByUser = async (userId) => {
-  const response = axiosInstance
-    .get(`/favorites?userId=${userId}`)
-    .then((res) => res.data);
+export const findFavoritesByUser = async () => {
+  const response = axiosInstance.get(`/favorites`).then((res) => res.data);
   return response;
 };
 
@@ -15,20 +13,16 @@ export const addFavorite = (favoriteRequest) => {
 };
 
 export const removeFavorite = (favoriteRequest) => {
+  const mediaId = favoriteRequest.mediaId;
   const response = axiosInstance
-    .delete("/favorites", {
-      params: {
-        userId: favoriteRequest.userId,
-        mediaId: favoriteRequest.mediaId,
-      },
-    })
+    .delete(`/favorites/${mediaId}`)
     .then((res) => res.data);
   return response;
 };
 
-export const findAllByUserWithDetails = (userId) => {
+export const findAllByUserWithDetails = () => {
   const response = axiosInstance
-    .get(`/favorites/user/${userId}`)
+    .get(`/favorites/media`)
     .then((res) => res.data);
   return response;
 };
