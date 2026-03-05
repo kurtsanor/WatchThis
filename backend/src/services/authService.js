@@ -4,7 +4,7 @@ const Credential = require("../models/Credential");
 const jwtUtil = require("../utils/jwtUtil");
 
 const registerUserApi = async (registerRequest) => {
-  const isExistingUser = userService.findByEmailApi(registerRequest.email);
+  const isExistingUser = await userService.findByEmailApi(registerRequest.email);
   if (isExistingUser) {
     throw new Error("Email is already in use.");
   }
@@ -31,7 +31,7 @@ const loginApi = async (loginRequest) => {
     userId: findResult._id,
   });
   if (findResult.googleId && !result?.password) {
-    throw new Error("This email is registered via Google. Log in with that.");
+    throw new Error("This email is registered via Google. Log in via google first then set a password in the setting.");
   }
   const isMatch = await bcrypt.compare(loginRequest.password, result.password);
   if (!isMatch) {
@@ -40,4 +40,32 @@ const loginApi = async (loginRequest) => {
   return jwtUtil.generateToken(findResult);
 };
 
-module.exports = { registerUserApi, loginApi };
+const setPasswordApi = async (userId, currentPassword, newPassword) => {
+  const existingCredential = await Credential.findOne({ userId });
+
+  // If user already has a password, require current password
+  if (existingCredential) {
+    if (!currentPassword) {
+      throw new Error("Current password is required to change your password.");
+    }
+
+    const ok = await bcrypt.compare(currentPassword, existingCredential.password);
+    if (!ok) {
+      throw new Error("Current password is incorrect.");
+    }
+
+    existingCredential.password = await bcrypt.hash(newPassword, 10);
+    await existingCredential.save();
+    return;
+  }
+
+  // If no password yet (e.g., Google-first), just set it
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+  await Credential.create({
+    userId,
+    password: hashedPassword,
+  });
+};
+
+module.exports = { registerUserApi, loginApi, setPasswordApi };

@@ -80,4 +80,17 @@ const verifyGoogleUser = async (accessToken, refreshToken, profile, done) => {
   }
 };
 
-module.exports = { registerUser, login, googleAuthCallback, verifyGoogleUser };
+const setPassword = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { currentPassword, password } = req.body; // password = new password
+
+    await authService.setPasswordApi(userId, currentPassword, password);
+
+    res.json({ message: "Password updated successfully." });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+module.exports = { registerUser, login, googleAuthCallback, verifyGoogleUser, setPassword };

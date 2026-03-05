@@ -10,17 +10,22 @@ import {
   Image,
   Menu,
   Text,
-} from "@mantine/core";
+  Modal,
+  TextInput,
+  Stack,
+} from "@mantine/core"; "@mantine/core";
 import { useDebouncedValue, useDisclosure } from "@mantine/hooks";
 import classes from "../css/HeaderSimple.module.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { UserButton } from "./UserButton";
-import { IconLogout, IconSearch } from "@tabler/icons-react";
+import { IconLogout, IconSearch, IconKey } from "@tabler/icons-react";
 import { FavoritesContext } from "../contexts/FavoriteContext";
 import { Spotlight, spotlight } from "@mantine/spotlight";
 import { globalSearch } from "../api/movieApi";
+import { notifications } from "@mantine/notifications";
+import axios from "axios";
 
 const links = [
   { link: "/", label: "Home" },
@@ -33,6 +38,12 @@ function Header() {
   const [result, setResult] = useState<any>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
+  const [passwordModalOpened, { open: openPasswordModal, close: closePasswordModal }] = useDisclosure(false);
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loadingPassword, setLoadingPassword] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+
   const [debouncedSearch] = useDebouncedValue(searchQuery, 250);
 
   const [menuOpened, { open, close }] = useDisclosure(false);
@@ -40,7 +51,12 @@ function Header() {
   const navigate = useNavigate();
 
   const { token, user, setUser, setToken, isLoading } = useContext(AuthContext);
+  console.log(user);
   const { setFavorites } = useContext(FavoritesContext)!;
+
+  const handleSetPassword = () => {
+    openPasswordModal();
+  };
 
   useEffect(() => {
     if (!searchQuery) return;
@@ -67,6 +83,46 @@ function Header() {
     setToken(null);
     setFavorites([]);
     navigate("/login");
+  };
+
+  const submitPassword = async () => {
+    if (password !== confirmPassword) {
+      notifications.show({
+        title: "Error",
+        message: "Passwords do not match",
+        color: "red",
+      });
+      return;
+    }
+
+    try {
+      setLoadingPassword(true);
+
+      await axios.post(
+        "http://localhost:3000/auth/set-password",
+        { currentPassword, password },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      notifications.show({
+        title: "Success",
+        message: "Password set successfully",
+        color: "green",
+      });
+
+      setCurrentPassword("");
+      setPassword("");
+      setConfirmPassword("");
+      closePasswordModal();
+    } catch (err) {
+      notifications.show({
+        title: "Error",
+        message: "Failed to set password",
+        color: "red",
+      });
+    } finally {
+      setLoadingPassword(false);
+    }
   };
 
   const mockData = result?.results.map((item: any) => (
@@ -143,6 +199,14 @@ function Header() {
                   />
                 </Menu.Target>
                 <Menu.Dropdown>
+
+                  <Menu.Item
+                    onClick={handleSetPassword}
+                    leftSection={<IconKey size={16} />}
+                  >
+                    Set Password
+                  </Menu.Item>
+
                   <Menu.Item
                     onClick={handleLogout}
                     color="red"
@@ -230,6 +294,49 @@ function Header() {
           )}
         </Spotlight.ActionsList>
       </Spotlight.Root>
+      
+      <Modal
+        opened={passwordModalOpened}
+        onClose={closePasswordModal}
+        title="Set Password"
+        centered
+      >
+        <Stack>
+
+          {user?.hasPassword && (
+            <TextInput
+              label="Current Password"
+              type="password"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.currentTarget.value)}
+            />
+          )}
+
+          <TextInput
+            label="New Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.currentTarget.value)}
+          />
+
+          <TextInput
+            label="Confirm Password"
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.currentTarget.value)}
+          />
+
+          <Button
+            loading={loadingPassword}
+            leftSection={<IconKey size={16} />}
+            onClick={submitPassword}
+          >
+            Save Password
+          </Button>
+
+        </Stack>
+      </Modal>
+
     </header>
   );
 }
