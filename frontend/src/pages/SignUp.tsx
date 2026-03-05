@@ -154,6 +154,22 @@ function SignUpForm() {
           Sign Up
         </Button>
 
+        <Divider my="md" label="Or continue with" labelPosition="center" />
+
+        <Button
+          fullWidth
+          variant="default"
+          radius="md"
+          mb="md"
+          fw={400}
+          leftSection={<IconBrandGoogleFilled size={18} />}
+          onClick={() => {
+            window.location.href = `${import.meta.env.VITE_BACKEND_URL}/auth/google`;
+          }}
+        >
+          Sign up with Google
+        </Button>
+
         <Text size="sm" ta="center">
           Already have an account?{" "}
           <Anchor
