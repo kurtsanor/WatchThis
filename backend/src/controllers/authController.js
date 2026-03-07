@@ -93,4 +93,10 @@ const setPassword = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, login, googleAuthCallback, verifyGoogleUser, setPassword };
+module.exports = {
+  registerUser,
+  login,
+  googleAuthCallback,
+  verifyGoogleUser,
+  setPassword,
+};

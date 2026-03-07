@@ -21,7 +21,13 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { UserButton } from "./UserButton";
-import { IconLogout, IconSearch, IconKey } from "@tabler/icons-react";
+import {
+  IconLogout,
+  IconSearch,
+  IconKey,
+  IconX,
+  IconCheck,
+} from "@tabler/icons-react";
 import { FavoritesContext } from "../contexts/FavoriteContext";
 import { Spotlight, spotlight } from "@mantine/spotlight";
 import { globalSearch } from "../api/movieApi";
@@ -55,7 +61,7 @@ function Header() {
   const navigate = useNavigate();
 
   const { token, user, setUser, setToken, isLoading } = useContext(AuthContext);
-  console.log(user);
+
   const { setFavorites } = useContext(FavoritesContext)!;
 
   const handleSetPassword = () => {
@@ -94,7 +100,10 @@ function Header() {
       notifications.show({
         title: "Error",
         message: "Passwords do not match",
-        color: "red",
+        color: "white",
+        icon: <IconX color="black" />,
+        position: "top-center",
+        withBorder: true,
       });
       return;
     }
@@ -111,19 +120,25 @@ function Header() {
 
       notifications.show({
         title: "Success",
-        message: "Password set successfully",
-        color: "green",
+        message: "Password has been set",
+        color: "white",
+        icon: <IconCheck color="black" />,
+        position: "top-center",
+        withBorder: true,
       });
 
       setCurrentPassword("");
       setPassword("");
       setConfirmPassword("");
       closePasswordModal();
-    } catch (err) {
+    } catch (error: any) {
       notifications.show({
         title: "Error",
-        message: "Failed to set password",
-        color: "red",
+        message: error.response.data.message,
+        color: "white",
+        icon: <IconX color="black" />,
+        position: "top-center",
+        withBorder: true,
       });
     } finally {
       setLoadingPassword(false);
@@ -333,6 +348,7 @@ function Header() {
             loading={loadingPassword}
             leftSection={<IconKey size={16} />}
             onClick={submitPassword}
+            fw={400}
           >
             Save Password
           </Button>

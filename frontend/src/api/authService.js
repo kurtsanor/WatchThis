@@ -17,7 +17,7 @@ export const login = (loginRequest) => {
 
 export const setPassword = (request) => {
   const response = axiosInstance
-    .post("/auth/set-password")
+    .post("/auth/set-password", request)
     .then((res) => res.data);
   return response;
 };
