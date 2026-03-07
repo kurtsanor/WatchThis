@@ -18,13 +18,16 @@ const userSchema = new mongoose.Schema(
       required: [true, "Last name is required"],
       trim: true,
     },
-    googleId: { 
-      type: String, 
-      index: true, 
-      sparse: true 
+    googleId: {
+      type: String,
+      index: true,
+      sparse: true,
     },
-    avatar: { 
-      type: String 
+    avatar: {
+      type: String,
+    },
+    avatarPublicId: {
+      type: String,
     },
   },
   {

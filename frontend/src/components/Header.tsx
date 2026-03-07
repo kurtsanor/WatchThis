@@ -27,6 +27,7 @@ import {
   IconKey,
   IconX,
   IconCheck,
+  IconUser,
 } from "@tabler/icons-react";
 import { FavoritesContext } from "../contexts/FavoriteContext";
 import { Spotlight, spotlight } from "@mantine/spotlight";
@@ -145,7 +146,7 @@ function Header() {
     }
   };
 
-  const mockData = result?.results.map((item: any) => (
+  const searchResult = result?.results.map((item: any) => (
     <Spotlight.Action
       key={item.id}
       onClick={() => {
@@ -209,7 +210,10 @@ function Header() {
           </ActionIcon>
           {token ? (
             user ? (
-              <Menu>
+              <Menu
+                width={250}
+                transitionProps={{ transition: "pop-top-right" }}
+              >
                 <Menu.Target>
                   <UserButton
                     firstName={user.firstName}
@@ -219,17 +223,25 @@ function Header() {
                   />
                 </Menu.Target>
                 <Menu.Dropdown>
+                  <Menu.Label>Account</Menu.Label>
+                  <Menu.Item
+                    onClick={() => navigate("/profile")}
+                    leftSection={<IconUser size={16} stroke={1.5} />}
+                  >
+                    My Profile
+                  </Menu.Item>
                   <Menu.Item
                     onClick={handleSetPassword}
-                    leftSection={<IconKey size={16} />}
+                    leftSection={<IconKey size={16} stroke={1.5} />}
                   >
                     Set Password
                   </Menu.Item>
-
+                  <Menu.Divider />
+                  <Menu.Label>Session</Menu.Label>
                   <Menu.Item
                     onClick={handleLogout}
                     color="red"
-                    leftSection={<IconLogout size={16} />}
+                    leftSection={<IconLogout size={16} stroke={1.5} />}
                   >
                     Logout
                   </Menu.Item>
@@ -306,8 +318,8 @@ function Header() {
           }}
         />
         <Spotlight.ActionsList style={{ maxHeight: 400, overflowY: "auto" }}>
-          {mockData?.length > 0 ? (
-            mockData
+          {searchResult?.length > 0 ? (
+            searchResult
           ) : (
             <Spotlight.Empty>Nothing found...</Spotlight.Empty>
           )}

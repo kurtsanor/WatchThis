@@ -3,8 +3,9 @@ import Header from "../components/Header";
 import { Outlet, useLocation } from "react-router-dom";
 
 function Layout() {
+  const noPaddingLocations = ["/", "/profile"];
   const location = useLocation();
-  const inHeroPage = location.pathname === "/";
+  const inHeroPage = noPaddingLocations.includes(location.pathname);
 
   return (
     <div

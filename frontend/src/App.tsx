@@ -12,6 +12,7 @@ import SignUp from "./pages/SignUp";
 import OAuthSuccess from "./pages/OAuthSuccess";
 import SearchResults from "./pages/SearchResults";
 import GuestRoute from "./routes/GuestRoute";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
           path="/tvshows/:id"
           element={<MediaDetails mediaType="tvshows" />}
         />
+        <Route path="/profile" element={<Profile />} />
       </Route>
       <Route path="/*" element={<NotFound></NotFound>}></Route>
     </Routes>

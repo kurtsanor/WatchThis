@@ -18,4 +18,21 @@ const findByIdApi = async (id) => {
   return { ...user, hasPassword: !!cred };
 };
 
-module.exports = { createUserApi, findByEmailApi, findByIdApi };
+const updateUserAvatar = async (userId, avatarUrl, avatarPublicId) => {
+  const result = await User.findByIdAndUpdate(
+    userId,
+    {
+      avatar: avatarUrl,
+      avatarPublicId: avatarPublicId,
+    },
+    { new: true },
+  );
+  return result;
+};
+
+module.exports = {
+  createUserApi,
+  findByEmailApi,
+  findByIdApi,
+  updateUserAvatar,
+};
