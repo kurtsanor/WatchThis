@@ -122,7 +122,7 @@ const Profile = () => {
           <FileButton
             disabled={isSubmitting}
             onChange={handleProfileChange}
-            accept="image/png,image/jpeg"
+            accept="image/png,image/jpeg,image/webp"
           >
             {(props) => (
               <Button

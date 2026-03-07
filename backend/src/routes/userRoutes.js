@@ -9,7 +9,14 @@ router.post("/", userController.createUser);
 router.post(
   "/avatar",
   verifyJwt,
-  upload.single("file"),
+  (req, res, next) => {
+    upload.single("file")(req, res, (err) => {
+      if (err) {
+        return res.status(400).json({ message: err.message });
+      }
+      next();
+    });
+  },
   uploadController.uploadUserAvatar,
 );
 router.get("/:id", userController.findById);
