@@ -13,7 +13,8 @@ import {
   Modal,
   TextInput,
   Stack,
-} from "@mantine/core"; "@mantine/core";
+} from "@mantine/core";
+("@mantine/core");
 import { useDebouncedValue, useDisclosure } from "@mantine/hooks";
 import classes from "../css/HeaderSimple.module.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -25,7 +26,7 @@ import { FavoritesContext } from "../contexts/FavoriteContext";
 import { Spotlight, spotlight } from "@mantine/spotlight";
 import { globalSearch } from "../api/movieApi";
 import { notifications } from "@mantine/notifications";
-import axios from "axios";
+import { setPassword as setPasswordApi } from "../api/authService";
 
 const links = [
   { link: "/", label: "Home" },
@@ -38,7 +39,10 @@ function Header() {
   const [result, setResult] = useState<any>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const [passwordModalOpened, { open: openPasswordModal, close: closePasswordModal }] = useDisclosure(false);
+  const [
+    passwordModalOpened,
+    { open: openPasswordModal, close: closePasswordModal },
+  ] = useDisclosure(false);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loadingPassword, setLoadingPassword] = useState(false);
@@ -98,11 +102,12 @@ function Header() {
     try {
       setLoadingPassword(true);
 
-      await axios.post(
-        "http://localhost:3000/auth/set-password",
-        { currentPassword, password },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const request = {
+        currentPassword: currentPassword,
+        password: password,
+      };
+
+      await setPasswordApi(request);
 
       notifications.show({
         title: "Success",
@@ -199,7 +204,6 @@ function Header() {
                   />
                 </Menu.Target>
                 <Menu.Dropdown>
-
                   <Menu.Item
                     onClick={handleSetPassword}
                     leftSection={<IconKey size={16} />}
@@ -294,7 +298,7 @@ function Header() {
           )}
         </Spotlight.ActionsList>
       </Spotlight.Root>
-      
+
       <Modal
         opened={passwordModalOpened}
         onClose={closePasswordModal}
@@ -302,7 +306,6 @@ function Header() {
         centered
       >
         <Stack>
-
           {user?.hasPassword && (
             <TextInput
               label="Current Password"
@@ -333,10 +336,8 @@ function Header() {
           >
             Save Password
           </Button>
-
         </Stack>
       </Modal>
-
     </header>
   );
 }
