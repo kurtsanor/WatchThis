@@ -90,6 +90,10 @@ const Profile = () => {
     }
   };
 
+  if (isLoading) {
+    return null;
+  }
+
   return (
     <>
       <Box

@@ -1,7 +1,7 @@
 const { uploadToCloudinaryApi } = require("../services/uploadService");
 const userService = require("../services/userService");
 
-const uploadUserAvatar = async (req, res) => {
+const uploadUserAvatar = async (req, res, next) => {
   try {
     const userId = req.user.id;
 
@@ -25,7 +25,8 @@ const uploadUserAvatar = async (req, res) => {
       .status(200)
       .json({ message: "Avatar has been updated", data: updateResult });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    error.status = 400;
+    next(error);
   }
 };
 

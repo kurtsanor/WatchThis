@@ -1,16 +1,17 @@
 const favoriteService = require("../services/favoriteService");
 
-const findFavoritesByUser = async (req, res) => {
+const findFavoritesByUser = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const result = await favoriteService.findFavoritesByUserApi(userId);
     res.status(200).json({ data: result });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    error.status = 400;
+    next(error);
   }
 };
 
-const addFavorite = async (req, res) => {
+const addFavorite = async (req, res, next) => {
   try {
     const favoriteRequest = {
       userId: req.user.id,
@@ -20,11 +21,11 @@ const addFavorite = async (req, res) => {
     const result = await favoriteService.addFavoriteApi(favoriteRequest);
     res.status(201).json({ message: "Added to favorites" });
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    next(error);
   }
 };
 
-const removeFavorite = async (req, res) => {
+const removeFavorite = async (req, res, next) => {
   try {
     const deleteRequest = {
       userId: req.user.id,
@@ -33,7 +34,8 @@ const removeFavorite = async (req, res) => {
     const result = await favoriteService.removeFavoriteApi(deleteRequest);
     res.status(200).json({ message: "Removed from favorites" });
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    error.status = 400;
+    next(error);
   }
 };
 
@@ -44,7 +46,8 @@ const findAllByUserWithDetails = async (req, res) => {
     const result = await favoriteService.findAllByUserWithDetailsApi(userId);
     res.status(200).json({ data: result });
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    error.status = 400;
+    next(error);
   }
 };
 

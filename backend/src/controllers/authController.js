@@ -2,16 +2,16 @@ const authService = require("../services/authService");
 const jwtUtil = require("../utils/jwtUtil");
 const User = require("../models/User");
 
-const registerUser = async (req, res) => {
+const registerUser = async (req, res, next) => {
   try {
     await authService.registerUserApi(req.body);
     res.status(201).json({ message: "User has been registered" });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    next(error);
   }
 };
 
-const login = async (req, res) => {
+const login = async (req, res, next) => {
   try {
     const loginResponse = await authService.loginApi(req.body);
     if (!loginResponse) {
@@ -21,7 +21,8 @@ const login = async (req, res) => {
       .status(200)
       .json({ message: "Login sucessful", token: loginResponse });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    error.status = 400;
+    next(error);
   }
 };
 
@@ -80,7 +81,7 @@ const verifyGoogleUser = async (accessToken, refreshToken, profile, done) => {
   }
 };
 
-const setPassword = async (req, res) => {
+const setPassword = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const { currentPassword, password } = req.body; // password = new password
@@ -89,7 +90,8 @@ const setPassword = async (req, res) => {
 
     res.json({ message: "Password updated successfully." });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    err.status = 400;
+    next(err);
   }
 };
 

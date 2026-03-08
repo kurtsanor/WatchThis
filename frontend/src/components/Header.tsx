@@ -13,6 +13,7 @@ import {
   Modal,
   TextInput,
   Stack,
+  Loader,
 } from "@mantine/core";
 ("@mantine/core");
 import { useDebouncedValue, useDisclosure } from "@mantine/hooks";
@@ -54,6 +55,7 @@ function Header() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loadingPassword, setLoadingPassword] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
+  const [isLoggingOut, setIsLogginOut] = useState(false);
 
   const [debouncedSearch] = useDebouncedValue(searchQuery, 250);
 
@@ -88,7 +90,9 @@ function Header() {
     </Link>
   ));
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    setIsLogginOut(true);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     localStorage.removeItem("token");
     setUser(undefined);
     setToken(null);
@@ -239,9 +243,16 @@ function Header() {
                   <Menu.Divider />
                   <Menu.Label>Session</Menu.Label>
                   <Menu.Item
+                    closeMenuOnClick={false}
                     onClick={handleLogout}
                     color="red"
-                    leftSection={<IconLogout size={16} stroke={1.5} />}
+                    leftSection={
+                      isLoggingOut ? (
+                        <Loader size={16} color="red" />
+                      ) : (
+                        <IconLogout size={16} stroke={1.5} />
+                      )
+                    }
                   >
                     Logout
                   </Menu.Item>

@@ -4,9 +4,13 @@ const Credential = require("../models/Credential");
 const jwtUtil = require("../utils/jwtUtil");
 
 const registerUserApi = async (registerRequest) => {
-  const isExistingUser = await userService.findByEmailApi(registerRequest.email);
+  const isExistingUser = await userService.findByEmailApi(
+    registerRequest.email,
+  );
   if (isExistingUser) {
-    throw new Error("Email is already in use.");
+    const error = new Error("Email is already in use.");
+    error.status = 400;
+    throw error;
   }
   const user = {
     firstName: registerRequest.firstName,
@@ -31,7 +35,9 @@ const loginApi = async (loginRequest) => {
     userId: findResult._id,
   });
   if (findResult.googleId && !result?.password) {
-    throw new Error("This email is registered via Google. Log in via google first then set a password in the setting.");
+    throw new Error(
+      "This email is registered via Google. Log in via google first then set a password in the setting.",
+    );
   }
   const isMatch = await bcrypt.compare(loginRequest.password, result.password);
   if (!isMatch) {
@@ -49,7 +55,10 @@ const setPasswordApi = async (userId, currentPassword, newPassword) => {
       throw new Error("Current password is required to change your password.");
     }
 
-    const ok = await bcrypt.compare(currentPassword, existingCredential.password);
+    const ok = await bcrypt.compare(
+      currentPassword,
+      existingCredential.password,
+    );
     if (!ok) {
       throw new Error("Current password is incorrect.");
     }
