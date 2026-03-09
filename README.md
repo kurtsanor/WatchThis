@@ -22,6 +22,7 @@ Not sure what movie to watch? **WatchThis** lets you preview trailers so you can
 - **MongoDB** connection (Atlas or self-hosted)
 - **TMDB API key** - [Get it here](https://www.themoviedb.org/settings/api)
 - **Google OAuth credentials** (for OAuth login)
+- **Cloudinary account** - [Sign up here](https://cloudinary.com/users/register/free)
 
 ### Step 1: Clone the Repository
 
