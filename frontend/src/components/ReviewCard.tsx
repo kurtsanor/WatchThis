@@ -29,8 +29,6 @@ const ReviewCard = ({
   onDeleteClick,
   isEditable,
 }: ReviewCardProps) => {
-  console.log(review);
-
   return (
     <Stack gap={5} pos={"relative"}>
       <Group>

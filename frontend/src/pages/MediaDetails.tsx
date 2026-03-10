@@ -75,7 +75,7 @@ function MediaDetails({ mediaType }: MediaDetailsProps) {
             fetchMediaData(id),
             fetchCastData(id),
             findAllByMediaId(Number(id)),
-            existsByMediaAndUser(id, user?._id),
+            user ? existsByMediaAndUser(id, user._id) : false,
           ]);
 
         setMedia(mediaData.data);
