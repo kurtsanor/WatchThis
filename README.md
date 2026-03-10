@@ -22,6 +22,7 @@ Not sure what movie to watch? **WatchThis** lets you preview trailers so you can
 - **MongoDB** connection (Atlas or self-hosted)
 - **TMDB API key** - [Get it here](https://www.themoviedb.org/settings/api)
 - **Google OAuth credentials** (for OAuth login)
+- **Cloudinary account** (for File Storage) - [Sign up here](https://cloudinary.com/users/register/free)
 
 ### Step 1: Clone the Repository
 
@@ -98,17 +99,24 @@ JWT_SECRET_KEY=your_jwt_secret_key_here
 GOOGLE_CLIENT_ID=your_google_client_id
 GOOGLE_CLIENT_SECRET=your_google_client_secret
 
+CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+
 FRONTEND_URL=http://localhost:5173
 BACKEND_URL=http://localhost:3000
 ```
 
 #### Environment Variables Guide:
 
-- **TMDB_API_KEY** - Your The Movie Database API key (required)
-- **MONGODB_URI** - MongoDB connection string with username and password (required)
-- **JWT_SECRET_KEY** - Secret key for JWT token generation (required)
-- **GOOGLE_CLIENT_ID** - Google OAuth client ID (optional, for Google login)
-- **GOOGLE_CLIENT_SECRET** - Google OAuth client secret (optional, for Google login)
+- **TMDB_API_KEY** - Your The Movie Database API key
+- **MONGODB_URI** - MongoDB connection string with username and password
+- **JWT_SECRET_KEY** - Secret key for JWT token generation
+- **GOOGLE_CLIENT_ID** - Google OAuth client ID (for Google login)
+- **GOOGLE_CLIENT_SECRET** - Google OAuth client secret (for Google login)
+- **CLOUDINARY_CLOUD_NAME** - Cloudinary cloud name (for file storage)
+- **CLOUDINARY_API_KEY** - Cloudinary API key (for file storage)
+- **CLOUDINARY_API_SECRET** - Cloudinary API secret (for file storage)
 - **FRONTEND_URL** - Frontend application URL (default: http://localhost:5173)
 - **BACKEND_URL** - Backend application URL (default: http://localhost:3000)
 
