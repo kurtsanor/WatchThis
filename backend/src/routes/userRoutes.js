@@ -4,8 +4,9 @@ const { verifyJwt } = require("../middlewares/authMiddleware");
 const upload = require("../config/multer");
 const userController = require("../controllers/userController");
 const uploadController = require("../controllers/uploadController");
+const { mongoValidator } = require("../validations");
+const validate = require("../middlewares/validatorMiddleware");
 
-router.post("/", userController.createUser);
 router.post(
   "/avatar",
   verifyJwt,
@@ -19,6 +20,12 @@ router.post(
   },
   uploadController.uploadUserAvatar,
 );
-router.get("/:id", userController.findById);
+router.get(
+  "/:id",
+  mongoValidator.idParam,
+  validate,
+  verifyJwt,
+  userController.findById,
+);
 
 module.exports = router;

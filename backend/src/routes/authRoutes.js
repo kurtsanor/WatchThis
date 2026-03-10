@@ -3,10 +3,23 @@ const router = express.Router();
 const passport = require("passport");
 const authController = require("../controllers/authController");
 const { verifyJwt } = require("../middlewares/authMiddleware");
+const { authValidator } = require("../validations");
+const validate = require("../middlewares/validatorMiddleware");
 
-router.post("/register", authController.registerUser);
-router.post("/login", authController.login);
-router.post("/set-password", verifyJwt, authController.setPassword);
+router.post(
+  "/register",
+  authValidator.register,
+  validate,
+  authController.registerUser,
+);
+router.post("/login", authValidator.login, validate, authController.login);
+router.post(
+  "/set-password",
+  authValidator.setPassword,
+  validate,
+  verifyJwt,
+  authController.setPassword,
+);
 router.get(
   "/google",
   passport.authenticate("google", { scope: ["profile", "email"] }),

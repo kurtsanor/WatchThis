@@ -52,6 +52,8 @@ const findByMediaAndUser = async (req, res, next) => {
 const updateReview = async (req, res, next) => {
   try {
     const updateRequest = req.body;
+    console.log("req body is", req.body);
+
     const result = await reviewService.updateApi(updateRequest);
     res.status(200).json({ data: result });
   } catch (error) {
