@@ -75,7 +75,11 @@ function LoginForm() {
     },
 
     validate: {
-      email: (val) => (val ? null : "Email is required"),
+      email: (val) => {
+        if (!val) return "Email is required";
+        const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return pattern.test(val) ? null : "Invalid email address";
+      },
       password: (val) => (val.length <= 0 ? "Password is required" : null),
     },
   });
