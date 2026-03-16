@@ -105,6 +105,13 @@ CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 
 FRONTEND_URL=http://localhost:5173
 BACKEND_URL=http://localhost:3000
+
+STORAGE_PROVIDER= (s3 or cloudinary)
+
+AWS_REGION=your-aws-region
+AWS_ACCESS_KEY_ID=your aws access key here
+AWS_SECRET_ACCESS_KEY= your aws secret access key here
+AWS_S3_BUCKET= your bucket name here
 ```
 
 #### Environment Variables Guide:
