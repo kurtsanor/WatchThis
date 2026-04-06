@@ -1,17 +1,46 @@
 # WatchThis
 
-Not sure what movie to watch? **WatchThis** lets you preview trailers so you can get a quick glimpse before deciding. Discover trending films, explore genres, and find your next watch in seconds.
+WatchThis is a movie and TV discovery web app that helps users decide what to watch faster. Users can search titles, browse trending content, explore genres, watch trailers, save favorites, and write reviews in one place.
+
+## Live Links
+
+- **Live App:** [WatchThis](https://watch-this-oi78.vercel.app/)
+- **GitHub Repository:** [kurtsanor/WatchThis](https://github.com/kurtsanor/WatchThis)
 
 ## Features
 
-- 🎬 **Browse Movies & TV Shows** - Explore trending and upcoming movies and TV shows
-- 🔍 **Search & Filter** - Search by title and filter by genres
-- ⭐ **User Reviews & Ratings** - Read and write reviews, rate your favorite content
-- ❤️ **Favorites** - Save your favorite movies and TV shows for later
-- 🎥 **Trailer Preview** - Watch trailers directly
-- 👤 **User Authentication** - Create an account, login, and manage your profile
-- 🔐 **Google OAuth** - Quick sign-up with Google
-- 📱 **Responsive Design** - Works seamlessly on desktop and mobile devices
+- Browse trending movies and TV shows
+- Search for movies and TV shows by title
+- Filter content by genre
+- Watch trailers before deciding what to watch
+- Save favorite movies and TV shows
+- Write ratings and reviews
+- Create an account and log in securely
+- Sign in with Google
+- Manage your profile and avatar
+- Use the app on desktop or mobile
+
+## Tech Stack
+
+- **Frontend:** React + Vite
+- **Backend:** Node.js + Express
+- **Database:** MongoDB
+- **External API:** TMDB
+- **Authentication:** JWT and Google OAuth
+- **File Storage:** Cloudinary or AWS S3
+
+## Getting Started
+
+### Prerequisites
+
+Before running the project locally, make sure you have:
+
+- Node.js 18 or higher
+- npm
+- A MongoDB connection string
+- A TMDB API key
+- Google OAuth credentials if you want Google sign-in enabled
+- Cloudinary or AWS S3 credentials if you want avatar uploads enable
 
 ## Installation & Setup
 
@@ -195,6 +224,12 @@ WatchThis/
 ### Backend
 
 - `node src/server.js` - Start the server
+
+**Notes**
+- Make sure your MongoDB connection string is valid before starting the backend.
+- If Google OAuth is not enabled, users can still use normal sign-up and login.
+- If avatar upload is not enabled, Cloudinary or AWS S3 settings are not needed.
+- Choose only one storage provider when using avatar uploads.
 
 ## Support
 
